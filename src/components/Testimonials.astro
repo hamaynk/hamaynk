@@ -1,0 +1,47 @@
+---
+import LucideQuote from "~icons/lucide/quote";
+
+const testimonials = [
+	{
+		quote: "My daughter looks forward to school every single day. The teachers here truly care about each child.",
+		name: "Maria G.",
+		role: "Parent of 2nd Grader",
+	},
+	{
+		quote: "Elementary gave our son confidence. He went from being shy to leading the school science fair!",
+		name: "James T.",
+		role: "Parent of 4th Grader",
+	},
+	{
+		quote: "The community here is amazing. We've made lifelong friends — both the kids and us parents!",
+		name: "Priya S.",
+		role: "Parent of Kindergartner",
+	},
+];
+---
+
+<div
+	class="testimonials-carousel bar flex overflow-x-auto snap-x snap-mandatory gap-6 pb-4 md:grid md:grid-cols-3 md:overflow-visible md:pb-0 md:gap-8"
+>
+	{
+		testimonials.map((t) => (
+			<div class="snap-start shrink-0 w-[85%] md:w-auto flex flex-col items-start bg-white rounded-2xl px-8 pb-8 pt-16 shadow relative">
+				<LucideQuote class="size-8 text-brand-blue/30 absolute top-6 right-6" />
+				<p class="italic leading-relaxed mb-6">"{t.quote}"</p>
+				<div class="mt-auto">
+					<div class="font-bold">{t.name}</div>
+					<div class="text-brand-foreground/60 text-sm">{t.role}</div>
+				</div>
+			</div>
+		))
+	}
+</div>
+
+<style>
+	.testimonials-carousel {
+		scrollbar-width: none;
+	}
+	.testimonials-carousel::-webkit-scrollbar {
+		display: none;
+	}
+</style>

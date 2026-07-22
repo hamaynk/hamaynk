@@ -1,0 +1,8 @@
+---
+import type { VideoProps as Props } from "@/types";
+
+const { src, overlay, ...rest } = Astro.props;
+---
+
+<video src={src} {...rest}></video>
+{overlay && <div class={`absolute inset-0 ${overlay}`} />}

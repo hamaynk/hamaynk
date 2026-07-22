@@ -1,0 +1,31 @@
+{
+  "name": "hamaynk",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.8",
+    "@astrojs/netlify": "^7.0.7",
+    "@tailwindcss/vite": "^4.2.2",
+    "@tailwindplus/elements": "^1.0.22",
+    "astro": "^6.1.8",
+    "tailwind-merge": "^3.5.0",
+    "tailwind-variants": "^3.2.2",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.9",
+    "@iconify/json": "^2.2.455",
+    "@tailwindcss/typography": "^0.5.19",
+    "unplugin-icons": "^23.0.1"
+  }
+}

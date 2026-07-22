@@ -1,0 +1,58 @@
+---
+import MaterialSymbolsPaletteOutline from '~icons/material-symbols/palette-outline'
+import IonMusicNote from '~icons/ion/music-note'
+import TablerMicroscope from '~icons/tabler/microscope'
+import MaterialSymbolsTrophyOutlineRounded from '~icons/material-symbols/trophy-outline-rounded'
+
+const programs = [
+	{
+		icon: MaterialSymbolsPaletteOutline,
+		title: "Art & Creativity",
+		description:
+			"Drawing, painting, sculpture, and digital art — our students explore every medium to express themselves.",
+		accent: "border-brand-red",
+		iconColor: "text-brand-red",
+	},
+	{
+		icon: IonMusicNote,
+		title: "Music & Performing Arts",
+		description: "Choir, band, and theater give every child a stage to shine. Annual spring musical included!",
+		accent: "border-brand-blue",
+		iconColor: "text-brand-blue",
+	},
+	{
+		icon: TablerMicroscope,
+		title: "STEM Discovery",
+		description: "Robotics, coding, and hands-on experiments — building the innovators of tomorrow, today.",
+		accent: "border-brand-green",
+		iconColor: "text-brand-green",
+	},
+	{
+		icon: MaterialSymbolsTrophyOutlineRounded,
+		title: "Sports & Wellness",
+		description: "Soccer, basketball, track, and yoga keep our students active, healthy, and having fun.",
+		accent: "border-brand-yellow",
+		iconColor: "text-brand-yellow",
+	},
+];
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
+	{
+		programs.map(({ icon: Icon, title, description, accent, iconColor }) => (
+			<div
+				class={`bg-white rounded-2xl p-6 shadow border-l-4 ${accent}`}
+			>
+				<div class="flex items-start gap-4">
+					<div class={`${iconColor} mt-1`}>
+						<Icon class="w-8 h-8" />
+					</div>
+					<div>
+						<h3 class="text-xl font-bold text-brand-foreground mb-2">{title}</h3>
+						<p>{description}</p>
+					</div>
+				</div>
+			</div>
+		))
+	}
+</div>

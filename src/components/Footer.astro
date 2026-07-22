@@ -1,0 +1,56 @@
+---
+import MapPin from "~icons/heroicons/map-pin";
+import Phone from "~icons/heroicons/phone";
+import Mail from "~icons/heroicons/envelope";
+import IconLogo from "@/assets/logo/logo.svg";
+import { siteName, phone, email } from "@/data/config";
+---
+
+<footer class="bg-brand-foreground text-white py-12 px-4">
+	<div class="container">
+		<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-8">
+			<div class="lg:col-span-2">
+				<a href="/" class="flex gap-x-4 items-center">
+					<IconLogo class:list={"size-12"} />
+					<span class="font-bold lowercase font-fredoka text-4xl">{siteName}</span>
+				</a>
+				<p class="font-body text-base mt-4">
+					Nurturing young minds since 1991. Join our community of learners and discover the joy of education
+					at {siteName}.
+				</p>
+			</div>
+			<div class="space-y-3 lg:col-start-5">
+				<h3 class="font-body font-bold text-lg">Contact Us</h3>
+				<div class="flex items-center gap-2 text-sm">
+					<MapPin class="w-4 h-4" /> 123 Learning Lane, Springfield
+				</div>
+				<div class="flex items-center gap-2 text-sm">
+					<Phone class="w-4 h-4" />
+					<a href={`${phone.href}`}>{phone.label}</a>
+				</div>
+				<div class="flex items-center gap-2 text-sm">
+					<Mail class="w-4 h-4" />
+					<a href={`${email.href}`}>{email.label}</a>
+				</div>
+			</div>
+			<div class="space-y-3">
+				<h3 class="font-body font-bold text-lg">School Hours</h3>
+				<p class="text-sm">Monday – Friday</p>
+				<p class="text-sm">8:00 AM – 3:00 PM</p>
+				<p class="text-sm">Office: 7:30 AM – 4:30 PM</p>
+			</div>
+		</div>
+		<div class="border-t border-primary-foreground/20 mt-8 pt-6 text-center text-sm opacity-60 font-body">
+			© {new Date().getFullYear()} Elementary. All rights reserved.
+
+			<span class="block">
+				Made with ❤️ by <a
+					href="https://wpinfusion.com"
+					class="font-bold"
+					target="_blank"
+					rel="noopener noreferrer">WP Infusion</a
+				>
+			</span>
+		</div>
+	</div>
+</footer>

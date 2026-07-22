@@ -1,0 +1,64 @@
+---
+import { siteName } from "@/data/config";
+import IconLogo from "@/assets/logo/logo.svg";
+import { MainMenu } from "@/data/menu";
+import MobileMenu from "@/components/MobileMenu.astro";
+
+const rmTrailingSlash = (path: string): string => {
+	return path.endsWith("/") && path.length > 1 ? path.slice(0, path.length - 1) : path;
+};
+
+const pathname = rmTrailingSlash(Astro.url.pathname);
+---
+
+<header id="main-header" class="sticky top-0 z-50">
+	<div class="bg-white/90 backdrop-blur-md">
+		<div class="container py-4 flex items-center justify-between gap-x-4">
+			<!-- Logo -->
+			<a href="/" class="flex gap-x-4 items-center">
+				<IconLogo class:list={"size-12"} />
+				<span class="font-bold lowercase font-fredoka text-4xl">{siteName}</span>
+			</a>
+
+			<!-- Menu -->
+			<nav>
+				<ul class="hidden md:flex gap-6 font-fredoka text-xl tracking-wide font-semibold">
+					{
+						MainMenu.map((item) => (
+							<li>
+								<a
+									href={item.href}
+									target={item.target}
+									rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
+									class={`transition lowercase ${item.hoverClass ?? ""} ${pathname === item.href ? (item.activeClass ?? "") : ""}`}
+								>
+									{item.label}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
+
+			<!-- Mobile Menu Trigger -->
+			<button type="button" title="open mobile menu" command="show-modal" commandfor="mobile-menu" class="md:hidden">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="size-6"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+					>
+					</path>
+				</svg>
+			</button>
+		</div>
+	</div>
+	<MobileMenu />
+</header>

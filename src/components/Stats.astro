@@ -1,0 +1,23 @@
+---
+import LucideUsers from '~icons/lucide/users'
+import LucideStar from '~icons/lucide/star'
+import LucideHeart from '~icons/lucide/heart'
+    
+const stats = [
+	{ icon: LucideUsers, label: "Students", value: "420+" },
+	{ icon: LucideStar, label: "Years of Excellence", value: "35" },
+	{ icon: LucideHeart, label: "Dedicated Staff", value: "50+" },
+];
+---
+
+<div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+	{
+		stats.map((stat) => (
+			<div class="rounded-2xl bg-white shadow p-8 text-center">
+				<stat.icon class="mx-auto size-10 text-brand-blue" />
+				<div class="font-bold font-fredoka mt-3 text-4xl">{stat.value}</div>
+				<div class="mt-1 font-semibold">{stat.label}</div>
+			</div>
+		))
+	}
+</div>

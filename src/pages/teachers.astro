@@ -1,0 +1,20 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Section.astro";
+import Container from "@/components/Container.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import TeachersList from "@/components/Teachers.astro";
+---
+
+<Layout title="Teachers - Elementary">
+	<Section>
+		<Container>
+			<SectionHeading>
+				<h1 class="text-4xl font-bold">Meet Our Teachers 👩‍🏫</h1>
+				<p>Our dedicated team of educators brings passion, experience, and creativity to every classroom.</p>
+			</SectionHeading>
+
+            <TeachersList />
+		</Container>
+	</Section>
+</Layout>

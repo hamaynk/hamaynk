@@ -1,0 +1,45 @@
+---
+import LucideBell from '~icons/lucide/bell'
+import LucideCalendarDays from '~icons/lucide/calendar-days'
+import LucideBookOpen from '~icons/lucide/book-open'
+import LucideUtensils from '~icons/lucide/utensils'
+
+const cards = [
+	{
+		icon: LucideBell,
+		title: "Announcements",
+		description: "Spring Picture Day is April 15th! Don't forget to smile 📸",
+		color: "bg-brand-blue text-white",
+	},
+	{
+		icon: LucideCalendarDays,
+		title: "Events",
+		description: "Science Fair — April 22nd. Start your experiments now! 🔬",
+		color: "bg-brand-green text-white",
+	},
+	{
+		icon: LucideUtensils,
+		title: "Lunch Menu",
+		description: "This week: Taco Tuesday, Pizza Friday & fresh fruit daily 🍕",
+		color: "bg-brand-red text-white",
+	},
+	{
+		icon: LucideBookOpen,
+		title: "Reading Challenge",
+		description: "Read 20 books this semester and earn a special prize! 📚",
+		color: "bg-brand-yellow text-white",
+	},
+];
+---
+
+<div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+	{
+		cards.map(({ icon: Icon, title, description, color }) => (
+			<div class={`p-6 rounded-lg shadow ${color}`}>
+				<Icon class="size-8 mb-3" />
+				<h3 class="text-2xl font-bold mb-4">{title}</h3>
+				<p class="font-semibold">{description}</p>
+			</div>
+		))
+	}
+</div>
