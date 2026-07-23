@@ -1,0 +1,203 @@
+---
+import Button from "@/components/buttons/Button.astro";
+---
+
+<form class="flex flex-col gap-4" onsubmit="return false;">
+	<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+		<div class="flex flex-col gap-1.5">
+			<label class="text-sm font-bold">Email <span class="text-red-500">*</span></label>
+			<input
+				type="email"
+				placeholder="your@example.com"
+				required
+				class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
+			/>
+		</div>
+		<div class="flex flex-col gap-1.5">
+			<label class="text-sm font-bold">State <span class="text-red-500">*</span></label>
+			<select
+				required
+				class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
+			>
+				<option value="">Select a state in New England</option>
+				<option value="CT">Connecticut</option>
+				<option value="ME">Maine</option>
+				<option value="MA">Massachusetts</option>
+				<option value="NH">New Hampshire</option>
+				<option value="RI">Rhode Island</option>
+				<option value="VT">Vermont</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="flex flex-col gap-1.5">
+		<label class="text-sm font-bold">Event Title <span class="text-red-500">*</span></label>
+		<input
+			type="text"
+			placeholder="e.g., Community Art Show 2026"
+			required
+			class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
+		/>
+	</div>
+
+	<div class="flex flex-col gap-1.5">
+		<label class="text-sm font-bold">Venue Address <span class="text-red-500">*</span></label>
+		<input
+			type="text"
+			placeholder="123 Main Street, City, State ZIP"
+			required
+			class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
+		/>
+	</div>
+
+	<div class="flex flex-col gap-1.5">
+		<label class="text-sm font-bold">Event URL <span class="text-red-500">*</span></label>
+		<input
+			type="url"
+			placeholder="https://example.com/event"
+			required
+			class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
+		/>
+	</div>
+
+	<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+		<div class="flex flex-col gap-1.5">
+			<label class="text-sm font-bold">Event Date <span class="text-red-500">*</span></label>
+			<input
+				type="date"
+				required
+				class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
+			/>
+		</div>
+		<div class="flex flex-col gap-1.5">
+			<label class="text-sm font-bold">Start Time <span class="text-red-500">*</span></label>
+			<input
+				type="time"
+				required
+				class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
+			/>
+		</div>
+	</div>
+
+	<div class="flex flex-col gap-1.5">
+		<label class="text-sm font-bold">Price <span class="text-red-500">*</span></label>
+		<div class="flex gap-4">
+			<label class="flex items-center gap-2 cursor-pointer">
+				<input
+					type="radio"
+					name="price"
+					value="free"
+					required
+					class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40"
+				/>
+				<span class="text-sm">Free</span>
+			</label>
+			<label class="flex items-center gap-2 cursor-pointer">
+				<input
+					type="radio"
+					name="price"
+					value="paid"
+					required
+					class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40"
+				/>
+				<span class="text-sm">Purchase Required</span>
+			</label>
+		</div>
+	</div>
+
+	<div class="flex flex-col gap-1.5">
+		<label class="text-sm font-bold">Age Group <span class="text-red-500">*</span></label>
+		<select
+			required
+			class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
+		>
+			<option value="">Select an age group</option>
+			<option value="kids">Kids</option>
+			<option value="teen">Teen</option>
+			<option value="18plus">18+</option>
+			<option value="21plus">21+</option>
+			<option value="all-ages">All Ages</option>
+		</select>
+	</div>
+
+	<div class="flex flex-col gap-1.5">
+		<label class="text-sm font-bold">Interest <span class="text-red-500">*</span></label>
+		<fieldset class="flex flex-col gap-2">
+			<label class="flex items-center gap-2 cursor-pointer">
+				<input
+					type="checkbox"
+					name="interest"
+					value="arts"
+					class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40"
+				/>
+				<span class="text-sm">Arts</span>
+			</label>
+			<label class="flex items-center gap-2 cursor-pointer">
+				<input
+					type="checkbox"
+					name="interest"
+					value="causes"
+					class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40"
+				/>
+				<span class="text-sm">Causes</span>
+			</label>
+			<label class="flex items-center gap-2 cursor-pointer">
+				<input
+					type="checkbox"
+					name="interest"
+					value="culture"
+					class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40"
+				/>
+				<span class="text-sm">Culture</span>
+			</label>
+			<label class="flex items-center gap-2 cursor-pointer">
+				<input
+					type="checkbox"
+					name="interest"
+					value="education"
+					class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40"
+				/>
+				<span class="text-sm">Education</span>
+			</label>
+			<label class="flex items-center gap-2 cursor-pointer">
+				<input
+					type="checkbox"
+					name="interest"
+					value="religion"
+					class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40"
+				/>
+				<span class="text-sm">Religion</span>
+			</label>
+			<label class="flex items-center gap-2 cursor-pointer">
+				<input
+					type="checkbox"
+					name="interest"
+					value="social"
+					class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40"
+				/>
+				<span class="text-sm">Social</span>
+			</label>
+			<label class="flex items-center gap-2 cursor-pointer">
+				<input
+					type="checkbox"
+					name="interest"
+					value="sports"
+					class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40"
+				/>
+				<span class="text-sm">Sports</span>
+			</label>
+		</fieldset>
+	</div>
+
+	<div class="flex flex-col gap-1.5">
+		<label class="text-sm font-bold">Event Description <span class="text-red-500">*</span></label>
+		<textarea
+			rows="5"
+			placeholder="Provide details about your event..."
+			required
+			class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40 resize-none"
+		></textarea>
+	</div>
+
+	<Button variant="blue" size="lg" class="w-full justify-center">Submit Event 🎉</Button>
+</form>

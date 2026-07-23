@@ -1,5 +1,7 @@
 ---
 title: "Spring Break – April 21–25"
+seoTitle: "Program Starts on 13 July"
+seoDescription: "NAASR NextGen 2026 starts on 13 July at 9 AM."
 excerpt: "Elementary will be closed for Spring Break from Monday, April 21 through Friday, April 25. We hope everyone enjoys a restful week with family!"
 pubDate: 2026-04-01
 category: Holiday

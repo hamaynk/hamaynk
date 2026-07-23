@@ -1,5 +1,7 @@
 ---
 title: "PTA Fundraiser Bake Sale Results"
+seoTitle: "Program Starts on 13 July"
+seoDescription: "NAASR NextGen 2026 starts on 13 July at 9 AM."
 excerpt: "Thank you to everyone who contributed to last week's bake sale! We raised over $1,200 toward new playground equipment. You are amazing! 🧁"
 pubDate: 2026-03-10
 category: PTA

@@ -7,6 +7,8 @@ import type { LayoutProps as Props } from "@/types";
 
 const baseUrl = Astro.url.href;
 const { title, seoTitle, seoDescription, noindex = false } = Astro.props;
+
+const finalOgImage = `/hamaynk/images/og-image.jpg`;
 ---
 
 <!doctype html>
@@ -40,7 +42,14 @@ const { title, seoTitle, seoDescription, noindex = false } = Astro.props;
 		<meta name="twitter:description" content={seoDescription} />
 		<!-- <meta name="twitter:image" content={`${baseUrl}/images/og-image.jpg`} /> -->
 
-		<title>{title}</title>
+		<link rel="preload" as="font" type="font/woff2" href="/hamaynk/fonts/fredoka/fredoka-v17-latin-regular.woff2" crossorigin />
+		<link rel="preload" as="font" type="font/woff2" href="/hamaynk/fonts/nunito/nunito-v32-latin-regular.woff2" crossorigin />
+		<link rel="preload" as="font" type="font/woff2" href="/hamaynk/fonts/nunito/nunito-v32-latin-500.woff2" crossorigin />
+		<link rel="preload" as="font" type="font/woff2" href="/hamaynk/fonts/nunito/nunito-v32-latin-600.woff2" crossorigin />
+		<link rel="preload" as="font" type="font/woff2" href="/hamaynk/fonts/nunito/nunito-v32-latin-700.woff2" crossorigin />
+		<link rel="preload" as="font" type="font/woff2" href="/hamaynk/fonts/nunito/nunito-v32-latin-900.woff2" crossorigin />
+
+		<title>{title} | {siteName}</title>
 	</head>
 	<body>
 		<Header />

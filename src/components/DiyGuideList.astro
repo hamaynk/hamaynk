@@ -1,0 +1,93 @@
+---
+import { getCollection } from "astro:content";
+import { categoryBgColor, categoryLabel } from "@/utils/diyUtils";
+import LucideCalendar from "~icons/lucide/calendar";
+
+const allPosts = await getCollection("diy-guides");
+const posts = allPosts.sort((a, b) =>
+  a.data.title.toLowerCase().localeCompare(b.data.title.toLowerCase())
+);
+
+// Flatten all interests into a single array, then get unique values
+const categories = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
+---
+
+<div class="max-w-3xl mx-auto">
+	<!-- Filter buttons -->
+	<div class="flex flex-wrap gap-2 mb-8 justify-center">
+		<button
+			class="filter-btn bg-brand-blue text-white border-brand-blue px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
+			data-filter="all"
+		>
+			All
+		</button>
+		{
+			categories.map((cat) => (
+				<button
+					class="filter-btn bg-white text-brand-foreground border-brand-foreground/20 hover:border-brand-foreground px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
+					data-filter={cat}
+				>
+					{categoryLabel(cat)}
+				</button>
+			))
+		}
+	</div>
+
+	<!-- Blog list -->
+	<div class="flex flex-col gap-6">
+		{
+			posts.map((post) => (
+				<div class="blog-item" data-categories={post.data.interests.join(',')}>
+					<article class="flex bg-white rounded-xl relative hover:translate-x-2 transition shadow-sm hover:shadow-md overflow-hidden">
+						<div class={`w-2 shrink-0 ${categoryBgColor(post.data.interests[0])}`} />
+						<div class="flex-1 p-5">
+							<div class="flex items-center gap-3 mb-2">
+								<span class="text-xs font-semibold bg-[#feca4f] rounded-full px-2 py-1">
+									{categoryLabel(post.data.interests[0])}
+								</span>
+							</div>
+
+							<h2 class="text-xl font-semibold mb-2">{post.data.title}</h2>
+
+							<a href={`/diy-guides/${post.id}`} class="text-brand-blue text-base font-bold">
+								More info →
+								<span class="absolute inset-0" />
+							</a>
+						</div>
+					</article>
+				</div>
+			))
+		}
+	</div>
+</div>
+
+<script>
+	const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+	const items = document.querySelectorAll<HTMLElement>(".blog-item");
+
+	const activeClasses = ["bg-brand-blue", "text-white", "border-brand-blue"];
+	const inactiveClasses = [
+		"bg-white",
+		"text-brand-foreground",
+		"border-brand-foreground/20",
+		"hover:border-brand-foreground",
+	];
+
+	buttons.forEach((btn) => {
+		btn.addEventListener("click", () => {
+			const filter = btn.dataset.filter ?? "all";
+			buttons.forEach((b) => {
+				b.classList.remove(...activeClasses);
+				b.classList.add(...inactiveClasses);
+			});
+			btn.classList.remove(...inactiveClasses);
+			btn.classList.add(...activeClasses);
+			items.forEach((item) => {
+				const itemCategories = item.dataset.categories?.split(",") ?? [];
+				const match =
+					filter === "all" || itemCategories.includes(filter);
+				item.classList.toggle("hidden", !match);
+			});
+		});
+	});
+</script>

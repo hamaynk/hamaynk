@@ -5,13 +5,14 @@ export interface MenuItem {
     class?: string;
     hoverClass?: string;
     activeClass?: string;
-}
+    children?: MenuItem[];
+    };
 
 export interface LayoutProps {
-	title: string;
-    seoTitle?: string;
-	seoDescription?: string;
-	noindex?: boolean;
+  title: string; // Required
+  seoTitle?: string; // Required
+  seoDescription?: string; // Required
+  noindex?: boolean;
 }
 
 export interface ContainerProps {

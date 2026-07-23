@@ -3,42 +3,38 @@ import { getCollection, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/Section.astro";
 import Container from "@/components/Container.astro";
-import { categoryBgColor, categoryLabel, formatDate } from "@/utils/blogUtils";
+import { categoryBgColor, categoryLabel } from "@/utils/diyUtils";
 
 export async function getStaticPaths() {
-	const posts = await getCollection("blog");
+	const posts = await getCollection("diy-guides");
 	return posts.map((entry) => ({
-		params: { id: entry.id },
+		params: { slug: entry.id },
 		props: { entry },
 	}));
 }
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, seoTitle, seoDescription, pubDate, category } = entry.data;
+const { title, seoTitle, seoDescription, interests } = entry.data|| {};
 ---
 
 <Layout {title} {seoTitle} {seoDescription}>
-
-    <Section>
+	<Section>
 		<Container>
 			<div class="max-w-3xl mx-auto">
 				<a
-					href="/blog"
+					href="/diy-guides"
 					class="inline-flex items-center gap-1 text-sm text-brand-foreground/60 hover:text-brand-foreground mb-8 transition-colors"
 				>
-					← Read more news
+					← See other DIY event guides
 				</a>
 
 				<div class="flex gap-4 mb-8">
-					<div class={`w-2 shrink-0 rounded-full ${categoryBgColor(category)}`}></div>
+					<div class={`w-2 shrink-0 rounded-full ${categoryBgColor(entry.data?.interests)}`}></div>
 					<div>
 						<div class="flex items-center gap-3 mb-3">
 							<span class="text-xs font-semibold bg-[#feca4f] rounded-full px-2 py-1">
-								{categoryLabel(category)}
-							</span>
-							<span class="text-sm text-brand-foreground/50">
-								{formatDate(pubDate)}
+								{categoryLabel(entry.data?.interests)}
 							</span>
 						</div>
 
@@ -54,5 +50,4 @@ const { title, seoTitle, seoDescription, pubDate, category } = entry.data;
 			</div>
 		</Container>
 	</Section>
-
 </Layout>

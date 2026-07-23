@@ -4,7 +4,7 @@ import Section from "@/components/Section.astro";
 import Container from "@/components/Container.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import FormContact from "@/components/forms/FormContact.astro";
-import FormEnrollment from "@/components/forms/FormEnrollment.astro";
+import FormEvent from "@/components/forms/FormEvent.astro";
 import { phone, email, address } from "@/data/config";
 ---
 
@@ -142,9 +142,9 @@ import { phone, email, address } from "@/data/config";
 									>Contact Us</button
 								>
 								<button
-									data-tab-btn="enrollment"
+									data-tab-btn="event"
 									class="inline-flex items-center cursor-pointer font-bold rounded-2xl whitespace-nowrap transition px-3 py-2 text-base border border-gray-300 text-gray-800 hover:bg-gray-100"
-									>Enrollment</button
+									>Event Submission</button
 								>
 							</div>
 							<h2 data-tab-title class="font-fredoka text-xl mt-4 font-semibold">Send Us a Message</h2>
@@ -154,8 +154,8 @@ import { phone, email, address } from "@/data/config";
 						<div data-tab-panel="contact">
 							<FormContact />
 						</div>
-						<div data-tab-panel="enrollment" hidden>
-							<FormEnrollment />
+						<div data-tab-panel="event" hidden>
+							<FormEvent />
 						</div>
 					</div>
 				</div>

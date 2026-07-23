@@ -3,6 +3,7 @@ import { siteName } from "@/data/config";
 import IconLogo from "@/assets/logo/logo.svg";
 import { MainMenu } from "@/data/menu";
 import MobileMenu from "@/components/MobileMenu.astro";
+import Button from "@/components/buttons/Button.astro";
 
 const rmTrailingSlash = (path: string): string => {
 	return path.endsWith("/") && path.length > 1 ? path.slice(0, path.length - 1) : path;
@@ -25,7 +26,7 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
 				<ul class="hidden md:flex gap-6 font-fredoka text-xl tracking-wide font-semibold">
 					{
 						MainMenu.map((item) => (
-							<li>
+							<li class="relative group">
 								<a
 									href={item.href}
 									target={item.target}
@@ -33,12 +34,43 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
 									class={`transition lowercase ${item.hoverClass ?? ""} ${pathname === item.href ? (item.activeClass ?? "") : ""}`}
 								>
 									{item.label}
+									{item.children && (
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke-width="1.5"
+											stroke="currentColor"
+											class="inline-block w-4 h-4 ml-1 transition-transform group-hover:rotate-180"
+										>
+											<path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+										</svg>
+									)}
 								</a>
+
+								{item.children && (
+									<ul class="absolute left-0 mt-0 w-48 bg-white/95 backdrop-blur-md rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+										{item.children.map((child) => (
+											<li>
+												<a
+													href={child.href}
+													target={child.target}
+													rel={child.target === "_blank" ? "noopener noreferrer" : undefined}
+													class={`block px-4 py-2 text-base lowercase transition first:rounded-t-md last:rounded-b-md hover:bg-brand-blue/10 ${child.hoverClass ?? ""} ${pathname === child.href ? (child.activeClass ?? "") : ""}`}
+												>
+													{child.label}
+												</a>
+											</li>
+										))}
+									</ul>
+								)}
 							</li>
 						))
 					}
 				</ul>
 			</nav>
+		 <Button href="/event-submission" variant="red">Submit Event</Button>
+
 
 			<!-- Mobile Menu Trigger -->
 			<button type="button" title="open mobile menu" command="show-modal" commandfor="mobile-menu" class="md:hidden">
@@ -61,4 +93,5 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
 		</div>
 	</div>
 	<MobileMenu />
+
 </header>

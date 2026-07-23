@@ -6,11 +6,7 @@ import MainHeading from "@/components/MainHeading.astro";
 import Button from "@/components/buttons/Button.astro";
 import Video from "@/components/Video.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
-import InfoCards from "@/components/InfoCards.astro";
-import Stats from "@/components/Stats.astro";
-import ProgramCards from "@/components/ProgramCards.astro";
-import Agenda from "@/components/Agenda.astro";
-import Testimonials from "@/components/Testimonials.astro";
+import EventList from "@/components/EventList.astro";
 import FormNewsletter from "@/components/forms/FormNewsletter.astro";
 import Faq from "@/components/Faq.astro";
 ---
@@ -29,17 +25,16 @@ import Faq from "@/components/Faq.astro";
 
 		<Container class:list={"relative z-20"}>
 			<MainHeading>
-				<h1 class="text-5xl font-bold tracking-wide">Welcome to Elementary</h1>
+				<h1 class="text-5xl font-bold tracking-wide">Welcome to Hamaynk</h1>
 
 				<p>
-					At Elementary 👫, we create a warm and supportive learning environment where children build strong
-					academic foundations, grow in confidence, and discover a love of learning through creativity,
-					curiosity, and meaningful connections with their teachers, classmates, and community.
+				    Hamaynk connects you to events in your community. More things it does, some other stuff, too. Here are other things we are doing. This is just filler text.
 				</p>
 
 				<div class="flex flex-wrap gap-4 justify-center md:justify-start">
-					<Button href="/contact" variant="blue">Enroll</Button>
-					<Button href="#learn-more" variant="green">Learn More</Button>
+				    <Button href="/contact" variant="red">About Us</Button>
+					<Button href="#learn-more" variant="blue">Learn More</Button>
+					<Button href="/contact" variant="yellow">Submit Event</Button>
 				</div>
 			</MainHeading>
 		</Container>
@@ -48,57 +43,11 @@ import Faq from "@/components/Faq.astro";
 	<Section>
 		<Container>
 			<SectionHeading>
-				<h2 class="text-4xl font-bold tracking-wide">What's Happening 🎭</h2>
+				<h1 class="text-4xl font-bold tracking-wide">Events List</h1>
+				<p>Browse our curated list of interesting and fun events for Armenians in New England!</p>
 			</SectionHeading>
 
-			<InfoCards />
-		</Container>
-	</Section>
-
-	<Section class:list={"bg-neutral-50"} id="about">
-		<Container>
-			<SectionHeading>
-				<h2 class="text-4xl font-bold tracking-wide">About Our School 🏫</h2>
-				<p>
-					At Elementary, we believe every child deserves a nurturing, creative, and joyful learning
-					environment. Our dedicated teachers inspire curiosity and build confidence through hands-on
-					learning, arts, and play. We're more than a school — we're a family!
-				</p>
-			</SectionHeading>
-
-			<Stats />
-		</Container>
-	</Section>
-
-	<Section>
-		<Container>
-			<SectionHeading>
-				<h2 class="text-4xl font-bold tracking-wide">Our Programs 🎨</h2>
-				<p>We offer enriching programs that spark curiosity and develop the whole child.</p>
-			</SectionHeading>
-
-			<ProgramCards />
-		</Container>
-	</Section>
-
-	<Section>
-		<Container>
-			<SectionHeading>
-				<h2 class="text-4xl font-bold tracking-wide">A Day at Elementary 🕐</h2>
-				<p>Here's what a typical school day looks like!</p>
-			</SectionHeading>
-
-			<Agenda />
-		</Container>
-	</Section>
-
-	<Section class:list={"bg-neutral-50"}>
-		<Container>
-			<SectionHeading>
-				<h2 class="text-4xl font-bold tracking-wide">What Parents Say 💬</h2>
-			</SectionHeading>
-
-			<Testimonials />
+			<EventList />
 		</Container>
 	</Section>
 

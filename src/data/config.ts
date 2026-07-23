@@ -1,8 +1,8 @@
 // Global variables
 export const siteLang = "en-US";
 export const siteCurrency = "USD";
-export const siteName = "Elementary";
-export const siteSlogan = "";
+export const siteName = "Hamaynk";
+export const siteSlogan = "Connecting New England Armenians since 2026.";
 export const themeColor = "#fef08a";
 export const unitSystem = "imperial";
 
@@ -12,8 +12,8 @@ export const phone = {
 };
 
 export const email = {
-	href: "mailto:info@elementary.com",
-	label: "info@elementary.com",
+	href: "mailto:hello.hamaynk@gmail.com",
+	label: "hello.hamaynk@gmail.com",
 };
 
 export const address = {

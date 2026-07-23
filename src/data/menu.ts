@@ -10,21 +10,35 @@ export const MainMenu: MenuItem[] = [
     },
     {
         label: "About",
-        href: "/#about",
+        href: "/about",
         hoverClass: "hover:text-brand-red",
         activeClass: "text-brand-red",
     },
     {
-        label: "Teachers",
-        href: "/teachers",
+        label: "Resources",
+        href: "/resources",
         hoverClass: "hover:text-brand-blue",
         activeClass: "text-brand-blue",
-    },
-    {
-        label: "Blog",
-        href: "/blog",
-        hoverClass: "hover:text-brand-green",
-        activeClass: "text-brand-green",
+        children: [
+            {
+                label: "New England Armenian History Timeline",
+                href: "/timeline",
+                hoverClass: "hover:text-brand-blue",
+                activeClass: "text-brand-blue",
+            },
+            {
+                label: "Local Armenian Organizations",
+                href: "/local-orgs",
+                hoverClass: "hover:text-brand-blue",
+                activeClass: "text-brand-blue",
+            },
+            {
+                label: "DIY Event Guides",
+                href: "/diy-guides",
+                hoverClass: "hover:text-brand-blue",
+                activeClass: "text-brand-blue",
+            },
+        ],
     },
     {
         label: "Contact",

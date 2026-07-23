@@ -7,7 +7,8 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
 	site: "https://astro-elementary.netlify.app/",
 	base: "/",
-	output: "static",
+  output: "static",
+	integrations: [],
 	vite: {
 		plugins: [
 			tailwindcss(),

@@ -1,0 +1,105 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Section.astro";
+import Container from "@/components/Container.astro";
+import Button from "@/components/buttons/Button.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import InfoCards from "@/components/InfoCards.astro";
+import Stats from "@/components/Stats.astro";
+import ProgramCards from "@/components/ProgramCards.astro";
+import Agenda from "@/components/Agenda.astro";
+import Testimonials from "@/components/Testimonials.astro";
+import FormNewsletter from "@/components/forms/FormNewsletter.astro";
+import Faq from "@/components/Faq.astro";
+---
+
+<Layout title="Home - Elementary Astro">
+	<Section>
+		<Container>
+			<SectionHeading>
+				<h1 class="text-4xl font-bold tracking-wide font-fredoka">About Us</h1>
+				<p>Have questions or ready to enroll? We'd love to hear from you!</p>
+			</SectionHeading>
+		</Container>  <!-- ← Close Container -->
+	</Section>      <!-- ← Close first Section -->
+
+	<Section>
+		<Container>
+			<SectionHeading>
+				<h2 class="text-4xl font-bold tracking-wide">What's Happening 🎭</h2>
+			</SectionHeading>
+
+			<InfoCards />
+		</Container>
+	</Section>
+
+	<Section class:list={"bg-neutral-50"} id="about">
+		<Container>
+			<SectionHeading>
+				<h2 class="text-4xl font-bold tracking-wide">About Our School 🏫</h2>
+				<p>
+					At Elementary, we believe every child deserves a nurturing, creative, and joyful learning
+					environment. Our dedicated teachers inspire curiosity and build confidence through hands-on
+					learning, arts, and play. We're more than a school — we're a family!
+				</p>
+			</SectionHeading>
+
+			<Stats />
+		</Container>
+	</Section>
+
+	<Section>
+		<Container>
+			<SectionHeading>
+				<h2 class="text-4xl font-bold tracking-wide">Our Programs 🎨</h2>
+				<p>We offer enriching programs that spark curiosity and develop the whole child.</p>
+			</SectionHeading>
+
+			<ProgramCards />
+		</Container>
+	</Section>
+
+	<Section>
+		<Container>
+			<SectionHeading>
+				<h2 class="text-4xl font-bold tracking-wide">A Day at Elementary 🕐</h2>
+				<p>Here's what a typical school day looks like!</p>
+			</SectionHeading>
+
+			<Agenda />
+		</Container>
+	</Section>
+
+	<Section class:list={"bg-neutral-50"}>
+		<Container>
+			<SectionHeading>
+				<h2 class="text-4xl font-bold tracking-wide">What Parents Say 💬</h2>
+			</SectionHeading>
+
+			<Testimonials />
+		</Container>
+	</Section>
+
+	<Section class:list={"bg-brand-blue text-white"}>
+		<Container class:list={"lg:py-12"}>
+			<SectionHeading>
+				<h2 class="text-4xl font-bold tracking-wide">Stay in the Loop! 📬</h2>
+				<p class="max-w-2xl mx-auto">
+					Sign up for our weekly newsletter to get the latest news, events, and classroom highlights.
+				</p>
+			</SectionHeading>
+
+			<FormNewsletter />
+		</Container>
+	</Section>
+
+	<Section class:list={"bg-neutral-50"}>
+		<Container>
+			<SectionHeading>
+				<h2 class="text-4xl font-bold tracking-wide">Frequently Asked Questions ❓</h2>
+			</SectionHeading>
+
+			<Faq />
+		</Container>
+	</Section>
+</Layout>

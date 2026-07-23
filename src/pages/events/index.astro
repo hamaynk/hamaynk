@@ -1,0 +1,25 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Section.astro";
+import Container from "@/components/Container.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import EventList from "@/components/EventList.astro";
+
+// Page metadata
+const title = "Events Listing";
+const seoTitle = "Armenian Events in New England";
+const seoDescription = "A list of interesting Armenian events in New England and the Boston-metro area, with filters for location, interests, and age.";
+---
+
+<Layout {title} {seoTitle} {seoDescription}>
+	<Section>
+		<Container>
+			<SectionHeading>
+				<h1 class="text-4xl font-bold tracking-wide">School News & Updates 📰</h1>
+				<p>Stay up to date with announcements, events, holidays, and PTA news.</p>
+			</SectionHeading>
+
+			<EventList />
+		</Container>
+	</Section>
+</Layout>

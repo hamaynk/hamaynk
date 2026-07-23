@@ -1,5 +1,7 @@
 ---
 title: "Spring PTA Meeting – All Parents Welcome!"
+seoTitle: "Program Starts on 13 July"
+seoDescription: "NAASR NextGen 2026 starts on 13 July at 9 AM."
 excerpt: "Join us in the cafeteria at 6:30 PM to discuss summer camp plans, fundraising goals, and the upcoming end-of-year celebration. Refreshments provided!"
 pubDate: 2026-04-08
 category: PTA

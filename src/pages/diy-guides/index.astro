@@ -1,0 +1,27 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Section.astro";
+import Container from "@/components/Container.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import DIYList from "@/components/DiyGuideList.astro";
+---
+
+<Layout title="Events - Elementary Astro">
+	<Section>
+		<Container>
+			<SectionHeading>
+				<h1 class="text-4xl font-bold tracking-wide">Use our helpful do-it-yourself (DIY) guides to host your own event!</h1>
+				<p>DISCLAIMER: Prices are variable depending on venues! Furthermore, not all these events are cheap/free, so you may set ticket prices.</p>
+				VENUE PRICES KEY:
+				free //
+				$ (cheap) //
+				$$ (medium) //
+				$$$ (expensive) //
+				? (contact venue)
+
+			</SectionHeading>
+
+			<DIYList />
+		</Container>
+	</Section>
+</Layout>

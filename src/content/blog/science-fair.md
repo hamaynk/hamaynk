@@ -1,5 +1,7 @@
 ---
 title: "Science Fair – Calling All Young Inventors!"
+seoTitle: "Program Starts on 13 July"
+seoDescription: "NAASR NextGen 2026 starts on 13 July at 9 AM."
 excerpt: "Our annual Science Fair takes place on May 2nd. Students in grades 3–5 are encouraged to submit projects. Sign-up sheets are in the main office."
 pubDate: 2026-03-28
 category: Event

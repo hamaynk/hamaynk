@@ -46,14 +46,41 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
 						{
 							MainMenu.map((item) => (
 								<li class="w-full">
-									<a
-										href={item.href}
-										target={item.target}
-										rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
-										class={`lowercase block px-3 py-2 text-center ${pathname === item.href ? (item.activeClass ?? "") : ""}`}
-									>
-										{item.label}
-									</a>
+									<details class="group w-full">
+										<summary class={`lowercase block px-3 py-2 text-center cursor-pointer transition list-none hover:bg-brand-blue/10 ${pathname === item.href ? (item.activeClass ?? "") : ""}`}>
+											<div class="flex items-center justify-center gap-2">
+												{item.label}
+												{item.children && (
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														fill="none"
+														viewBox="0 0 24 24"
+														stroke-width="1.5"
+														stroke="currentColor"
+														class="w-5 h-5 transition-transform group-open:rotate-180"
+													>
+														<path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+													</svg>
+												)}
+											</div>
+										</summary>
+										{item.children && (
+											<ul class="flex flex-col gap-1 mt-2 bg-brand-blue/5 rounded-md">
+												{item.children.map((child) => (
+													<li>
+														<a
+															href={child.href}
+															target={child.target}
+															rel={child.target === "_blank" ? "noopener noreferrer" : undefined}
+															class={`lowercase block px-6 py-2 text-center text-2xl transition ${child.hoverClass ?? ""} ${pathname === child.href ? (child.activeClass ?? "") : ""}`}
+														>
+															{child.label}
+														</a>
+													</li>
+												))}
+											</ul>
+										)}
+									</details>
 								</li>
 							))
 						}

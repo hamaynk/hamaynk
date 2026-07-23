@@ -1,0 +1,60 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Section.astro";
+import Container from "@/components/Container.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import FormEvent from "@/components/forms/FormEvent.astro";
+
+// Page metadata
+const title = "Event Submission";
+const seoTitle = "Submit an Event";
+const seoDescription = "Submit interesting Armenian events for youth in New England and the Boston metro area.";
+
+const disclaimers = [
+					{
+						title: "DISCLAIMER",
+						description:
+							"Your event may take up to a week to be published, so submit in advance! Double check all details as this form is NOT editable! Please email hello.hamaynk@gmail.com if you have any questions. Note that submitted events will reviewed for approval. We reserve the right to accept or decline events at our own discretion.",
+						accent: "border-brand-red",
+					},
+				];
+---
+
+<Layout {title} {seoTitle} {seoDescription}>
+	<Section>
+		<Container>
+			<SectionHeading>
+				<h1 class="text-4xl font-bold tracking-wide">Submit your events!</h1>
+			</SectionHeading>
+
+	<Section class:list={"bg-white text-black"}>
+		<Container class:list={"lg:py-12"}>
+			<SectionHeading>
+
+				<div class="grid grid-cols-1 md:grid-cols-1 gap-6 max-w-7xl mx-auto">
+					{
+						disclaimers.map(({ title, description, accent }) => (
+							<div
+								class={`bg-white rounded-2xl p-6 shadow border-l-4 ${accent}`}
+							>
+								<div class="flex items-start gap-4">
+									</div>
+									<div>
+										<h3 class="text-xl font-bold text-brand-foreground mb-2">{title}</h3>
+										<p>{description}</p>
+									</div>
+								</div>
+						))
+					}
+				</div>
+			</SectionHeading>
+
+				<FormEvent />
+		</Container>
+	</Section>
+
+
+
+		</Container>
+	</Section>
+</Layout>
