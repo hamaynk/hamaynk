@@ -6,8 +6,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://hamaynk.github.io",
-	base: "/hamaynk",
+	site: "https://hamaynk.github.io/hamaynk",
+	base: "/",
 	output: 'static',
 	integrations: [],
 	vite: {
