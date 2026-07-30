@@ -17,8 +17,5 @@ export default defineConfig({
 				compiler: "astro",
 			}),
 		],
-		ssr: {
-			external: ['@supabase/supabase-js']
-		}
 	},
 });
