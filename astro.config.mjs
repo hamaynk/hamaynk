@@ -1,13 +1,14 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import Icons from "unplugin-icons/vite";
+import node from '@astrojs/node';
 import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://astro-elementary.netlify.app/",
-	base: "/",
-  output: "static",
+	site: "https://hamaynk.github.io",
+	base: "/hamaynk",
+	output: 'static',
 	integrations: [],
 	vite: {
 		plugins: [
@@ -16,5 +17,8 @@ export default defineConfig({
 				compiler: "astro",
 			}),
 		],
+		ssr: {
+			external: ['@supabase/supabase-js']
+		}
 	},
 });

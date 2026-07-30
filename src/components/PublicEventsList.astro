@@ -1,0 +1,62 @@
+<div class="p-6">
+  <h1 class="text-2xl font-bold mb-6">Upcoming Events</h1>
+  <div id="public-events" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+</div>
+
+<script>
+  const SUPABASE_URL = "https://wryrgdxbdpkoifywcjsu.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_1wdg3gV-9czBMFctMqrZ3A_Ntimhr3C";
+
+  async function fetchApprovedEvents() {
+    try {
+      const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/events?status=eq.approved&order=event_date.asc`,
+        {
+          headers: {
+            apikey: SUPABASE_ANON_KEY,
+          },
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to fetch events");
+
+      const events = await response.json();
+      renderApprovedEvents(events);
+    } catch (err) {
+      console.error("Error fetching approved events:", err);
+    }
+  }
+
+  function renderApprovedEvents(events: any[]) {
+    const container = document.getElementById("public-events")!;
+
+    if (events.length === 0) {
+      container.innerHTML = "<p class='text-gray-500'>No approved events available</p>";
+      return;
+    }
+
+    container.innerHTML = events
+      .map(
+        (event) => `
+      <div class="border rounded-lg p-4 shadow-lg hover:shadow-xl transition">
+        <h3 class="font-bold text-lg mb-2">${event.event_title}</h3>
+        <p class="text-sm text-gray-600 mb-3">By ${event.organizers}</p>
+        <div class="space-y-2 text-sm mb-4">
+          <p><strong>📅</strong> ${event.event_date} at ${event.start_time}</p>
+          <p><strong>📍</strong> ${event.venue_address}, ${event.venue_city}, ${event.venue_state}</p>
+          <p><strong>💵</strong> ${event.price === "free" ? "Free" : "Paid"}</p>
+          <p><strong>👥</strong> ${event.age_group}</p>
+        </div>
+        <p class="text-sm mb-4">${event.event_description.substring(0, 100)}...</p>
+        <a href="${event.event_url}" target="_blank" class="inline-block px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600">
+          Learn More
+        </a>
+      </div>
+    `
+      )
+      .join("");
+  }
+
+  // Load approved events on page load
+  fetchApprovedEvents();
+</script>

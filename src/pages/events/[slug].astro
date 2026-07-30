@@ -3,7 +3,7 @@ import { getCollection, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/Section.astro";
 import Container from "@/components/Container.astro";
-import { categoryBgColor, categoryLabel, formatDate } from "@/utils/eventUtils";
+import { stateBgColor, categoryLabels, ageGroupLabels, formatDate } from "@/utils/eventUtils";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("events");
@@ -15,40 +15,147 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, seoTitle, seoDescription, date, interests } = entry.data|| {};
+const {
+	title = "Untitled Event",
+	seoTitle,
+	seoDescription,
+	date,
+	time,
+	state = "Unknown",
+	venueAddress,
+	venueCity,
+	ageGroup,
+	interests,
+	eventUrl,
+	price,
+	description,
+	organizers,
+	isUserSubmitted,
+	published = true
+} = entry.data || {};
+
+const stateLabel = state;
+const ageGroupArray = ageGroup ? ageGroupLabels(ageGroup) : [];
+const interestArray = categoryLabels(interests);
+
+// Build full address
+const fullAddress = [venueAddress, venueCity, state].filter(Boolean).join(", ");
 ---
 
-<Layout {title} {seoTitle} {seoDescription}>
-	<Section>
+<Layout title={title} seoTitle={seoTitle} seoDescription={seoDescription}>
+	<Section class:list={"bg-neutral-50"}>
 		<Container>
-			<div class="max-w-3xl mx-auto">
+			<div class="max-w-6xl mx-auto">
 				<a
-					href="/events"
+					href="/hamaynk/events"
+					aria-label="Back to all events"
 					class="inline-flex items-center gap-1 text-sm text-brand-foreground/60 hover:text-brand-foreground mb-8 transition-colors"
 				>
 					← See more events
 				</a>
 
 				<div class="flex gap-4 mb-8">
-					<div class={`w-2 shrink-0 rounded-full ${categoryBgColor(entry.data?.location)}`}></div>
-					<div>
-						<div class="flex items-center gap-3 mb-3">
-							<span class="text-xs font-semibold bg-[#feca4f] rounded-full px-2 py-1">
-								{categoryLabel(entry.data?.location)}
+					<div class={`w-2 shrink-0 rounded-full ${stateBgColor(state)}`}></div>
+					<div class="flex-1">
+						<div class="flex items-center gap-3 mb-3 flex-wrap">
+							<span class="text-xs font-semibold bg-brand-yellow text-white rounded-full px-2 py-1 text-brand-foreground">
+								{stateLabel}
 							</span>
-							<span class="text-sm text-brand-foreground/50">
-								{formatDate(date)}
-							</span>
+							{ageGroupArray.map((ag) => (
+								<span class="text-xs font-semibold bg-blue-100 text-blue-800 rounded-full px-2 py-1">
+									{ag}
+								</span>
+							))}
+							{isUserSubmitted && (
+								<span class="text-xs font-semibold bg-purple-100 text-purple-800 rounded-full px-2 py-1">
+									User Submitted
+								</span>
+							)}
+							{interestArray.map((interest) => (
+								<span
+									class="text-xs bg-green-100 text-green-800 rounded-full px-3 py-1 font-semibold"
+									aria-label={`Interest: ${interest}`}
+								>
+									{interest}
+								</span>
+							))}
 						</div>
-
-						<h1 class="font-fredoka text-3xl lg:text-4xl text-brand-foreground font-bold leading-tight">
+						<h1 class="font-caveat-brush text-3xl lg:text-4xl text-brand-foreground font-bold leading-tight">
 							{title}
 						</h1>
 					</div>
 				</div>
 
-				<div class="prose prose-lg max-w-none font-nunito text-brand-foreground">
-					<Content />
+				<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+					{/* Left column: Description and main content combined */}
+					<div class="lg:col-span-2">
+						<div class="bg-white rounded-lg p-6 border border-neutral-200">
+							{description && (
+								<>
+									<h2 class="font-caveat-brush text-2xl text-brand-foreground font-bold mb-3">About</h2>
+									<p class="text-brand-foreground mb-6">
+										{description}
+									</p>
+								</>
+							)}
+							<div class="prose prose-lg max-w-none font-nunito text-brand-foreground">
+								<Content />
+							</div>
+						</div>
+					</div>
+
+					{/* Right column: Sidebar with event details */}
+					<div class="space-y-6">
+						{/* Event details box */}
+						<div class="bg-white rounded-lg p-6 border border-neutral-200">
+							<h3 class="font-caveat-brush text-xl text-brand-foreground font-bold mb-4">Event Details</h3>
+							<div class="mb-4">
+								<p class="text-sm font-bold uppercase underline mb-1">Date & Time</p>
+								<p class="text-sm text-brand-foreground font-semibold">
+									{date ? formatDate(date) : "Date not available"}
+									{time && <span class="block text-sm mt-1">{time}</span>}
+								</p>
+							</div>
+							{fullAddress && (
+								<div class="mb-4">
+									<p class="text-sm font-bold uppercase underline mb-1">Location</p>
+									<p class="text-sm text-brand-foreground font-semibold">
+										{fullAddress}
+									</p>
+								</div>
+							)}
+							{price && (
+								<div class="mb-4">
+									<p class="text-sm font-bold uppercase underline mb-1">Price</p>
+									<p class="text-sm text-brand-foreground font-semibold">
+										{price}
+									</p>
+								</div>
+							)}
+							{organizers && (
+								<div class="mb-4">
+									<p class="text-sm font-bold uppercase underline mb-1">Organizers</p>
+									<p class="text-sm text-brand-foreground font-semibold">
+										{organizers}
+									</p>
+								</div>
+							)}
+							{eventUrl && (
+								<div class="mb-4">
+									<p class="text-sm font-bold uppercase underline mb-1">Event Link</p>
+									<a
+										href={eventUrl}
+										target="_blank"
+										rel="noopener noreferrer"
+										aria-label="Visit event website (opens in new tab)"
+										class="text-sm text-blue-600 hover:text-blue-800 break-all"
+									>
+										More information
+									</a>
+								</div>
+							)}
+						</div>
+					</div>
 				</div>
 			</div>
 		</Container>

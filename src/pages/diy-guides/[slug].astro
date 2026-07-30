@@ -3,7 +3,7 @@ import { getCollection, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/Section.astro";
 import Container from "@/components/Container.astro";
-import { categoryBgColor, categoryLabel } from "@/utils/diyUtils";
+import { interestBgColor, interestLabel } from "@/utils/diyUtils";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("diy-guides");
@@ -15,37 +15,58 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, seoTitle, seoDescription, interests } = entry.data|| {};
+const { title, seoTitle, seoDescription, description, interests } = entry.data || {};
+
+// Normalize interests to array
+const normalizedInterests = Array.isArray(interests)
+	? interests
+	: interests
+		? [interests]
+		: [];
 ---
 
 <Layout {title} {seoTitle} {seoDescription}>
-	<Section>
+	<Section class:list={"bg-neutral-50"}>
 		<Container>
 			<div class="max-w-3xl mx-auto">
 				<a
-					href="/diy-guides"
+					href="/hamaynk/diy-guides"
 					class="inline-flex items-center gap-1 text-sm text-brand-foreground/60 hover:text-brand-foreground mb-8 transition-colors"
 				>
 					← See other DIY event guides
 				</a>
 
 				<div class="flex gap-4 mb-8">
-					<div class={`w-2 shrink-0 rounded-full ${categoryBgColor(entry.data?.interests)}`}></div>
-					<div>
-						<div class="flex items-center gap-3 mb-3">
-							<span class="text-xs font-semibold bg-[#feca4f] rounded-full px-2 py-1">
-								{categoryLabel(entry.data?.interests)}
-							</span>
-						</div>
+					<div class={`w-2 shrink-0 rounded-full ${interestBgColor(normalizedInterests?.[0])}`}></div>
+					<div class="flex-1">
+						{normalizedInterests.length > 0 && (
+							<div class="flex flex-wrap items-center gap-2 mb-3">
+								{normalizedInterests.map((interest) => (
+									<span class={`text-xs font-semibold text-white rounded-full px-3 py-1 ${interestBgColor(interest)}`}>
+										{interestLabel(interest)}
+									</span>
+								))}
+							</div>
+						)}
 
-						<h1 class="font-fredoka text-3xl lg:text-4xl text-brand-foreground font-bold leading-tight">
+						<h1 class="font-caveat-brush text-3xl lg:text-4xl text-brand-foreground font-bold leading-tight">
 							{title}
 						</h1>
 					</div>
 				</div>
 
-				<div class="prose prose-lg max-w-none font-nunito text-brand-foreground">
-					<Content />
+				<div class="bg-white rounded-lg p-6 border border-neutral-200">
+					{description && (
+						<>
+							<h2 class="font-caveat-brush text-2xl text-brand-foreground font-bold mb-3">About</h2>
+							<p class="text-brand-foreground mb-6">
+								{description}
+							</p>
+						</>
+					)}
+					<div class="prose prose-lg max-w-none font-nunito text-brand-foreground">
+						<Content />
+					</div>
 				</div>
 			</div>
 		</Container>

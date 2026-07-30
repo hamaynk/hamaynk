@@ -8,10 +8,11 @@ const { variant, size, class: className, ...rest } = Astro.props;
 
 const button = tv({
 	base: [
-		"inline-flex items-center justify-center gap-1.5 cursor-pointer font-bold rounded-2xl text-lg whitespace-nowrap transition",
+		"inline-flex items-center justify-center gap-1.5 cursor-pointer font-bold rounded-2xl text-lg whitespace-nowrap transition-all duration-200",
 		"[&_svg]:pointer-events-none [&_svg]:shrink-0",
 		"focus-visible:outline-2 focus-visible:outline-offset-2",
-		"disabled:pointer-events-none",
+		"disabled:pointer-events-none disabled:opacity-50",
+		"hover:translate-y-[-2px] hover:shadow-lg active:translate-y-0 active:shadow-md",
 	],
 	variants: {
 		variant: {

@@ -102,7 +102,7 @@ The dev server starts at **http://localhost:4321**.
 All global site settings live in **`src/data/config.ts`**:
 
 ```ts
-export const siteName = "Elementary";
+export const siteName = "Hamaynk";
 export const phone    = { href: "tel:+123456789", label: "(123) 456-789" };
 export const email    = { href: "mailto:info@elementary.com", label: "info@elementary.com" };
 export const address  = { street: "…", city: "…", zip: "…", state: "…" };

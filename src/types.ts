@@ -47,3 +47,16 @@ export interface VideoProps extends HTMLAttributes<"video"> {
 	src: string;
 	overlay?: string;
 }
+
+export interface Event {
+  id: string;
+  status: "pending" | "approved" | "rejected";
+}
+
+declare global {
+  interface Window {
+    updateEventStatus: (eventId: string, status: string) => void;
+  }
+}
+
+export {};

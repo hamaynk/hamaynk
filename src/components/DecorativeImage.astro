@@ -1,0 +1,54 @@
+---
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: string | ImageMetadata;
+  alt: string;
+  variant?: 'card' | 'offset' | 'hero' | 'thumbnail';
+  class?: string;
+  disableRotation?: boolean;
+  isGif?: boolean;
+}
+
+const { src, alt, variant = 'card', class: customClass, disableRotation = false, isGif = false } = Astro.props;
+
+const imageSrc = typeof src === 'string' ? src : src.src;
+
+const variantClasses = {
+  card: 'w-full h-48 sm:h-64',
+  offset: 'w-full h-48 sm:h-64',
+  hero: 'w-full h-56 sm:h-96',
+  thumbnail: 'w-20 sm:w-24 h-20 sm:h-24',
+};
+
+const rotations = ['rotate-1', '-rotate-2', 'rotate-3', '-rotate-1'];
+const randomRotation = !disableRotation ? rotations[Math.floor(Math.random() * rotations.length)] : '';
+---
+
+{isGif ? (
+  <div class="flex items-center justify-center">
+    <img
+      src={imageSrc}
+      alt={alt}
+      class="max-w-full max-h-96 object-contain"
+      loading="lazy"
+    />
+  </div>
+) : (
+  <div class={`${randomRotation} md:${randomRotation} ${customClass || ''}`}>
+    <div class="relative shadow-lg sm:shadow-xl">
+      <div class="absolute inset-0 bg-gray-300 sm:bg-gray-400 rounded-sm"></div>
+
+      <div class="relative bg-white border border-black sm:border-2 rounded-sm p-1 sm:p-2 shadow-md">
+        <div class={`${variantClasses[variant]} overflow-hidden`}>
+          <img
+            src={imageSrc}
+            alt={alt}
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+)}

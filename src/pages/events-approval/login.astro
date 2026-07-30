@@ -1,0 +1,224 @@
+---
+export const prerender = false;
+
+import { supabase } from '../../lib/supabase';
+
+import Layout from '../../layouts/Layout.astro';
+
+let message = '';
+let loading = false;
+
+if (Astro.request.method === 'POST') {
+  try {
+    const formData = await Astro.request.formData();
+    const email = formData.get('email')?.toString();
+
+    if (!email) {
+      message = 'Email is required';
+    } else {
+      console.log('📧 Sending magic link to:', email);
+
+      const { error } = await supabase.auth.signInWithOtp({
+        email: email,
+        options: {
+          emailRedirectTo: `${import.meta.env.SITE}/auth/callback`,
+        },
+      });
+
+      if (error) {
+        console.error('❌ Error sending magic link:', error.message);
+        message = `Error: ${error.message}`;
+      } else {
+        console.log('✅ Magic link sent to:', email);
+        message = `Check your email for the login link!`;
+      }
+    }
+  } catch (error) {
+    console.error('❌ Unexpected error:', error);
+    message = 'An unexpected error occurred';
+  }
+}
+---
+
+<Layout title="Login - Event Approval">
+  <main class="login-container">
+    <div class="login-box">
+      <h1>Event Approval Portal</h1>
+      <p>Enter your email to receive a magic link for secure login.</p>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="you@example.com"
+          />
+        </div>
+
+        <button type="submit" class="login-btn">Send Magic Link</button>
+
+        <div id="status-message" class="status-message"></div>
+      </form>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { supabase } from '../../lib/supabase';
+
+  const form = document.getElementById('login-form') as HTMLFormElement;
+  const statusMsg = document.getElementById('status-message') as HTMLDivElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = (document.getElementById('email') as HTMLInputElement).value;
+    statusMsg.textContent = 'Checking authorization...';
+    statusMsg.className = 'status-message loading';
+
+    try {
+      // Check authorization via server endpoint
+      const authCheckResponse = await fetch('/api/check-authorization', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.toLowerCase() }),
+      });
+
+      const { authorized } = await authCheckResponse.json();
+
+      if (!authorized) {
+        statusMsg.textContent = '❌ Email not authorized. Please contact the administrator.';
+        statusMsg.className = 'status-message error';
+        return;
+      }
+
+      // Send magic link
+      const { error: signInError } = await supabase.auth.signInWithOtp({
+        email: email.toLowerCase(),
+        options: {
+          emailRedirectTo: `${window.location.origin}/events-approval`,
+        },
+      });
+
+      if (signInError) {
+        statusMsg.textContent = `❌ Error: ${signInError.message}`;
+        statusMsg.className = 'status-message error';
+        return;
+      }
+
+      statusMsg.textContent = '✅ Magic link sent! Check your email.';
+      statusMsg.className = 'status-message success';
+      form.reset();
+    } catch (err) {
+      statusMsg.textContent = '❌ An error occurred. Please try again.';
+      statusMsg.className = 'status-message error';
+    }
+  });
+</script>
+
+<style>
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1rem;
+  }
+
+  .login-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  p {
+    color: #666;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+
+  .login-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #667eea;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .login-btn:hover {
+    background-color: #5568d3;
+  }
+
+  .status-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 4px;
+    text-align: center;
+    display: none;
+  }
+
+  .status-message.loading,
+  .status-message.success,
+  .status-message.error {
+    display: block;
+  }
+
+  .status-message.loading {
+    background-color: #e3f2fd;
+    color: #1976d2;
+  }
+
+  .status-message.success {
+    background-color: #e8f5e9;
+    color: #388e3c;
+  }
+
+  .status-message.error {
+    background-color: #ffebee;
+    color: #d32f2f;
+  }
+</style>

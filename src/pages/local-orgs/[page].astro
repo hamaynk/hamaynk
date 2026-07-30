@@ -1,0 +1,93 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import OrgList from "@/components/OrgList.astro";
+
+export async function getStaticPaths() {
+  const allOrgs = await getCollection("orgs");
+
+  // Sort alphabetically
+  const sortedOrgs = allOrgs.sort((a, b) =>
+    a.data.name.localeCompare(b.data.name)
+  );
+
+  const postsPerPage = 12;
+  const totalPages = Math.ceil(sortedOrgs.length / postsPerPage);
+  const paths = [];
+
+  for (let page = 1; page <= totalPages; page++) {
+    paths.push({
+      params: { page: page.toString() },
+      props: {
+        orgs: sortedOrgs.slice(
+          (page - 1) * postsPerPage,
+          page * postsPerPage
+        ),
+        currentPage: page,
+        totalPages,
+      },
+    });
+  }
+
+  return paths;
+}
+
+interface Props {
+  orgs: any[];
+  currentPage: number;
+  totalPages: number;
+}
+
+const { orgs, currentPage, totalPages } = Astro.props;
+---
+
+<Layout title={`Local Organizations - Page ${currentPage}`}>
+  <div class="max-w-6xl mx-auto p-6">
+    <h1 class="text-4xl font-bold mb-8">Local Organizations</h1>
+
+    {/* Orgs Grid */}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      {orgs.map((org) => (
+        <OrgList org={org} />
+      ))}
+    </div>
+
+    {/* Pagination */}
+    <div class="flex justify-center items-center gap-2">
+      {currentPage > 1 && (
+        <a
+          href={currentPage === 2 ? "/local-orgs" : `/local-orgs/${currentPage - 1}`}
+          class="px-4 py-2 border-2 border-black rounded font-semibold hover:bg-gray-100"
+        >
+          ← Previous
+        </a>
+      )}
+
+      <div class="flex gap-1">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+          (pageNum) => (
+            <a
+              href={pageNum === 1 ? "/local-orgs" : `/local-orgs/${pageNum}`}
+              class={`px-3 py-2 rounded font-semibold border-2 ${
+                pageNum === currentPage
+                  ? "bg-brand-blue text-white border-brand-blue"
+                  : "border-black hover:bg-gray-100"
+              }`}
+            >
+              {pageNum}
+            </a>
+          )
+        )}
+      </div>
+
+      {currentPage < totalPages && (
+        <a
+          href={`/local-orgs/${currentPage + 1}`}
+          class="px-4 py-2 border-2 border-black rounded font-semibold hover:bg-gray-100"
+        >
+          Next →
+        </a>
+      )}
+    </div>
+  </div>
+</Layout>

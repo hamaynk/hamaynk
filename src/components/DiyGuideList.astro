@@ -1,93 +1,127 @@
 ---
 import { getCollection } from "astro:content";
-import { categoryBgColor, categoryLabel } from "@/utils/diyUtils";
-import LucideCalendar from "~icons/lucide/calendar";
+import { interestLabel, interestBgColor, type DIYInterest } from "@/utils/diyUtils";
 
 const allPosts = await getCollection("diy-guides");
 const posts = allPosts.sort((a, b) =>
   a.data.title.toLowerCase().localeCompare(b.data.title.toLowerCase())
 );
 
-// Flatten all interests into a single array, then get unique values
-const categories = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
+const interests = [
+  ...new Set(
+    posts.flatMap((p) =>
+      Array.isArray(p.data.interests)
+        ? p.data.interests
+        : p.data.interests
+          ? [p.data.interests]
+          : []
+    )
+  ),
+].sort() as DIYInterest[];
 ---
 
-<div class="max-w-3xl mx-auto">
-	<!-- Filter buttons -->
-	<div class="flex flex-wrap gap-2 mb-8 justify-center">
-		<button
-			class="filter-btn bg-brand-blue text-white border-brand-blue px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
-			data-filter="all"
-		>
-			All
-		</button>
-		{
-			categories.map((cat) => (
-				<button
-					class="filter-btn bg-white text-brand-foreground border-brand-foreground/20 hover:border-brand-foreground px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
-					data-filter={cat}
-				>
-					{categoryLabel(cat)}
-				</button>
-			))
-		}
-	</div>
+<div class="max-w-6xl mx-auto px-10">
+  {/* Filter Buttons - Separate Container */}
+  <div class="mb-32">
+    <div class="flex flex-wrap gap-2 justify-center">
+      <button
+        data-filter="all"
+        class="px-4 py-2 rounded-full text-sm font-semibold border-2 bg-brand-blue text-white border-brand-blue transition"
+      >
+        All
+      </button>
+      {interests.map((interest) => (
+        <button
+          data-filter={interest}
+          class="px-4 py-2 rounded-full text-sm font-semibold border-2 bg-white text-brand-foreground border-brand-foreground/20 hover:border-brand-foreground transition"
+        >
+          {interestLabel(interest)}
+        </button>
+      ))}
+    </div>
+  </div>
 
-	<!-- Blog list -->
-	<div class="flex flex-col gap-6">
-		{
-			posts.map((post) => (
-				<div class="blog-item" data-categories={post.data.interests.join(',')}>
-					<article class="flex bg-white rounded-xl relative hover:translate-x-2 transition shadow-sm hover:shadow-md overflow-hidden">
-						<div class={`w-2 shrink-0 ${categoryBgColor(post.data.interests[0])}`} />
-						<div class="flex-1 p-5">
-							<div class="flex items-center gap-3 mb-2">
-								<span class="text-xs font-semibold bg-[#feca4f] rounded-full px-2 py-1">
-									{categoryLabel(post.data.interests[0])}
-								</span>
-							</div>
+  {/* Grid Container - Separate Container */}
+  <div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {posts.map((post, index) => {
+        const rotations = ["rotate-2", "-rotate-2", "rotate-1", "-rotate-1"];
+        const translations = ["-translate-y-10", "-translate-x-10", "translate-x-5", "translate-y-10"];
+        const zIndices = ["z-10", "z-20", "z-30", "z-40"];
+        const rotation = rotations[index % rotations.length];
+        const translation = translations[index % translations.length];
+        const zIndex = zIndices[index % zIndices.length];
 
-							<h2 class="text-xl font-semibold mb-2">{post.data.title}</h2>
+        // Normalize interests to always be an array
+        const postInterests = Array.isArray(post.data.interests)
+          ? post.data.interests
+          : post.data.interests
+            ? [post.data.interests]
+            : [];
 
-							<a href={`/diy-guides/${post.id}`} class="text-brand-blue text-base font-bold">
-								More info →
-								<span class="absolute inset-0" />
-							</a>
-						</div>
-					</article>
-				</div>
-			))
-		}
-	</div>
+        return (
+          <div class="blog-item" data-categories={postInterests.join(",")}>
+            <article
+              class={`flex flex-col gap-4 p-6 bg-white border-2 shadow-[6px_6px_0px_rgba(0,0,0,0.3)] ${rotation} ${translation} ${zIndex} transition hover:shadow-[8px_8px_0px_rgba(0,0,0,0.4)]`}
+            >
+              {/* Tags with Dynamic Colors */}
+              <div class="flex flex-wrap gap-2">
+                {postInterests.map((interest) => (
+                  <span class={`text-xs font-semibold text-white rounded-full px-3 py-1 ${interestBgColor(interest)}`}>
+                    {interestLabel(interest)}
+                  </span>
+                ))}
+              </div>
+
+              {/* Title */}
+              <h2 class="text-lg font-semibold">{post.data.title}</h2>
+
+              {/* Description */}
+              <p class="text-m text-gray-700">{post.data.description}</p>
+
+              {/* More info link */}
+              <a
+                href={`/hamaynk/diy-guides/${post.id}`}
+                class="text-brand-blue text-sm font-bold hover:underline mt-2"
+              >
+                More info →
+              </a>
+            </article>
+          </div>
+        );
+      })}
+    </div>
+  </div>
 </div>
 
 <script>
-	const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
-	const items = document.querySelectorAll<HTMLElement>(".blog-item");
+  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+  const items = document.querySelectorAll<HTMLElement>(".blog-item");
+  const activeClasses = ["bg-brand-blue", "text-white", "border-brand-blue"];
+  const inactiveClasses = [
+    "bg-white",
+    "text-brand-foreground",
+    "border-brand-foreground/20",
+    "hover:border-brand-foreground",
+  ];
 
-	const activeClasses = ["bg-brand-blue", "text-white", "border-brand-blue"];
-	const inactiveClasses = [
-		"bg-white",
-		"text-brand-foreground",
-		"border-brand-foreground/20",
-		"hover:border-brand-foreground",
-	];
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.dataset.filter ?? "all";
 
-	buttons.forEach((btn) => {
-		btn.addEventListener("click", () => {
-			const filter = btn.dataset.filter ?? "all";
-			buttons.forEach((b) => {
-				b.classList.remove(...activeClasses);
-				b.classList.add(...inactiveClasses);
-			});
-			btn.classList.remove(...inactiveClasses);
-			btn.classList.add(...activeClasses);
-			items.forEach((item) => {
-				const itemCategories = item.dataset.categories?.split(",") ?? [];
-				const match =
-					filter === "all" || itemCategories.includes(filter);
-				item.classList.toggle("hidden", !match);
-			});
-		});
-	});
+      buttons.forEach((b) => {
+        b.classList.remove(...activeClasses);
+        b.classList.add(...inactiveClasses);
+      });
+
+      btn.classList.remove(...inactiveClasses);
+      btn.classList.add(...activeClasses);
+
+      items.forEach((item) => {
+        const itemCategories = item.dataset.categories?.split(",") ?? [];
+        const match = filter === "all" || itemCategories.includes(filter);
+        item.classList.toggle("hidden", !match);
+      });
+    });
+  });
 </script>

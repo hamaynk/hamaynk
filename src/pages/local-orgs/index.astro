@@ -1,0 +1,41 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Section.astro";
+import Container from "@/components/Container.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import OrgList from "@/components/OrgList.astro";
+import { getCollection } from "astro:content";
+
+const allOrgs = await getCollection("orgs");
+const sortedOrgs = allOrgs.sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+const orgsPerPage = 8;
+const totalPages = Math.ceil(sortedOrgs.length / orgsPerPage);
+
+// Always show page 1
+const orgs = sortedOrgs.slice(0, orgsPerPage);
+const currentPage = 1;
+const hasNextPage = totalPages > 1;
+const hasPrevPage = false;
+
+const states = [...new Set(sortedOrgs.map((o) => o.data.state))].sort();
+const types = [...new Set(sortedOrgs.map((o) => o.data.type))].sort();
+
+// Page metadata
+const title = "Local Armenian Organizations";
+const seoTitle = "Local Armenian Organizations in New England";
+const seoDescription = "Explore local organizations across New England, including churches, cultural centers, educational institutions, professional orgs, and politically affiliated groups.";
+---
+
+<Layout {title} {seoTitle} {seoDescription}>
+	<Section>
+		<Container>
+			<SectionHeading>
+				<h1 class="text-4xl font-bold tracking-wide">Local Armenian Organizations in New England</h1>
+				<p>Discover organizations making a difference in our community.</p>
+			</SectionHeading>
+
+			<OrgList />
+		</Container>
+	</Section>
+</Layout>

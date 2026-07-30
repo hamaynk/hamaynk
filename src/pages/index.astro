@@ -7,15 +7,14 @@ import Button from "@/components/buttons/Button.astro";
 import Video from "@/components/Video.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import EventList from "@/components/EventList.astro";
-import FormNewsletter from "@/components/forms/FormNewsletter.astro";
-import Faq from "@/components/Faq.astro";
+import EventPreview from "@/components/EventPreview.astro";
 ---
 
-<Layout title="Home - Elementary Astro">
+<Layout title="Home">
 	<Section class="relative">
 		<Video
 			class:list={"absolute inset-0 object-cover object-top w-full h-full z-0"}
-			src="/8088625-hd_1280_720_30fps.mp4"
+			src="/hamaynk-video-hero.mp4"
 			autoplay
 			muted
 			loop
@@ -28,49 +27,27 @@ import Faq from "@/components/Faq.astro";
 				<h1 class="text-5xl font-bold tracking-wide">Welcome to Hamaynk</h1>
 
 				<p>
-				    Hamaynk connects you to events in your community. More things it does, some other stuff, too. Here are other things we are doing. This is just filler text.
+				    Hamaynk encourages participation and promotes unity among Armenians by providing a platform for attending and organizing events in New England
 				</p>
 
 				<div class="flex flex-wrap gap-4 justify-center md:justify-start">
-				    <Button href="/contact" variant="red">About Us</Button>
-					<Button href="#learn-more" variant="blue">Learn More</Button>
-					<Button href="/contact" variant="yellow">Submit Event</Button>
+				    <Button href="/about" variant="red">About Us</Button>
+					<Button href="#events-list" variant="blue">Events List</Button>
+					<Button href="/event-submission" variant="yellow">Submit Event</Button>
 				</div>
 			</MainHeading>
 		</Container>
 	</Section>
 
-	<Section>
+	<Section id="events-list">
 		<Container>
 			<SectionHeading>
 				<h1 class="text-4xl font-bold tracking-wide">Events List</h1>
 				<p>Browse our curated list of interesting and fun events for Armenians in New England!</p>
 			</SectionHeading>
 
-			<EventList />
+			<EventPreview />
 		</Container>
 	</Section>
 
-	<Section class:list={"bg-brand-blue text-white"}>
-		<Container class:list={"lg:py-12"}>
-			<SectionHeading>
-				<h2 class="text-4xl font-bold tracking-wide">Stay in the Loop! 📬</h2>
-				<p class="max-w-2xl mx-auto">
-					Sign up for our weekly newsletter to get the latest news, events, and classroom highlights.
-				</p>
-			</SectionHeading>
-
-			<FormNewsletter />
-		</Container>
-	</Section>
-
-	<Section class:list={"bg-neutral-50"}>
-		<Container>
-			<SectionHeading>
-				<h2 class="text-4xl font-bold tracking-wide">Frequently Asked Questions ❓</h2>
-			</SectionHeading>
-
-			<Faq />
-		</Container>
-	</Section>
 </Layout>

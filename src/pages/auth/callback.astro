@@ -1,0 +1,21 @@
+---
+import { supabase } from '../../lib/supabase';
+
+const { url } = Astro;
+const token = url.searchParams.get('token');
+const type = url.searchParams.get('type');
+
+// Debug logging
+console.log('🔐 Callback page loaded');
+console.log('📝 Type:', type);
+console.log('🔑 Token present:', !!token);
+
+if (type === 'magiclink' && token) {
+  console.log('✅ Valid magic link detected, redirecting to events-approval');
+  return Astro.redirect('/events-approval');
+}
+
+// Fallback to login if no valid magic link
+console.log('❌ No valid magic link found, redirecting to login');
+return Astro.redirect('/events-approval/login');
+---

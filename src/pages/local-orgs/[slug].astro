@@ -1,0 +1,163 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Section.astro";
+import Container from "@/components/Container.astro";
+import { typeBgColor, typeLabel, stateBgColor, stateLabel, normalizeType } from "@/utils/orgUtils";
+
+export async function getStaticPaths() {
+	const orgs = await getCollection("orgs");
+	return orgs.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { name, seoTitle, seoDescription, state, type, address, website, email, phone, lat, lng } = entry.data || {};
+
+const types = normalizeType(type || []);
+const hasCoordinates = typeof lat === 'number' && typeof lng === 'number';
+---
+
+<Layout title={name} seoTitle={seoTitle} seoDescription={seoDescription}>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+	<Section class:list={"bg-neutral-50"}>
+		<Container>
+			<div class="max-w-3xl mx-auto">
+				<a
+					href="/hamaynk/local-orgs"
+					class="inline-flex items-center gap-1 text-sm text-brand-foreground/60 hover:text-brand-foreground mb-8 transition-colors"
+				>
+					← See more organizations
+				</a>
+
+				<div class="flex gap-4 mb-8">
+					<div class={`w-2 shrink-0 rounded-full ${typeBgColor(types[0])}`}></div>
+					<div>
+						<div class="flex items-center gap-3 mb-3 flex-wrap">
+							{types.map((t) => (
+								<span class={`text-xs font-semibold text-white rounded-full px-2 py-1 ${typeBgColor(t)}`}>
+									{typeLabel(t)}
+								</span>
+							))}
+							<span class={`text-xs font-semibold text-white rounded-full px-2 py-1 ${stateBgColor(state)}`}>
+								{stateLabel(state)}
+							</span>
+						</div>
+
+						<h1 class="font-caveat-brush text-3xl lg:text-4xl text-brand-foreground font-bold leading-tight">
+							{name}
+						</h1>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+					<div class="lg:col-span-2">
+						<div class="prose prose-lg max-w-none font-nunito text-brand-foreground">
+							<Content />
+						</div>
+					</div>
+
+					<div class="space-y-6">
+						<div class="bg-white rounded-lg p-6 border border-neutral-200">
+							<h3 class="font-caveat-brush text-xl text-brand-foreground font-bold mb-4">Details</h3>
+
+							{website && (
+								<div class="mb-4">
+									<p class="text-sm font-bold uppercase underline mb-1">Website</p>
+									<a
+										href={`https://${website}`}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="text-sm text-blue-600 hover:text-blue-800 break-all"
+									>
+										{website}
+									</a>
+								</div>
+							)}
+
+							{email && (
+								<div class="mb-4">
+									<p class="text-sm font-bold uppercase underline mb-1">Email</p>
+									<a
+										href={`mailto:${email}`}
+										class="text-sm text-blue-600 hover:text-blue-800 break-all"
+									>
+										{email}
+									</a>
+								</div>
+							)}
+
+							{phone && (
+								<div class="mb-4">
+									<p class="text-sm font-bold uppercase underline mb-1">Phone</p>
+									<a
+										href={`tel:${phone}`}
+										class="text-sm text-blue-600 hover:text-blue-800"
+									>
+										{phone}
+									</a>
+								</div>
+							)}
+
+							{address && (
+								<div>
+									<p class="text-sm font-bold uppercase underline mb-1">Address</p>
+									<p class="text-sm text-brand-foreground">
+										{address}
+									</p>
+								</div>
+							)}
+						</div>
+					</div>
+				</div>
+
+				{hasCoordinates && (
+					<div class="bg-white rounded-lg p-6 border border-neutral-200 mb-8">
+						<h3 class="font-caveat-brush text-xl text-brand-foreground font-bold mb-4">Location</h3>
+						<div id="map" class="w-full rounded-lg overflow-hidden"></div>
+					</div>
+				)}
+			</div>
+		</Container>
+	</Section>
+</Layout>
+
+<script define:vars={{ lat: entry.data?.lat, lng: entry.data?.lng, name: entry.data?.name, hasCoordinates }}>
+	function initMap() {
+		if (window.L && hasCoordinates) {
+			if (typeof lat === 'number' && typeof lng === 'number') {
+				const map = L.map("map").setView([lat, lng], 15);
+
+				L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+					maxZoom: 19,
+					attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+				}).addTo(map);
+
+				L.marker([lat, lng])
+					.bindPopup(`<strong>${name}</strong>`)
+					.addTo(map)
+					.openPopup();
+			} else {
+				console.error("Invalid coordinates:", { lat, lng });
+			}
+		} else if (!hasCoordinates) {
+			console.log("No coordinates provided for map");
+		} else {
+			setTimeout(initMap, 100);
+		}
+	}
+
+	initMap();
+</script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+	#map {
+		height: 400px;
+	}
+</style>

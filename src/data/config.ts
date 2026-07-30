@@ -12,8 +12,8 @@ export const phone = {
 };
 
 export const email = {
-	href: "mailto:hello.hamaynk@gmail.com",
-	label: "hello.hamaynk@gmail.com",
+	href: "mailto:info.hamaynk@gmail.com",
+	label: "info.hamaynk@gmail.com",
 };
 
 export const address = {
@@ -36,7 +36,7 @@ export const socialMedia = {
 		icon: "x",
 	},
 	instagram: {
-		url: "https://instagram.com",
+		url: "https://instagram.com/hamaynk_ne",
 		label: "Instagram",
 		icon: "instagram",
 	},

@@ -1,0 +1,190 @@
+---
+import { getCollection } from "astro:content";
+import { stateBgColor, normalizeType, typeBgColor } from "@/utils/orgUtils";
+
+const orgs = await getCollection("orgs" as const);
+const sortedOrgs = orgs.sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+// Extract unique values for each filter category
+const states = [...new Set(orgs.map((o) => o.data.state))].filter(Boolean).sort();
+const types = [
+	...new Set(orgs.flatMap((o) => normalizeType(o.data.type))),
+].filter(Boolean).sort();
+---
+
+<div class="max-w-3xl mx-auto">
+	<!-- State Filter -->
+	<div class="mb-8">
+		<h3 class="text-lg font-semibold text-brand-foreground mb-3">State</h3>
+		<div class="flex flex-wrap gap-2 justify-start">
+			<button
+				class="filter-btn filter-state bg-brand-red text-white border-brand-red px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
+				data-filter="all"
+			>
+				All States
+			</button>
+			{
+				states.map((state) => (
+					<button
+						class="filter-btn filter-state bg-white text-brand-foreground border-brand-foreground/20 hover:border-brand-foreground px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
+						data-filter={state}
+					>
+						{state}
+					</button>
+				))
+			}
+		</div>
+	</div>
+
+	<!-- Type Filter -->
+	<div class="mb-8">
+		<h3 class="text-lg font-semibold text-brand-foreground mb-3">Organization Type</h3>
+		<div class="flex flex-wrap gap-2 justify-start">
+			<button
+				class="filter-btn filter-type bg-brand-blue text-white border-brand-blue px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
+				data-filter="all"
+			>
+				All Types
+			</button>
+			{
+				types.map((type) => (
+					<button
+						class="filter-btn filter-type bg-white text-brand-foreground border-brand-foreground/20 hover:border-brand-foreground px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
+						data-filter={type}
+					>
+						{type}
+					</button>
+				))
+			}
+		</div>
+	</div>
+
+	<!-- No orgs message -->
+	<div
+		id="no-orgs-message"
+		class="hidden text-center py-12 px-6 bg-white rounded-xl mb-8"
+	>
+		<p class="text-brand-foreground mb-4">
+			No organizations found matching your filters.
+		</p>
+	</div>
+
+	<!-- Org list -->
+	<div class="flex flex-col gap-6 mt-8" id="orgs-container">
+		{
+			orgs.map((org) => {
+				const orgTypes = normalizeType(org.data.type);
+				return (
+					<div
+						class="org-item"
+						data-state={org.data.state}
+						data-types={orgTypes.join(",")}
+					>
+						<article class="flex bg-white rounded-xl relative hover:translate-x-2 transition shadow-sm hover:shadow-md overflow-hidden">
+							<div class={`w-2 shrink-0 ${stateBgColor(org.data.state)}`} />
+							<div class="flex-1 p-5">
+								<div class="flex items-center gap-3 mb-2 flex-wrap">
+									<span class="text-xs font-semibold bg-[#feca4f] rounded-full px-2 py-1">
+										{org.data.state}
+									</span>
+									{orgTypes.map((type) => (
+										<span class="text-xs font-semibold bg-blue-100 text-blue-800 rounded-full px-2 py-1">
+											{type}
+										</span>
+									))}
+								</div>
+
+								<h2 class="text-xl font-semibold mb-3">{org.data.name}</h2>
+
+								<a href={`/hamaynk/local-orgs/${org.id}`} class="text-brand-blue text-base font-bold">
+									View Full Details →
+									<span class="absolute inset-0" />
+								</a>
+							</div>
+						</article>
+					</div>
+				);
+			})
+		}
+	</div>
+</div>
+
+<script>
+	const stateButtons = document.querySelectorAll<HTMLButtonElement>(
+		".filter-state"
+	);
+	const typeButtons = document.querySelectorAll<HTMLButtonElement>(
+		".filter-type"
+	);
+	const items = document.querySelectorAll<HTMLElement>(".org-item");
+	const noOrgsMessage = document.getElementById("no-orgs-message");
+
+	const activeClasses = ["bg-brand-blue", "text-white", "border-brand-blue"];
+	const inactiveClasses = [
+		"bg-white",
+		"text-brand-foreground",
+		"border-brand-foreground/20",
+		"hover:border-brand-foreground",
+	];
+
+	let activeFilters = {
+		state: "all",
+		type: "all",
+	};
+
+	const updateFilters = () => {
+		let visibleCount = 0;
+
+		items.forEach((item) => {
+			const itemState = item.dataset.state;
+			const itemTypes = (item.dataset.types ?? "").split(",");
+
+			const stateMatch =
+				activeFilters.state === "all" ||
+				itemState === activeFilters.state;
+			const typeMatch =
+				activeFilters.type === "all" ||
+				itemTypes.includes(activeFilters.type);
+
+			const match = stateMatch && typeMatch;
+			item.classList.toggle("hidden", !match);
+
+			if (match) {
+				visibleCount++;
+			}
+		});
+
+		// Show/hide no orgs message
+		if (visibleCount === 0) {
+			noOrgsMessage?.classList.remove("hidden");
+		} else {
+			noOrgsMessage?.classList.add("hidden");
+		}
+	};
+
+	stateButtons.forEach((btn) => {
+		btn.addEventListener("click", () => {
+			activeFilters.state = btn.dataset.filter ?? "all";
+			stateButtons.forEach((b) => {
+				b.classList.remove(...activeClasses);
+				b.classList.add(...inactiveClasses);
+			});
+			btn.classList.remove(...inactiveClasses);
+			btn.classList.add(...activeClasses);
+			updateFilters();
+		});
+	});
+
+	typeButtons.forEach((btn) => {
+		btn.addEventListener("click", () => {
+			activeFilters.type = btn.dataset.filter ?? "all";
+			typeButtons.forEach((b) => {
+				b.classList.remove(...activeClasses);
+				b.classList.add(...inactiveClasses);
+			});
+			btn.classList.remove(...inactiveClasses);
+			btn.classList.add(...activeClasses);
+			updateFilters();
+		});
+	});
+</script>

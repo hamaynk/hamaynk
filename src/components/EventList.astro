@@ -1,35 +1,73 @@
 ---
 import { getCollection } from "astro:content";
-import { categoryBgColor, categoryLabel, formatDate } from "@/utils/eventUtils";
+import {
+  stateBgColor,
+  categoryLabels,
+  ageGroupLabels,
+  formatDate,
+  getDateCategory,
+  getAllDateCategories,
+  getDateCategoryLabel
+} from "@/utils/eventUtils";
 import LucideCalendar from "~icons/lucide/calendar";
 
 const allPosts = await getCollection("events");
-const posts = allPosts.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+
+const now = new Date();
+const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+const posts = allPosts
+  .filter((event) => event.data.date >= startOfToday) // today + future
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime()); // sorted
 
 // Extract unique values for each filter category
-const locations = [...new Set(posts.map((p) => p.data.location))].sort();
-const ageGroups = [...new Set(posts.map((p) => p.data.ageGroup))].sort();
-const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
+const states = [...new Set(posts.map((p) => p.data.state))].sort();
+const ageGroups = [...new Set(posts.flatMap((p) => ageGroupLabels(p.data.ageGroup)))].sort();
+const interests = [...new Set(posts.flatMap((p) => categoryLabels(p.data.interests)))].sort();
+const dates = getAllDateCategories(posts.map((p) => p.data.date));
 ---
 
 <div class="max-w-3xl mx-auto">
-	<!-- Location Filter -->
+	<!-- Date Filter -->
 	<div class="mb-8">
-		<h3 class="text-sm font-semibold text-brand-foreground mb-3">Location</h3>
+		<h3 class="text-lg font-semibold text-brand-foreground mb-3">Date</h3>
 		<div class="flex flex-wrap gap-2 justify-start">
 			<button
-				class="filter-btn filter-location bg-brand-red text-white border-brand-red px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
+				class="filter-btn filter-date bg-brand-green text-white border-brand-green px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
+				data-filter="all"
+			>
+				All Dates
+			</button>
+			{
+				dates.map((dateCategory) => (
+					<button
+						class="filter-btn filter-date bg-white text-brand-foreground border-brand-foreground/20 hover:border-brand-foreground px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
+						data-filter={dateCategory}
+					>
+						{getDateCategoryLabel(dateCategory)}
+					</button>
+				))
+			}
+		</div>
+	</div>
+
+	<!-- State Filter -->
+	<div class="mb-8">
+		<h3 class="text-lg font-semibold text-brand-foreground mb-3">Location</h3>
+		<div class="flex flex-wrap gap-2 justify-start">
+			<button
+				class="filter-btn filter-state bg-brand-red text-white border-brand-red px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
 				data-filter="all"
 			>
 				All Locations
 			</button>
 			{
-				locations.map((loc) => (
+				states.map((state) => (
 					<button
-						class="filter-btn filter-location bg-white text-brand-foreground border-brand-foreground/20 hover:border-brand-foreground px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
-						data-filter={loc}
+						class="filter-btn filter-state bg-white text-brand-foreground border-brand-foreground/20 hover:border-brand-foreground px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
+						data-filter={state}
 					>
-						{categoryLabel(loc)}
+						{state}
 					</button>
 				))
 			}
@@ -38,13 +76,13 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 
 	<!-- Age Group Filter -->
 	<div class="mb-8">
-		<h3 class="text-sm font-semibold text-brand-foreground mb-3">Age Group</h3>
+		<h3 class="text-lg font-semibold text-brand-foreground mb-3">Age Group</h3>
 		<div class="flex flex-wrap gap-2 justify-start">
 			<button
 				class="filter-btn filter-agegroup bg-brand-blue text-white border-brand-blue px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
 				data-filter="all"
 			>
-				All Ages
+				All Age Groups
 			</button>
 			{
 				ageGroups.map((age) => (
@@ -52,7 +90,7 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 						class="filter-btn filter-agegroup bg-white text-brand-foreground border-brand-foreground/20 hover:border-brand-foreground px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
 						data-filter={age}
 					>
-						{categoryLabel(age)}
+						{age}
 					</button>
 				))
 			}
@@ -61,7 +99,7 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 
 	<!-- Interests Filter -->
 	<div class="mb-8">
-		<h3 class="text-sm font-semibold text-brand-foreground mb-3">Interests</h3>
+		<h3 class="text-lg font-semibold text-brand-foreground mb-3">Interests</h3>
 		<div class="flex flex-wrap gap-2 justify-start">
 			<button
 				class="filter-btn filter-interests bg-brand-yellow text-white border-brand-yellow px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
@@ -75,7 +113,7 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 						class="filter-btn filter-interests bg-white text-brand-foreground border-brand-foreground/20 hover:border-brand-foreground px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer"
 						data-filter={interest}
 					>
-						{categoryLabel(interest)}
+						{interest}
 					</button>
 				))
 			}
@@ -85,12 +123,12 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 	<!-- No events message -->
 	<div
 		id="no-events-message"
-		class="hidden text-center py-12 px-6 bg-brand-foreground/5 rounded-xl mb-8"
+		class="hidden text-center py-12 px-6 bg-white rounded-xl mb-8"
 	>
 		<p class="text-brand-foreground mb-4">
 			No events found. <a
 				href="/diy-guides"
-				class="text-brand-blue font-semibold hover:underline"
+				class="text-blue-600 font-bold hover:underline"
 			>
 				Host your own with our DIY event guides!
 			</a>
@@ -103,20 +141,23 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 			posts.map((post) => (
 				<div
 					class="blog-item"
-					data-location={post.data.location}
-					data-agegroup={post.data.ageGroup}
-					data-interests={post.data.interests.join(',')}
+					data-date={getDateCategory(post.data.date)}
+					data-state={post.data.state}
+					data-agegroup={ageGroupLabels(post.data.ageGroup).join(',')}
+					data-interests={categoryLabels(post.data.interests).join(',')}
 				>
 					<article class="flex bg-white rounded-xl relative hover:translate-x-2 transition shadow-sm hover:shadow-md overflow-hidden">
-						<div class={`w-2 shrink-0 ${categoryBgColor(post.data.location)}`} />
+						<div class={`w-2 shrink-0 ${stateBgColor(post.data.state)}`} />
 						<div class="flex-1 p-5">
 							<div class="flex items-center gap-3 mb-2 flex-wrap">
 								<span class="text-xs font-semibold bg-[#feca4f] rounded-full px-2 py-1">
-									{categoryLabel(post.data.location)}
+									{post.data.state}
 								</span>
-								<span class="text-xs font-semibold bg-blue-100 text-blue-800 rounded-full px-2 py-1">
-									{categoryLabel(post.data.ageGroup)}
-								</span>
+								{ageGroupLabels(post.data.ageGroup).map((group) => (
+									<span class="text-xs font-semibold bg-blue-100 text-blue-800 rounded-full px-2 py-1">
+										{group}
+									</span>
+								))}
 								<span class="text-sm text-brand-foreground/50 flex items-center">
 									<LucideCalendar class="inline-block size-4 mr-1" />
 									{formatDate(post.data.date)}
@@ -126,14 +167,14 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 							<h2 class="text-xl font-semibold mb-2">{post.data.title}</h2>
 
 							<div class="flex flex-wrap gap-2 mb-3">
-								{post.data.interests.map((interest) => (
+								{categoryLabels(post.data.interests).map((interest) => (
 									<span class="text-xs bg-green-100 text-green-800 rounded px-2 py-1">
-										{categoryLabel(interest)}
+										{interest}
 									</span>
 								))}
 							</div>
 
-							<a href={`/events/${post.id}`} class="text-brand-blue text-base font-bold">
+							<a href={`/hamaynk/events/${post.id}`} class="text-brand-blue text-base font-bold">
 								More info →
 								<span class="absolute inset-0" />
 							</a>
@@ -146,8 +187,13 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 </div>
 
 <script>
-	const locationButtons = document.querySelectorAll<HTMLButtonElement>(
-		".filter-location"
+	import { getDateCategory } from "@/utils/eventUtils";
+
+	const dateButtons = document.querySelectorAll<HTMLButtonElement>(
+		".filter-date"
+	);
+	const stateButtons = document.querySelectorAll<HTMLButtonElement>(
+		".filter-state"
 	);
 	const ageGroupButtons = document.querySelectorAll<HTMLButtonElement>(
 		".filter-agegroup"
@@ -167,7 +213,8 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 	];
 
 	let activeFilters = {
-		location: "all",
+		date: "all",
+		state: "all",
 		ageGroup: "all",
 		interests: "all",
 	};
@@ -176,13 +223,17 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 		let visibleCount = 0;
 
 		items.forEach((item) => {
-			const itemLocation = item.dataset.location;
+			const itemDate = item.dataset.date;
+			const itemState = item.dataset.state;
 			const itemAgeGroup = item.dataset.agegroup;
 			const itemInterests = item.dataset.interests?.split(",") ?? [];
 
-			const locationMatch =
-				activeFilters.location === "all" ||
-				itemLocation === activeFilters.location;
+			const dateMatch =
+				activeFilters.date === "all" ||
+				itemDate === activeFilters.date;
+			const stateMatch =
+				activeFilters.state === "all" ||
+				itemState === activeFilters.state;
 			const ageGroupMatch =
 				activeFilters.ageGroup === "all" ||
 				itemAgeGroup === activeFilters.ageGroup;
@@ -190,7 +241,7 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 				activeFilters.interests === "all" ||
 				itemInterests.includes(activeFilters.interests);
 
-			const match = locationMatch && ageGroupMatch && interestsMatch;
+			const match = dateMatch && stateMatch && ageGroupMatch && interestsMatch;
 			item.classList.toggle("hidden", !match);
 
 			if (match) {
@@ -206,10 +257,23 @@ const interests = [...new Set(posts.flatMap((p) => p.data.interests))].sort();
 		}
 	};
 
-	locationButtons.forEach((btn) => {
+	dateButtons.forEach((btn) => {
 		btn.addEventListener("click", () => {
-			activeFilters.location = btn.dataset.filter ?? "all";
-			locationButtons.forEach((b) => {
+			activeFilters.date = btn.dataset.filter ?? "all";
+			dateButtons.forEach((b) => {
+				b.classList.remove(...activeClasses);
+				b.classList.add(...inactiveClasses);
+			});
+			btn.classList.remove(...inactiveClasses);
+			btn.classList.add(...activeClasses);
+			updateFilters();
+		});
+	});
+
+	stateButtons.forEach((btn) => {
+		btn.addEventListener("click", () => {
+			activeFilters.state = btn.dataset.filter ?? "all";
+			stateButtons.forEach((b) => {
 				b.classList.remove(...activeClasses);
 				b.classList.add(...inactiveClasses);
 			});

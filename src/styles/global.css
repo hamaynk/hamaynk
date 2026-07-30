@@ -3,13 +3,13 @@
 
 @theme {
 	--font-nunito: "Nunito", "sans-serif";
-	--font-fredoka: "Fredoka", "sans-serif";
+	--font-caveat-brush: "Caveat Brush", "sans-serif";
 	--color-brand-foreground: #20293c;
-	--color-brand-background: #fffbf0;
-    --color-brand-blue: #0033a0;
-    --color-brand-red: #d90012;
-    --color-brand-green: #3db66d;
-    --color-brand-yellow: #f2a800;
+	--color-brand-background: #f6caa0;
+    --color-brand-blue: #1b3769;
+    --color-brand-red: #852210;
+    --color-brand-green: #637815;
+    --color-brand-yellow: #c16000;
 }
 
 @utility container {
@@ -26,18 +26,34 @@
 		@apply scroll-smooth;
 	}
 
+	/* Essential font smoothing for headings */
+    html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    }
+
+  /* Ensure all text elements use proper smoothing */
+  *,
+  *::before,
+  *::after {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+
 	body {
 		@apply bg-brand-background text-brand-foreground font-nunito text-lg;
 	}
 
 	:is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) {
-		@apply font-fredoka font-bold;
+		@apply font-caveat-brush;
 	}
 }
 
 /* nunito-regular - latin */
 @font-face {
-	font-display: swap;
+	font-display: block;
 	font-family: "Nunito";
 	font-style: normal;
 	font-weight: 400;
@@ -45,7 +61,7 @@
 }
 /* nunito-italic - latin */
 @font-face {
-	font-display: swap;
+	font-display: block;
 	font-family: "Nunito";
 	font-style: italic;
 	font-weight: 400;
@@ -53,7 +69,7 @@
 }
 /* nunito-500 - latin */
 @font-face {
-	font-display: swap;
+	font-display: block;
 	font-family: "Nunito";
 	font-style: normal;
 	font-weight: 500;
@@ -61,7 +77,7 @@
 }
 /* nunito-500italic - latin */
 @font-face {
-	font-display: swap;
+	font-display: block;
 	font-family: "Nunito";
 	font-style: italic;
 	font-weight: 500;
@@ -69,7 +85,7 @@
 }
 /* nunito-600 - latin */
 @font-face {
-	font-display: swap;
+	font-display: block;
 	font-family: "Nunito";
 	font-style: normal;
 	font-weight: 600;
@@ -77,7 +93,7 @@
 }
 /* nunito-600italic - latin */
 @font-face {
-	font-display: swap;
+	font-display: block;
 	font-family: "Nunito";
 	font-style: italic;
 	font-weight: 600;
@@ -85,7 +101,7 @@
 }
 /* nunito-700 - latin */
 @font-face {
-	font-display: swap;
+	font-display: block;
 	font-family: "Nunito";
 	font-style: normal;
 	font-weight: 700;
@@ -93,7 +109,7 @@
 }
 /* nunito-700italic - latin */
 @font-face {
-	font-display: swap;
+	font-display: block;
 	font-family: "Nunito";
 	font-style: italic;
 	font-weight: 700;
@@ -101,7 +117,7 @@
 }
 /* nunito-900 - latin */
 @font-face {
-	font-display: swap;
+	font-display: block;
 	font-family: "Nunito";
 	font-style: normal;
 	font-weight: 900;
@@ -109,18 +125,18 @@
 }
 /* nunito-900italic - latin */
 @font-face {
-	font-display: swap;
+	font-display: block;
 	font-family: "Nunito";
 	font-style: italic;
 	font-weight: 900;
 	src: url("/fonts/nunito/nunito-v32-latin-900italic.woff2") format("woff2");
 }
 
-/* fredoka-regular - latin */
+/* caveat-brush-regular - latin */
 @font-face {
-	font-display: swap;
-	font-family: "Fredoka";
+	font-display: block;
+	font-family: "Caveat Brush";
 	font-style: normal;
 	font-weight: 400;
-	src: url("/fonts/fredoka/fredoka-v17-latin-regular.woff2") format("woff2");
+	src: url("/fonts/caveat-brush/caveat-brush-v12-latin-regular.woff2") format("woff2");
 }

@@ -1,0 +1,41 @@
+---
+import LucideMapPin from '~icons/lucide/map-pin'
+import LucideBox from '~icons/lucide/box'
+import LucideUsers from '~icons/lucide/users'
+import LucideSpark from '~icons/lucide/sparkles'
+import LucideLightbulb from '~icons/lucide/lightbulb'
+
+interface Props {
+  venues: string;
+  materials: string;
+  people: string;
+  interests: string[];
+  examples?: string;
+}
+
+const { venues, materials, people, interests, examples } = Astro.props;
+
+const stats = [
+  { icon: LucideMapPin, label: "Venues", value: venues },
+  { icon: LucideBox, label: "Materials", value: materials },
+  { icon: LucideUsers, label: "People", value: people },
+  { icon: LucideSpark, label: "Interests", value: interests.join(", ") },
+  ...(examples ? [{ icon: LucideLightbulb, label: "Examples", value: examples }] : []),
+];
+---
+
+<div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 max-w-5xl mx-auto">
+	{
+		stats.map((stat) => (
+			<div class="rounded-2xl bg-white shadow p-8">
+				<div class="flex items-start gap-4">
+					<stat.icon class="size-6 text-brand-blue shrink-0 mt-1" />
+					<div class="flex-1">
+						<div class="font-bold text-lg">{stat.label}</div>
+						<div class="font-semibold text-gray-700 mt-2 whitespace-pre-wrap">{stat.value}</div>
+					</div>
+				</div>
+			</div>
+		))
+	}
+</div>
