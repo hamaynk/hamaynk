@@ -1,140 +1,300 @@
 ---
-export const prerender = false;
-
 import Button from "@/components/buttons/Button.astro";
-
-// Server-side code runs only on the server
-const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
-
-let formMessage = "";
-let isError = false;
-
-// Handle form submission
-if (Astro.request.method === "POST") {
-	try {
-		const formData = await Astro.request.formData();
-
-		// Extract interests (multiple checkboxes)
-		const interests = formData.getAll("interest") as string[];
-
-		if (interests.length === 0) {
-			formMessage = "Please select at least one interest.";
-			isError = true;
-		} else {
-			const payload = {
-				event_id: crypto.randomUUID(),
-				email: formData.get("email"),
-				organizers: formData.get("organizers"),
-				event_title: formData.get("title"),
-				venue_address: formData.get("venue_address"),
-				venue_city: formData.get("venue_city"),
-				venue_state: formData.get("venue_state"),
-				event_url: formData.get("event_url"),
-				event_date: formData.get("event_date"),
-				start_time: formData.get("start_time"),
-				price: formData.get("price"),
-				age_group: formData.get("age_group"),
-				interest: interests.join(", "),
-				event_description: formData.get("description"),
-				source: "form",
-				status: "pending",
-			};
-
-			// Submit to Supabase
-			const res = await fetch(`${SUPABASE_URL}/rest/v1/events`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					apikey: SUPABASE_ANON_KEY,
-					Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-					Prefer: "return=minimal",
-				},
-				body: JSON.stringify(payload),
-			});
-
-			if (!res.ok) {
-				const err = await res.text();
-				throw new Error(err || `Request failed (${res.status})`);
-			}
-
-			formMessage = "Event submitted. It will appear on our site if approved. 🎉";
-			isError = false;
-		}
-	} catch (err) {
-		console.error(err);
-		formMessage = "Something went wrong submitting your event. Please try again.";
-		isError = true;
-	}
-}
 ---
 
-<form id="event-form" class="flex flex-col gap-4" method="POST">
-	<!-- Hidden honeypot -->
-	<input
-		type="text"
-		name="website"
-		style="display: none;"
-		tabindex="-1"
-		autocomplete="off"
-	/>
+<form id="event-form" class="flex flex-col gap-4">
+  <!-- Email -->
+  <label class="flex flex-col">
+    <span class="font-semibold">Email *</span>
+    <input
+      type="email"
+      name="email"
+      required
+      class="border border-gray-300 rounded px-3 py-2"
+    />
+  </label>
 
-	<!-- ... all your form fields stay exactly the same ... -->
+  <!-- Organizers -->
+  <label class="flex flex-col">
+    <span class="font-semibold">Organizers *</span>
+    <input
+      type="text"
+      name="organizers"
+      required
+      class="border border-gray-300 rounded px-3 py-2"
+    />
+  </label>
 
-	<Button type="submit" variant="blue" size="lg" class="w-full justify-center">Submit Event 🎉</Button>
+  <!-- Event Title -->
+  <label class="flex flex-col">
+    <span class="font-semibold">Event Title *</span>
+    <input
+      type="text"
+      name="title"
+      required
+      class="border border-gray-300 rounded px-3 py-2"
+    />
+  </label>
 
-	{formMessage && (
-		<p class={`text-m ${isError ? "text-red-600" : "text-green-600"}`}>
-			{formMessage}
-		</p>
-	)}
+  <!-- Venue Address -->
+  <label class="flex flex-col">
+    <span class="font-semibold">Venue Address *</span>
+    <input
+      type="text"
+      name="venue_address"
+      required
+      class="border border-gray-300 rounded px-3 py-2"
+    />
+  </label>
+
+  <!-- Venue City -->
+  <label class="flex flex-col">
+    <span class="font-semibold">City *</span>
+    <input
+      type="text"
+      name="venue_city"
+      required
+      class="border border-gray-300 rounded px-3 py-2"
+    />
+  </label>
+
+  <!-- Venue State -->
+  <label class="flex flex-col">
+    <span class="font-semibold">State *</span>
+    <input
+      type="text"
+      name="venue_state"
+      required
+      class="border border-gray-300 rounded px-3 py-2"
+    />
+  </label>
+
+  <!-- Event URL -->
+  <label class="flex flex-col">
+    <span class="font-semibold">Event URL</span>
+    <input
+      type="url"
+      name="event_url"
+      class="border border-gray-300 rounded px-3 py-2"
+    />
+  </label>
+
+  <!-- Event Date -->
+  <label class="flex flex-col">
+    <span class="font-semibold">Event Date *</span>
+    <input
+      type="date"
+      name="event_date"
+      required
+      class="border border-gray-300 rounded px-3 py-2"
+    />
+  </label>
+
+  <!-- Start Time -->
+  <label class="flex flex-col">
+    <span class="font-semibold">Start Time *</span>
+    <input
+      type="time"
+      name="start_time"
+      required
+      class="border border-gray-300 rounded px-3 py-2"
+    />
+  </label>
+
+  <!-- Price -->
+  <fieldset class="flex flex-col gap-2">
+    <span class="font-semibold">Price *</span>
+    <label class="flex items-center gap-2">
+      <input type="radio" name="price" value="free" required />
+      Free
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="radio" name="price" value="paid" required />
+      Paid
+    </label>
+  </fieldset>
+
+  <!-- Age Group -->
+  <label class="flex flex-col">
+    <span class="font-semibold">Age Group *</span>
+    <select name="age_group" required class="border border-gray-300 rounded px-3 py-2">
+      <option value="">Select an age group</option>
+      <option value="all-ages">All Ages</option>
+      <option value="kids">Kids</option>
+      <option value="teens">Teens</option>
+      <option value="adults">Adults</option>
+      <option value="seniors">Seniors</option>
+    </select>
+  </label>
+
+  <!-- Interests -->
+  <fieldset class="flex flex-col gap-2">
+    <span class="font-semibold">Interests *</span>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" name="interest" value="arts" />
+      Arts
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" name="interest" value="causes" />
+      Causes
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" name="interest" value="culture" />
+      Culture
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" name="interest" value="education" />
+      Education
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" name="interest" value="religion" />
+      Religion
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" name="interest" value="social" />
+      Social
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" name="interest" value="sports" />
+      Sports
+    </label>
+  </fieldset>
+
+  <!-- Description -->
+  <label class="flex flex-col">
+    <span class="font-semibold">Event Description *</span>
+    <textarea
+      name="description"
+      required
+      rows="4"
+      class="border border-gray-300 rounded px-3 py-2"
+    ></textarea>
+  </label>
+
+  <!-- Honeypot (hidden from users) -->
+  <input
+    type="text"
+    name="website"
+    style="display: none;"
+    tabindex="-1"
+    autocomplete="off"
+  />
+
+  <Button type="submit" variant="blue" size="lg" class="w-full justify-center"
+    >Submit Event 🎉</Button
+  >
+  <p id="form-status" class="text-m hidden" role="status"></p>
 </form>
 
 <script>
-	const form = document.getElementById("event-form") as HTMLFormElement;
+  const form = document.getElementById("event-form") as HTMLFormElement;
+  const status = document.getElementById("form-status") as HTMLParagraphElement;
 
-	// Basic rate limiting (per session)
-	function checkRateLimit(): boolean {
-		const lastSubmitTime = sessionStorage.getItem("lastFormSubmit");
-		const now = Date.now();
+  function showStatus(message: string, isError: boolean) {
+    status.textContent = message;
+    status.classList.remove("hidden", "text-red-600", "text-green-600");
+    status.classList.add(isError ? "text-red-600" : "text-green-600");
+  }
 
-		if (lastSubmitTime) {
-			const timeSinceLastSubmit = now - parseInt(lastSubmitTime);
-			// Minimum 2 seconds between submissions
-			if (timeSinceLastSubmit < 2000) {
-				alert("Please wait before submitting again.");
-				return false;
-			}
-		}
+  function isSpamSubmission(): boolean {
+    const honeypot = form.querySelector<HTMLInputElement>(
+      'input[name="website"]'
+    );
+    return honeypot !== null && honeypot.value.length > 0;
+  }
 
-		sessionStorage.setItem("lastFormSubmit", now.toString());
-		return true;
-	}
+  function checkRateLimit(): boolean {
+    const lastSubmitTime = sessionStorage.getItem("lastFormSubmit");
+    const now = Date.now();
+    if (lastSubmitTime) {
+      const timeSinceLastSubmit = now - parseInt(lastSubmitTime);
+      if (timeSinceLastSubmit < 2000) {
+        showStatus("Please wait before submitting again.", true);
+        return false;
+      }
+    }
+    sessionStorage.setItem("lastFormSubmit", now.toString());
+    return true;
+  }
 
-	// Honeypot validation
-	function isSpamSubmission(): boolean {
-		const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
-		return honeypot !== null && honeypot.value.length > 0;
-	}
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-	form?.addEventListener("submit", (e) => {
-		// Check honeypot
-		if (isSpamSubmission()) {
-			console.warn("Spam submission detected (honeypot)");
-			// Still submit silently to confuse bots
-			return;
-		}
+    // Honeypot check
+    if (isSpamSubmission()) {
+      console.warn("Spam submission detected (honeypot)");
+      showStatus("Event submitted. Thanks! 🎉", false);
+      form.reset();
+      return;
+    }
 
-		// Check rate limiting
-		if (!checkRateLimit()) {
-			e.preventDefault();
-			return;
-		}
+    // Rate limit check
+    if (!checkRateLimit()) {
+      return;
+    }
 
-		const interests = form.querySelectorAll<HTMLInputElement>('input[name="interest"]:checked');
-		if (interests.length === 0) {
-			e.preventDefault();
-			alert("Please select at least one interest.");
-		}
-	});
+    // Get selected interests
+    const interests = Array.from(
+      form.querySelectorAll<HTMLInputElement>('input[name="interest"]:checked')
+    ).map((el) => el.value);
+
+    if (interests.length === 0) {
+      showStatus("Please select at least one interest.", true);
+      return;
+    }
+
+    // Build payload
+    const data = new FormData(form);
+    const payload = {
+      event_id: crypto.randomUUID(),
+      email: data.get("email"),
+      organizers: data.get("organizers"),
+      event_title: data.get("title"),
+      venue_address: data.get("venue_address"),
+      venue_city: data.get("venue_city"),
+      venue_state: data.get("venue_state"),
+      event_url: data.get("event_url"),
+      event_date: data.get("event_date"),
+      start_time: data.get("start_time"),
+      price: data.get("price"),
+      age_group: data.get("age_group"),
+      interest: interests.join(", "),
+      event_description: data.get("description"),
+      source: "form",
+      status: "pending",
+    };
+
+    const submitBtn = form.querySelector<HTMLButtonElement>('[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    showStatus("Submitting…", false);
+
+    try {
+      // Call the Netlify Function
+      const res = await fetch("/.netlify/functions/submit-event", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || `Request failed (${res.status})`);
+      }
+
+      showStatus(
+        "Event submitted. It will appear on our site if approved. 🎉",
+        false
+      );
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      showStatus(
+        "Something went wrong submitting your event. Please try again.",
+        true
+      );
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
 </script>
