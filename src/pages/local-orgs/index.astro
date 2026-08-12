@@ -14,11 +14,12 @@ const types = [...new Set(sortedOrgs.map((o) => o.data.type))].sort();
 
 // Page metadata
 const title = "Local Armenian Organizations";
+const description = "Explore local organizations across New England, including churches, cultural centers, educational institutions, professional orgs, and politically affiliated groups.";
 const seoTitle = "Local Armenian Organizations in New England";
 const seoDescription = "Explore local organizations across New England, including churches, cultural centers, educational institutions, professional orgs, and politically affiliated groups.";
 ---
 
-<Layout {title} {seoTitle} {seoDescription}>
+<Layout {title} {description} {seoTitle} {seoDescription}>
 	<Section>
 		<Container>
 			<SectionHeading>

@@ -6,7 +6,7 @@ import { siteName, siteLang, themeColor } from "@/data/config";
 import type { LayoutProps as Props } from "@/types";
 
 const baseUrl = Astro.url.href;
-const { title, seoTitle, seoDescription, noindex = false } = Astro.props;
+const { title, seoTitle, seoDescription, description, noindex = false } = Astro.props;
 
 const finalOgImage = `/hamaynk/images/og-image.jpg`;
 ---
@@ -17,7 +17,8 @@ const finalOgImage = `/hamaynk/images/og-image.jpg`;
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content={themeColor} />
-		<meta name="description" content={seoDescription} />
+		<meta name="description" content={description} />
+		<meta name="seoDescription" content={seoDescription} />
 		{noindex && <meta name="robots" content="noindex,nofollow" />}
 		<link rel="author" href="humans.txt" />
 
@@ -31,7 +32,7 @@ const finalOgImage = `/hamaynk/images/og-image.jpg`;
 		<meta property="og:url" content={Astro.url} />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content={`${seoTitle} | ${siteName}`} />
-		<meta property="og:image" content={`${baseUrl}/images/og-image.png`} />
+		<meta property="og:image" content={finalOgImage} />
 		<meta property="og:description" content={seoDescription} />
 		<meta property="og:site_name" content={siteName} />
 		<meta property="og:locale" content={siteLang} />
@@ -39,8 +40,8 @@ const finalOgImage = `/hamaynk/images/og-image.jpg`;
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:url" content={Astro.url} />
 		<meta name="twitter:title" content={`${seoTitle} | ${siteName}`} />
-		<meta name="twitter:description" content={seoDescription} />
-		<!-- <meta name="twitter:image" content={`${baseUrl}/images/og-image.jpg`} /> -->
+		<meta name="twitter:description" content={description} />
+		<!-- <meta name="twitter:image" content={finalOgImage} /> -->
 
 		<link rel="preload" as="font" type="font/woff2" href="/hamaynk/fonts/caveat-brush/caveat-brush-v12-latin-regular.woff2" crossorigin />
 		<link rel="preload" as="font" type="font/woff2" href="/hamaynk/fonts/nunito/nunito-v32-latin-regular.woff2" crossorigin />

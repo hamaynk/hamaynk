@@ -10,11 +10,12 @@ import EventPreview from "@/components/EventPreview.astro";
 
 // Page metadata
 const title = "Home";
+const description = "Hamaynk home page for Armenian events in New England";
 const seoTitle = "Home";
 const seoDescription = "Hamaynk home page for Armenian events in New England";
 ---
 
-<Layout title="Home">
+<Layout {title} {description} {seoTitle} {seoDescription}>
 	<Section class="relative">
 		<Video
 			class:list={"absolute inset-0 object-cover object-top w-full h-full z-0"}

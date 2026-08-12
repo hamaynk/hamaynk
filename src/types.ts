@@ -10,6 +10,7 @@ export interface MenuItem {
 
 export interface LayoutProps {
   title: string; // Required
+  description?: string; // Required
   seoTitle?: string; // Required
   seoDescription?: string; // Required
   noindex?: boolean;
