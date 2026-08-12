@@ -151,11 +151,8 @@ import Button from "@/components/buttons/Button.astro";
 </form>
 
 <script>
-  import { createClient } from '@supabase/supabase-js';
-
-  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-  const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const SUPABASE_URL = "https://wryrgdxbdpkoifywcjsu.supabase.co";
+  const SUPABASE_ANON_KEY =	"sb_publishable_1wdg3gV-9czBMFctMqrZ3A_Ntimhr3C";
 
   const form = document.getElementById("event-form") as HTMLFormElement;
   const status = document.getElementById("form-status") as HTMLParagraphElement;
@@ -244,21 +241,29 @@ import Button from "@/components/buttons/Button.astro";
     showStatus("Submitting…", false);
 
     try {
-      const { error } = await supabase
-        .from('events')
-        .insert([payload]);
+			const res = await fetch(`${SUPABASE_URL}/rest/v1/events`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					apikey: SUPABASE_ANON_KEY,
+					Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+					Prefer: "return=minimal",
+				},
+				body: JSON.stringify(payload),
+			});
 
-      if (error) {
-        throw new Error(error.message || "Failed to insert event");
-      }
+			if (!res.ok) {
+							const err = await res.text();
+							throw new Error(err || `Request failed (${res.status})`);
+						}
 
-      showStatus("Event submitted. It will appear on our site if approved. 🎉", false);
-      form.reset();
-    } catch (err) {
-      console.error(err);
-      showStatus("Something went wrong submitting your event. Please try again.", true);
-    } finally {
-      if (submitBtn) submitBtn.disabled = false;
-    }
-  });
+						showStatus("Event submitted. It will appear on our site if approved. 🎉", false);
+						form.reset();
+					} catch (err) {
+						console.error(err);
+						showStatus("Something went wrong submitting your event. Please try again.", true);
+					} finally {
+						if (submitBtn) submitBtn.disabled = false;
+					}
+				});
 </script>
