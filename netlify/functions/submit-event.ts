@@ -12,9 +12,9 @@ const handler: Handler = async (event) => {
 
   // Get credentials from environment variables (private, not exposed to client)
   const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "Server configuration missing" }),
@@ -24,8 +24,8 @@ const handler: Handler = async (event) => {
   try {
     const payload = JSON.parse(event.body || "{}");
 
-    // Create Supabase client with service role key (for server-side operations)
-    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+    // Create Supabase client with anon key (for server-side operations)
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Insert event into Supabase
     const { data, error } = await supabase
