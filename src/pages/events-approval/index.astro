@@ -1,33 +1,18 @@
 ---
-import { supabase } from '../../lib/supabase';
+export const prerender = false;
 
-const { data: { session } } = await supabase.auth.getSession();
+const user = Astro.locals.user;
 
-if (!session) {
+if (!user) {
   return Astro.redirect('/events-approval/login');
 }
-
-// Fetch user info
-const { data: authorized } = await supabase
-  .from('authorized_users')
-  .select('*')
-  .eq('email', session.user.email)
-  .eq('is_active', true)
-  .single();
-
-// Fetch pending events
-const { data: events, error: eventsError } = await supabase
-  .from('events')
-  .select('*')
-  .eq('approved', false)
-  .order('created_at', { ascending: false });
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Event Approval Dashboard</title>
   <style>
     * {
@@ -37,22 +22,34 @@ const { data: events, error: eventsError } = await supabase
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       background: #f5f5f5;
-      color: #333;
+      min-height: 100vh;
+      padding: 20px;
     }
 
-    .header {
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
       background: white;
-      padding: 20px 40px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
-    .header h1 {
+    h1 {
       font-size: 28px;
+      color: #333;
+      font-weight: 700;
     }
 
     .user-info {
@@ -64,59 +61,118 @@ const { data: events, error: eventsError } = await supabase
     .user-email {
       font-size: 14px;
       color: #666;
+      font-weight: 500;
     }
 
     .logout-btn {
       padding: 10px 20px;
-      background: #dc3545;
+      background: #e74c3c;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      text-decoration: none;
       font-size: 14px;
+      font-weight: 600;
+      transition: background 0.3s;
+      font-family: inherit;
     }
 
     .logout-btn:hover {
-      background: #c82333;
+      background: #c0392b;
     }
 
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
+    .logout-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      display: none;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .events-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       gap: 20px;
     }
 
     .event-card {
       background: white;
-      padding: 20px;
       border-radius: 8px;
+      padding: 20px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .event-card h3 {
-      font-size: 20px;
-      margin-bottom: 10px;
+    .event-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .event-title {
+      font-size: 18px;
+      font-weight: 600;
       color: #333;
     }
 
-    .event-card p {
+    .event-detail {
       font-size: 14px;
       color: #666;
-      margin-bottom: 8px;
-      line-height: 1.6;
+      line-height: 1.5;
+    }
+
+    .event-detail strong {
+      color: #333;
+      display: block;
+      margin-top: 8px;
+      margin-bottom: 2px;
+      font-weight: 500;
+    }
+
+    .event-detail:first-of-type strong {
+      margin-top: 0;
     }
 
     .event-actions {
       display: flex;
       gap: 10px;
-      margin-top: 20px;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
     }
 
     .btn {
@@ -127,75 +183,280 @@ const { data: events, error: eventsError } = await supabase
       cursor: pointer;
       font-size: 14px;
       font-weight: 600;
-      transition: all 0.2s;
+      transition: all 0.3s;
+      font-family: inherit;
     }
 
     .btn-approve {
-      background: #28a745;
+      background: #27ae60;
       color: white;
     }
 
-    .btn-approve:hover {
-      background: #218838;
+    .btn-approve:hover:not(:disabled) {
+      background: #229954;
+      transform: translateY(-1px);
     }
 
     .btn-deny {
-      background: #dc3545;
+      background: #e74c3c;
       color: white;
     }
 
-    .btn-deny:hover {
-      background: #c82333;
+    .btn-deny:hover:not(:disabled) {
+      background: #c0392b;
+      transform: translateY(-1px);
     }
 
-    .no-events {
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .empty-state {
       text-align: center;
-      padding: 40px;
-      background: white;
-      border-radius: 8px;
+      padding: 60px 20px;
+      color: #999;
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+
+    .empty-state-text {
+      font-size: 16px;
       color: #666;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>✅ Event Approval Dashboard</h1>
-    <div class="user-info">
-      <div class="user-email">{session.user.email}</div>
-      <a href="/auth/logout" class="logout-btn">Logout</a>
+  <div class="container">
+    <header>
+      <h1>Event Approval Dashboard</h1>
+      <div class="user-info">
+        <span class="user-email" id="userEmail"></span>
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+      </div>
+    </header>
+
+    <div id="message" class="message"></div>
+
+    <div class="events-grid" id="eventsContainer">
+      <div class="empty-state">
+        <div class="empty-state-icon">📋</div>
+        <p class="empty-state-text">Loading events...</p>
+      </div>
     </div>
   </div>
 
-  <div class="container">
-    {events && events.length > 0 ? (
-      <div class="events-grid">
-        {events.map((event: any) => (
-          <div class="event-card">
-            <h3>{event.title}</h3>
-            <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-            <p><strong>Location:</strong> {event.location}</p>
-            <p><strong>Description:</strong> {event.description}</p>
-            <p><strong>Submitted by:</strong> {event.submitted_by_email}</p>
+  <script>
+    import { actions } from 'astro:actions';
 
-            <div class="event-actions">
-              <form method="POST" action="/api/approve-event">
-                <input type="hidden" name="event_id" value={event.id} />
-                <button type="submit" class="btn btn-approve">Approve</button>
-              </form>
+    const messageEl = document.getElementById('message') as HTMLDivElement | null;
+    const eventsContainer = document.getElementById('eventsContainer') as HTMLDivElement | null;
+    const userEmailEl = document.getElementById('userEmail') as HTMLSpanElement | null;
+    const logoutBtn = document.getElementById('logoutBtn') as HTMLButtonElement | null;
 
-              <form method="POST" action="/api/deny-event">
-                <input type="hidden" name="event_id" value={event.id} />
-                <button type="submit" class="btn btn-deny">Deny</button>
-              </form>
-            </div>
-          </div>
-        ))}
-      </div>
-    ) : (
-      <div class="no-events">
-        <p>No pending events to approve</p>
-      </div>
-    )}
-  </div>
+    if (!messageEl || !eventsContainer || !userEmailEl || !logoutBtn) {
+      console.error('Required DOM elements not found');
+    } else {
+      // Display user email
+      const userEmail = document.body.getAttribute('data-user-email');
+      if (userEmail) {
+        userEmailEl.textContent = userEmail;
+      }
+
+      // Fetch and display pending events
+      const loadEvents = async (): Promise<void> => {
+        try {
+          const response = await fetch('/api/pending-events');
+          const events = await response.json();
+
+          if (!Array.isArray(events) || events.length === 0) {
+            eventsContainer.innerHTML = `
+              <div class="empty-state" style="grid-column: 1 / -1;">
+                <div class="empty-state-icon">✓</div>
+                <p class="empty-state-text">No pending events to review</p>
+              </div>
+            `;
+            return;
+          }
+
+          eventsContainer.innerHTML = events
+            .map(
+              (event: {
+                id: string;
+                event_title: string;
+                email: string;
+                venue_address: string;
+                venue_city: string;
+                venue_state: string;
+                event_date: string;
+                start_time: string;
+                event_description: string;
+              }) => `
+                <div class="event-card" data-event-id="${event.id}">
+                  <div class="event-title">${escapeHtml(event.event_title)}</div>
+                  <div class="event-detail">
+                    <strong>Organizer Email</strong>
+                    ${escapeHtml(event.email)}
+                  </div>
+                  <div class="event-detail">
+                    <strong>Venue</strong>
+                    ${escapeHtml(event.venue_address)}, ${escapeHtml(event.venue_city)}, ${escapeHtml(event.venue_state)}
+                  </div>
+                  <div class="event-detail">
+                    <strong>Date & Time</strong>
+                    ${escapeHtml(event.event_date)} at ${escapeHtml(event.start_time)}
+                  </div>
+                  <div class="event-detail">
+                    <strong>Description</strong>
+                    ${escapeHtml(event.event_description)}
+                  </div>
+                  <div class="event-actions">
+                    <button class="btn btn-approve" data-action="approve">Approve</button>
+                    <button class="btn btn-deny" data-action="deny">Deny</button>
+                  </div>
+                </div>
+              `
+            )
+            .join('');
+
+          // Attach event listeners
+          attachEventListeners();
+        } catch (error) {
+          console.error('Error loading events:', error);
+          showMessage('Failed to load events. Please refresh the page.', 'error');
+        }
+      };
+
+      const attachEventListeners = (): void => {
+        const cards = eventsContainer.querySelectorAll('.event-card');
+        cards.forEach((card: Element): void => {
+          const card_ = card as HTMLDivElement;
+          const eventId = card_.getAttribute('data-event-id');
+          if (!eventId) return;
+
+          const approveBtn = card_.querySelector('[data-action="approve"]') as HTMLButtonElement | null;
+          const denyBtn = card_.querySelector('[data-action="deny"]') as HTMLButtonElement | null;
+
+          if (approveBtn) {
+            approveBtn.addEventListener('click', async (): Promise<void> => {
+              await handleApprove(eventId, card_);
+            });
+          }
+
+          if (denyBtn) {
+            denyBtn.addEventListener('click', async (): Promise<void> => {
+              await handleDeny(eventId, card_);
+            });
+          }
+        });
+      };
+
+      const handleApprove = async (eventId: string, card: HTMLDivElement): Promise<void> => {
+        const approveBtn = card.querySelector('[data-action="approve"]') as HTMLButtonElement | null;
+        const denyBtn = card.querySelector('[data-action="deny"]') as HTMLButtonElement | null;
+
+        if (!approveBtn || !denyBtn) return;
+
+        try {
+          approveBtn.disabled = true;
+          denyBtn.disabled = true;
+
+          await actions.server.approveEvent({ eventId });
+
+          card.style.opacity = '0.5';
+          card.style.pointerEvents = 'none';
+          showMessage(`Event "${eventId}" approved successfully!`, 'success');
+
+          // Reload events after 2 seconds
+          setTimeout(loadEvents, 2000);
+        } catch (error) {
+          console.error('Error approving event:', error);
+          showMessage('Failed to approve event. Please try again.', 'error');
+          approveBtn.disabled = false;
+          denyBtn.disabled = false;
+        }
+      };
+
+      const handleDeny = async (eventId: string, card: HTMLDivElement): Promise<void> => {
+        const approveBtn = card.querySelector('[data-action="approve"]') as HTMLButtonElement | null;
+        const denyBtn = card.querySelector('[data-action="deny"]') as HTMLButtonElement | null;
+
+        if (!approveBtn || !denyBtn) return;
+
+        try {
+          approveBtn.disabled = true;
+          denyBtn.disabled = true;
+
+          await actions.server.denyEvent({ eventId });
+
+          card.style.opacity = '0.5';
+          card.style.pointerEvents = 'none';
+          showMessage(`Event "${eventId}" denied successfully!`, 'success');
+
+          // Reload events after 2 seconds
+          setTimeout(loadEvents, 2000);
+        } catch (error) {
+          console.error('Error denying event:', error);
+          showMessage('Failed to deny event. Please try again.', 'error');
+          approveBtn.disabled = false;
+          denyBtn.disabled = false;
+        }
+      };
+
+      const showMessage = (text: string, type: string): void => {
+        messageEl.textContent = text;
+        messageEl.className = `message show ${type}`;
+        setTimeout((): void => {
+          messageEl.classList.remove('show');
+        }, 5000);
+      };
+
+      const escapeHtml = (text: string): string => {
+        const map: { [key: string]: string } = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;',
+        };
+        return text.replace(/[&<>"']/g, (m: string): string => map[m]);
+      };
+
+      // Logout handler
+      logoutBtn.addEventListener('click', async (): Promise<void> => {
+        try {
+          logoutBtn.disabled = true;
+          await actions.server.signOut({});
+          window.location.href = '/events-approval/login';
+        } catch (error) {
+          console.error('Error signing out:', error);
+          showMessage('Failed to sign out. Please try again.', 'error');
+          logoutBtn.disabled = false;
+        }
+      });
+
+      // Load events on page load
+      loadEvents();
+    }
+  </script>
 </body>
 </html>

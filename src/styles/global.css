@@ -9,7 +9,10 @@
     --color-brand-blue: #1b3769;
     --color-brand-red: #852210;
     --color-brand-green: #637815;
-    --color-brand-yellow: #c16000;
+    --color-brand-yellow: #cc9933;
+    --color-brand-purple: #660066;
+    --color-brand-orange: #c16000;
+    --color-brand-pink: #cc6699;
 }
 
 @utility container {

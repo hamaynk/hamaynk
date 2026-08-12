@@ -3,7 +3,7 @@ title: "Rally"
 seoTitle: "Rally"
 seoDescription: "Meet up with like-minded people and advocate for a cause you care about!"
 excerpt: "Meet up with like-minded people and advocate for a cause you care about!"
-description: Meet up with like-minded people and advocate for a cause you care about!
+description: "Meet up with like-minded people and advocate for a cause you care about!"
 interests: ["Causes"]
 published: true
 ---

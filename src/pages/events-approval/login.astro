@@ -1,222 +1,268 @@
 ---
+export const prerender = false;
+
 import { supabase } from '../../lib/supabase';
 
-import Layout from '../../layouts/Layout.astro';
-
-let message = '';
-let loading = false;
-
-if (Astro.request.method === 'POST') {
-  try {
-    const formData = await Astro.request.formData();
-    const email = formData.get('email')?.toString();
-
-    if (!email) {
-      message = 'Email is required';
-    } else {
-      console.log('📧 Sending magic link to:', email);
-
-      const { error } = await supabase.auth.signInWithOtp({
-        email: email,
-        options: {
-          emailRedirectTo: `${import.meta.env.SITE}/auth/callback`,
-        },
-      });
-
-      if (error) {
-        console.error('❌ Error sending magic link:', error.message);
-        message = `Error: ${error.message}`;
-      } else {
-        console.log('✅ Magic link sent to:', email);
-        message = `Check your email for the login link!`;
-      }
-    }
-  } catch (error) {
-    console.error('❌ Unexpected error:', error);
-    message = 'An unexpected error occurred';
-  }
+// Redirect to dashboard if already authenticated
+const sessionCookie = Astro.request.headers.get('cookie');
+if (sessionCookie?.includes('sb-access-token')) {
+  return Astro.redirect('/events-approval/');
 }
 ---
 
-<Layout title="Login - Event Approval">
-  <main class="login-container">
-    <div class="login-box">
-      <h1>Event Approval Portal</h1>
-      <p>Enter your email to receive a magic link for secure login.</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Approval - Login</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-      <form id="login-form">
+      body {
+        font-family: caveat-brush, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .container {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+        padding: 40px;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .subtitle {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      input[type='email'] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+      }
+
+      input[type='email']:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      button:hover {
+        background: #5568d3;
+      }
+
+      button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+
+      .status-message {
+        margin-top: 20px;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        display: none;
+      }
+
+      .status-message.success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        display: block;
+      }
+
+      .status-message.error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        display: block;
+      }
+
+      .status-message.loading {
+        background: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+        display: block;
+      }
+
+      .spinner {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-top: 2px solid #0c5460;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin-right: 8px;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Event Approval</h1>
+      <p class="subtitle">Sign in to manage event approvals</p>
+
+      <form id="loginForm">
         <div class="form-group">
           <label for="email">Email Address</label>
           <input
             type="email"
             id="email"
             name="email"
+            placeholder="your.email@example.com"
             required
-            placeholder="you@example.com"
+            autocomplete="email"
           />
         </div>
 
-        <button type="submit" class="login-btn">Send Magic Link</button>
-
-        <div id="status-message" class="status-message"></div>
+        <button type="submit" id="submitBtn">Send Magic Link</button>
       </form>
+
+      <div id="statusMessage" class="status-message"></div>
     </div>
-  </main>
-</Layout>
 
-<script>
-  import { supabase } from '../../lib/supabase';
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', async () => {
+        const form = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusMessage = document.getElementById('statusMessage');
 
-  const form = document.getElementById('login-form') as HTMLFormElement;
-  const statusMsg = document.getElementById('status-message') as HTMLDivElement;
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
 
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
+          const email = emailInput.value.trim();
 
-    const email = (document.getElementById('email') as HTMLInputElement).value;
-    statusMsg.textContent = 'Checking authorization...';
-    statusMsg.className = 'status-message loading';
+          // Validate email format
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            statusMessage.textContent = '❌ Please enter a valid email address';
+            statusMessage.className = 'status-message error';
+            return;
+          }
 
-    try {
-      // Check authorization via server endpoint
-      const authCheckResponse = await fetch('/api/check-authorization', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.toLowerCase() }),
+          // Show loading state
+          submitBtn.disabled = true;
+          statusMessage.innerHTML =
+            '<span class="spinner"></span>Checking authorization...';
+          statusMessage.className = 'status-message loading';
+
+          try {
+            // Step 1: Check authorization via Netlify Function
+            console.log('Checking authorization for:', email);
+            const authResponse = await fetch(
+              '/.netlify/functions/check-authorization',
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+              }
+            );
+
+            if (!authResponse.ok) {
+              throw new Error('Authorization check failed');
+            }
+
+            const authData = await authResponse.json();
+            console.log('Authorization response:', authData);
+
+            if (!authData.authorized) {
+              statusMessage.textContent =
+                '❌ This email is not authorized to access event approvals';
+              statusMessage.className = 'status-message error';
+              submitBtn.disabled = false;
+              return;
+            }
+
+            // Step 2: Request magic link via Netlify Function
+            statusMessage.innerHTML =
+              '<span class="spinner"></span>Sending magic link...';
+            statusMessage.className = 'status-message loading';
+
+            const magicLinkResponse = await fetch(
+              '/.netlify/functions/request-magic-link',
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+              }
+            );
+
+            if (!magicLinkResponse.ok) {
+              throw new Error('Failed to send magic link');
+            }
+
+            const magicLinkData = await magicLinkResponse.json();
+            console.log('Magic link response:', magicLinkData);
+
+            // Success
+            statusMessage.textContent =
+              '✅ Magic link sent! Check your email and click the link to sign in.';
+            statusMessage.className = 'status-message success';
+            form.reset();
+            emailInput.blur();
+
+          } catch (error) {
+            console.error('Login error:', error);
+            statusMessage.textContent =
+              '❌ An error occurred. Please try again.';
+            statusMessage.className = 'status-message error';
+            submitBtn.disabled = false;
+          }
+        });
       });
-
-      const { authorized } = await authCheckResponse.json();
-
-      if (!authorized) {
-        statusMsg.textContent = '❌ Email not authorized. Please contact the administrator.';
-        statusMsg.className = 'status-message error';
-        return;
-      }
-
-      // Send magic link
-      const { error: signInError } = await supabase.auth.signInWithOtp({
-        email: email.toLowerCase(),
-        options: {
-          emailRedirectTo: `${window.location.origin}/events-approval`,
-        },
-      });
-
-      if (signInError) {
-        statusMsg.textContent = `❌ Error: ${signInError.message}`;
-        statusMsg.className = 'status-message error';
-        return;
-      }
-
-      statusMsg.textContent = '✅ Magic link sent! Check your email.';
-      statusMsg.className = 'status-message success';
-      form.reset();
-    } catch (err) {
-      statusMsg.textContent = '❌ An error occurred. Please try again.';
-      statusMsg.className = 'status-message error';
-    }
-  });
-</script>
-
-<style>
-  .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 1rem;
-  }
-
-  .login-box {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
-  }
-
-  h1 {
-    color: #333;
-    margin-bottom: 0.5rem;
-    text-align: center;
-  }
-
-  p {
-    color: #666;
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  .form-group {
-    margin-bottom: 1.5rem;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: #333;
-  }
-
-  input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    box-sizing: border-box;
-  }
-
-  input:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-  }
-
-  .login-btn {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #667eea;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .login-btn:hover {
-    background-color: #5568d3;
-  }
-
-  .status-message {
-    margin-top: 1rem;
-    padding: 0.75rem;
-    border-radius: 4px;
-    text-align: center;
-    display: none;
-  }
-
-  .status-message.loading,
-  .status-message.success,
-  .status-message.error {
-    display: block;
-  }
-
-  .status-message.loading {
-    background-color: #e3f2fd;
-    color: #1976d2;
-  }
-
-  .status-message.success {
-    background-color: #e8f5e9;
-    color: #388e3c;
-  }
-
-  .status-message.error {
-    background-color: #ffebee;
-    color: #d32f2f;
-  }
-</style>
+    </script>
+  </body>
+</html>

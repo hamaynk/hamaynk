@@ -43,14 +43,12 @@ const interests = [
 
   {/* Grid Container - Separate Container */}
   <div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="card-grid">
       {posts.map((post, index) => {
         const rotations = ["rotate-2", "-rotate-2", "rotate-1", "-rotate-1"];
         const translations = ["-translate-y-10", "-translate-x-10", "translate-x-5", "translate-y-10"];
-        const zIndices = ["z-10", "z-20", "z-30", "z-40"];
         const rotation = rotations[index % rotations.length];
         const translation = translations[index % translations.length];
-        const zIndex = zIndices[index % zIndices.length];
 
         // Normalize interests to always be an array
         const postInterests = Array.isArray(post.data.interests)
@@ -60,9 +58,13 @@ const interests = [
             : [];
 
         return (
-          <div class="blog-item" data-categories={postInterests.join(",")}>
+          <div
+            class="blog-item transition-all duration-300"
+            data-categories={postInterests.join(",")}
+            data-index={index}
+          >
             <article
-              class={`flex flex-col gap-4 p-6 bg-white border-2 shadow-[6px_6px_0px_rgba(0,0,0,0.3)] ${rotation} ${translation} ${zIndex} transition hover:shadow-[8px_8px_0px_rgba(0,0,0,0.4)]`}
+              class={`flex flex-col gap-4 p-6 bg-white border-2 shadow-[6px_6px_0px_rgba(0,0,0,0.3)] ${rotation} ${translation} hover:shadow-[8px_8px_0px_rgba(0,0,0,0.4)] transition`}
             >
               {/* Tags with Dynamic Colors */}
               <div class="flex flex-wrap gap-2">
@@ -97,6 +99,7 @@ const interests = [
 <script>
   const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
   const items = document.querySelectorAll<HTMLElement>(".blog-item");
+  const cardGrid = document.getElementById("card-grid") as HTMLElement;
   const activeClasses = ["bg-brand-blue", "text-white", "border-brand-blue"];
   const inactiveClasses = [
     "bg-white",
@@ -117,10 +120,29 @@ const interests = [
       btn.classList.remove(...inactiveClasses);
       btn.classList.add(...activeClasses);
 
+      // Separate matched and unmatched items
+      const matchedItems: HTMLElement[] = [];
+      const unmatchedItems: HTMLElement[] = [];
+
       items.forEach((item) => {
         const itemCategories = item.dataset.categories?.split(",") ?? [];
         const match = filter === "all" || itemCategories.includes(filter);
-        item.classList.toggle("hidden", !match);
+
+        if (match) {
+          matchedItems.push(item);
+          item.classList.remove("opacity-0", "pointer-events-none");
+          item.classList.add("opacity-100");
+        } else {
+          unmatchedItems.push(item);
+          item.classList.remove("opacity-100");
+          item.classList.add("opacity-0", "pointer-events-none");
+        }
+      });
+
+      // Reorder grid: matched items first, then unmatched
+      const reorderedItems = [...matchedItems, ...unmatchedItems];
+      reorderedItems.forEach((item, index) => {
+        item.style.order = String(index);
       });
     });
   });

@@ -9,15 +9,6 @@ import { getCollection } from "astro:content";
 const allOrgs = await getCollection("orgs");
 const sortedOrgs = allOrgs.sort((a, b) => a.data.name.localeCompare(b.data.name));
 
-const orgsPerPage = 8;
-const totalPages = Math.ceil(sortedOrgs.length / orgsPerPage);
-
-// Always show page 1
-const orgs = sortedOrgs.slice(0, orgsPerPage);
-const currentPage = 1;
-const hasNextPage = totalPages > 1;
-const hasPrevPage = false;
-
 const states = [...new Set(sortedOrgs.map((o) => o.data.state))].sort();
 const types = [...new Set(sortedOrgs.map((o) => o.data.type))].sort();
 

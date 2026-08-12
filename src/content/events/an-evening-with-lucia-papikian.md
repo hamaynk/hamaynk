@@ -15,6 +15,6 @@ interests:
   - Arts
 ageGroup:
   - Teens
-  - 18+
+  - Young Adults
   - 21+
 ---

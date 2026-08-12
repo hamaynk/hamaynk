@@ -3,7 +3,7 @@ title: Homenetmen Providence Chapter
 seoTitle: "Homenetmen Providence Chapter"
 seoDescription: "The Homenetmen Providence Chapter is a prominent athletic and scouting organization serving the Rhode Island diaspora as part of the Homenetmen Eastern USA Region."
 name: "Homenetmen Providence Chapter"
-location: "RI"
+state: "RI"
 type: "Athletics"
 address: "402 Broadway, Providence, RI 02909"
 website: https://providencehomenetmen.wordpress.com/

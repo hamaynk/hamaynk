@@ -12,26 +12,29 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.9",
-    "@astrojs/node": "^11.0.3",
-    "@astrojs/react": "^6.0.1",
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/netlify": "^8.2.0",
+    "@astrojs/node": "^11.1.0",
+    "@astrojs/react": "^6.0.2",
     "@astrojs/studio": "^0.1.9",
     "@supabase/supabase-js": "^2.110.8",
     "@tailwindcss/vite": "^4.2.2",
     "@tailwindplus/elements": "^1.0.22",
-    "astro": "^7.1.5",
+    "astro": "^7.2.0",
     "astro-leaflet": "^1.12.0",
     "astro-pagefind": "^2.0.1",
     "leaflet": "^1.9.4",
     "tailwind-merge": "^3.5.0",
     "tailwind-variants": "^3.2.2",
     "tailwindcss": "^4.2.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.9",
     "@iconify/json": "^2.2.455",
     "@tailwindcss/typography": "^0.5.19",
+    "typescript": "^5.9.3",
     "unplugin-icons": "^23.0.1"
   }
 }

@@ -6,11 +6,16 @@ interface Props {
   alt: string;
   variant?: 'card' | 'offset' | 'hero' | 'thumbnail';
   class?: string;
-  disableRotation?: boolean;
   isGif?: boolean;
 }
 
-const { src, alt, variant = 'card', class: customClass, disableRotation = false, isGif = false } = Astro.props;
+const {
+  src,
+  alt,
+  variant = 'card',
+  class: customClass,
+  isGif = false,
+} = Astro.props;
 
 const imageSrc = typeof src === 'string' ? src : src.src;
 
@@ -21,34 +26,40 @@ const variantClasses = {
   thumbnail: 'w-20 sm:w-24 h-20 sm:h-24',
 };
 
-const rotations = ['rotate-1', '-rotate-2', 'rotate-3', '-rotate-1'];
-const randomRotation = !disableRotation ? rotations[Math.floor(Math.random() * rotations.length)] : '';
+// Simple CSS rotation angles
+const rotations = ['2deg', '-3deg', '1.5deg', '-2.5deg'];
+const rotationIndex = Math.floor(Math.random() * rotations.length);
+const rotation = rotations[rotationIndex];
 ---
 
 {isGif ? (
-  <div class="flex items-center justify-center">
+  <img
+    src={imageSrc}
+    alt={alt}
+    class="max-w-full max-h-96 object-contain"
+    loading="eager"
+  />
+) : (
+  <div
+    class={`${variantClasses[variant]} ${customClass || ''}`}
+    style={`
+      background: white;
+      border: 2px solid #000;
+      padding: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(${rotation});
+      flex-shrink: 0;
+    `}
+  >
     <img
       src={imageSrc}
       alt={alt}
-      class="max-w-full max-h-96 object-contain"
-      loading="lazy"
+      loading="eager"
+      decoding="async"
+      style="width: 100%; height: 100%; object-fit: cover; display: block;"
     />
-  </div>
-) : (
-  <div class={`${randomRotation} md:${randomRotation} ${customClass || ''}`}>
-    <div class="relative shadow-lg sm:shadow-xl">
-      <div class="absolute inset-0 bg-gray-300 sm:bg-gray-400 rounded-sm"></div>
-
-      <div class="relative bg-white border border-black sm:border-2 rounded-sm p-1 sm:p-2 shadow-md">
-        <div class={`${variantClasses[variant]} overflow-hidden`}>
-          <img
-            src={imageSrc}
-            alt={alt}
-            class="w-full h-full object-cover"
-            loading="lazy"
-          />
-        </div>
-      </div>
-    </div>
   </div>
 )}

@@ -1,44 +1,61 @@
 import { defineMiddleware } from 'astro:middleware';
-import { supabase } from './lib/supabase';
+import type { MiddlewareHandler } from 'astro';
+import { createClient } from '@supabase/supabase-js';
 
-export const onRequest = defineMiddleware(async (context, next) => {
-  const { request, redirect } = context;
-  const url = new URL(request.url);
+const protectedRoutes = ['/events-approval'];
 
-  // Allow auth callback without session
-  if (url.pathname === '/auth/callback') {
+export const onRequest: MiddlewareHandler = async (context, next) => {
+  const { pathname } = new URL(context.request.url);
+
+  const isStaticRoute =
+    pathname.startsWith('/_astro/') ||
+    pathname.startsWith('/api/') ||
+    pathname === '/' ||
+    pathname.startsWith('/events') ||
+    pathname === '/about' ||
+    pathname === '/contact' ||
+    pathname.startsWith('/diy-guides') ||
+    pathname.startsWith('/local-orgs') ||
+    pathname === '/timeline' ||
+    pathname === '/event-submission' ||
+    /\.(js|css|svg|png|jpg|webp|ico)$/.test(pathname);
+
+  if (isStaticRoute) {
     return next();
   }
 
-  // Allow login page
-  if (url.pathname === '/events-approval/login') {
-    return next();
-  }
+  // Only create Supabase client for non-static routes
+  const supabase = createClient(
+    import.meta.env.PUBLIC_SUPABASE_URL,
+    import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
+    { global: { headers: { Authorization: context.request.headers.get('cookie') || '' } } }
+  );
 
-  // Protect /events-approval routes
-  if (url.pathname.startsWith('/events-approval')) {
-    // Get session from Supabase
-    const { data: { session } } = await supabase.auth.getSession();
+  try {
+    const { data } = await supabase.auth.getSession();
+    const session = data.session;
 
-    if (!session) {
-      return redirect('/events-approval/login');
+    if (!session && protectedRoutes.some(route => pathname.startsWith(route))) {
+      return context.redirect('/events-approval/login');
     }
 
-    // Verify user is in authorized_users table
-    const { data: authorized, error } = await supabase
-      .from('authorized_users')
-      .select('id, email, is_active')
-      .eq('email', session.user.email)
-      .eq('is_active', true)
-      .single();
+    if (session?.user?.email) {
+      context.locals.user = {
+        id: session.user.id,
+        email: session.user.email,
+      };
+    } else {
+      context.locals.user = null;
+    }
+  } catch (error) {
+    console.error('Session restoration failed:', error);
 
-    if (error || !authorized) {
-      console.log('❌ User not authorized:', session.user.email);
-      return redirect('/events-approval/login');
+    if (protectedRoutes.some(route => pathname.startsWith(route))) {
+      return context.redirect('/events-approval/login');
     }
 
-    console.log('✅ User authorized:', session.user.email);
+    context.locals.user = null;
   }
 
   return next();
-});
+};

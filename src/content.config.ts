@@ -23,8 +23,8 @@ const events = defineCollection({
       z.array(z.enum(categoryEnum))
     ]).transform((val) => Array.isArray(val) ? val : [val]),
     ageGroup: z.union([
-      z.enum(['Kids', 'Teens', '18+', '21+', 'All ages']),
-      z.array(z.enum(['Kids', 'Teens', '18+', '21+', 'All ages']))
+      z.enum(['Kids', 'Teens', 'Young Adults', '21+', 'All ages']),
+      z.array(z.enum(['Kids', 'Teens', 'Young Adults', '21+', 'All ages']))
     ]).transform((val) => Array.isArray(val) ? val : [val]),
     price: z.string(),
     organizers: z.string(),

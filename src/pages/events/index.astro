@@ -5,39 +5,28 @@ import Section from "@/components/Section.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import Container from "@/components/Container.astro";
 import EventList from "@/components/EventList.astro";
-import { ageGroupLabels, categoryLabels } from "@/utils/eventUtils";
 
 const allPosts = await getCollection("events");
-const sortedPosts = allPosts.sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime());
-
-const postsPerPage = 8;
-const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
-
-// Always show page 1
-const posts = sortedPosts.slice(0, postsPerPage);
-const currentPage = 1;
-const hasNextPage = totalPages > 1;
-const hasPrevPage = false;
-
-const states = [...new Set(sortedPosts.map((p) => p.data.state))].sort();
-const ageGroups = [...new Set(sortedPosts.flatMap((p) => ageGroupLabels(p.data.ageGroup)))].sort();
-const interests = [...new Set(sortedPosts.flatMap((p) => categoryLabels(p.data.interests)))].sort();
+const sortedPosts = allPosts.sort(
+  (a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime()
+);
 
 // Page metadata
-const title = "Events Listing";
+const title = `Events Listing`;
 const seoTitle = "Armenian Events in New England";
 const seoDescription = "A list of interesting Armenian events in New England and the Boston-metro area, with filters for location, interests, and age.";
 ---
+
 
 <Layout {title} {seoTitle} {seoDescription}>
 	<Section>
 		<Container>
 			<SectionHeading>
 				<h1 class="text-4xl font-bold tracking-wide">Events Listing</h1>
-				<p>A list of interesting Armenian events in New England and the Boston-metro area, with filters for location, interests, and age.</p>
+				<p>A list of interesting Armenian events in New England and the Boston-metro area, with filters for date, location, interests, and age.</p>
 			</SectionHeading>
 
-			<EventList />
+			<EventList posts={sortedPosts} />
 		</Container>
 	</Section>
 </Layout>

@@ -1,8 +1,8 @@
 ---
-title: Armenian Relief Society (ARS) Providence Arax Chapter
+title: "Armenian Relief Society (ARS) Providence Arax Chapter"
 seoTitle: "Armenian Relief Society (ARS) Providence Arax Chapter"
 seoDescription: "The Armenian Relief Society (ARS) Providence Arax Chapter is a historic, grass-roots philanthropic branch serving the Armenian-American community in Rhode Island."
-name: "Armenian Relief Society"
+name: "Armenian Relief Society (ARS) Providence Arax Chapter"
 state: "RI"
 type: "Humanitarian"
 address: "402 Broadway, Providence, RI 02909"

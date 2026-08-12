@@ -3,7 +3,7 @@ title: St. Stephen's Armenian Apostolic Church
 seoTitle: "St. Stephen's Armenian Apostolic Church"
 seoDescription: "The St. Stephen's Armenian Apostolic Church is a vital parish under the Eastern Prelacy of the Armenian Apostolic Church, serving one of the largest Armenian communities on the East Coast from its home in Watertown, Massachusetts."
 name: "St. Stephen's Armenian Apostolic Church"
-state: "ME"
+state: "MA"
 type: "Religious"
 address: "1 Artsakh Street, Watertown, MA 02472"
 website: soorpstepanos.org
