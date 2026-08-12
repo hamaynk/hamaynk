@@ -1,226 +1,162 @@
 ---
 import Button from "@/components/buttons/Button.astro";
 ---
-<form id="event-form" class="flex flex-col gap-1.5">
-<div class="flex flex-col gap-1.5">
-		<div class="flex flex-col gap-1.5">
-			<label class="text-m font-bold">Email of Submitter <span class="text-red-500">*</span></label>
-			<input
-				type="email"
-				name="email"
-				placeholder="your@example.com"
-				required
-				class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
-			/>
-		</div>
-	</div>
 
-	<div class="flex flex-col gap-1.5">
-		<label class="text-m font-bold">Event Title <span class="text-red-500">*</span></label>
-		<input
-			type="text"
-			name="title"
-			placeholder="e.g., Armenian Movie Night"
-			required
-			class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
-		/>
-	</div>
+<form id="event-form" class="flex flex-col gap-4" method="POST">
+  <!-- Hidden -->
+  <input type="text" name="website" style="display: none;" tabindex="-1" autocomplete="off" />
 
-	<div class="flex flex-col gap-1.5">
-		<label class="text-m font-bold">Organizer(s) <span class="text-red-500">*</span></label>
-		<input
-			type="text"
-			name="organizers"
-			placeholder="e.g., NAASR"
-			required
-			class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
-		/>
-	</div>
+  <div class="flex flex-col gap-1.5">
+    <div class="flex flex-col gap-1.5">
+      <label class="text-m font-bold">Email of Submitter <span class="text-red-500">*</span></label>
+      <input type="email" name="email" placeholder="your@example.com" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
+    </div>
+  </div>
 
+  <div class="flex flex-col gap-1.5">
+    <label class="text-m font-bold">Event Title <span class="text-red-500">*</span></label>
+    <input type="text" name="title" placeholder="e.g., Armenian Movie Night" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
+  </div>
 
-	<div class="flex flex-col gap-1.5">
-		<label class="text-m font-bold">Venue Address <span class="text-red-500">*</span></label>
-		<input
-			type="text"
-			name="venue_address"
-			placeholder="123 Concord Avenue"
-			required
-			class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
-		/>
-	</div>
+  <div class="flex flex-col gap-1.5">
+    <label class="text-m font-bold">Organizer(s) <span class="text-red-500">*</span></label>
+    <input type="text" name="organizers" placeholder="e.g., NAASR" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
+  </div>
 
-	<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-		<div class="flex flex-col gap-1.5">
-			<label class="text-m font-bold">City <span class="text-red-500">*</span></label>
-			<input
-				type="text"
-				name="venue_city"
-				placeholder="e.g., Boston"
-				required
-				class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
-			/>
-		</div>
-		<div class="flex flex-col gap-1.5">
-			<label class="text-m font-bold">State <span class="text-red-500">*</span></label>
-			<select
-				name="venue_state"
-				required
-				class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
-			>
-				<option value="">Select a New England state</option>
-				<option value="CT">Connecticut</option>
-				<option value="ME">Maine</option>
-				<option value="MA">Massachusetts</option>
-				<option value="NH">New Hampshire</option>
-				<option value="RI">Rhode Island</option>
-				<option value="VT">Vermont</option>
-			</select>
-		</div>
-	</div>
+  <div class="flex flex-col gap-1.5">
+    <label class="text-m font-bold">Venue Address <span class="text-red-500">*</span></label>
+    <input type="text" name="venue_address" placeholder="123 Concord Avenue" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
+  </div>
 
-	<div class="flex flex-col gap-1.5">
-		<label class="text-m font-bold">Event URL <span class="text-red-500">*</span></label>
-		<input
-			type="url"
-			name="event_url"
-			placeholder="https://example.com/event"
-			required
-			class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
-		/>
-	</div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="flex flex-col gap-1.5">
+      <label class="text-m font-bold">City <span class="text-red-500">*</span></label>
+      <input type="text" name="venue_city" placeholder="e.g., Boston" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label class="text-m font-bold">State <span class="text-red-500">*</span></label>
+      <select name="venue_state" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" >
+        <option value="">Select a New England state</option>
+        <option value="CT">Connecticut</option>
+        <option value="ME">Maine</option>
+        <option value="MA">Massachusetts</option>
+        <option value="NH">New Hampshire</option>
+        <option value="RI">Rhode Island</option>
+        <option value="VT">Vermont</option>
+      </select>
+    </div>
+  </div>
 
-	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-		<div class="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-1">
-			<label class="text-m font-bold">Event Date <span class="text-red-500">*</span></label>
-			<input
-				type="date"
-				name="event_date"
-				required
-				class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
-			/>
-		</div>
-		<div class="flex flex-col gap-1.5">
-			<label class="text-m font-bold">Start Time <span class="text-red-500">*</span></label>
-			<input
-				type="time"
-				name="start_time"
-				required
-				class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
-			/>
-		</div>
-		<div class="flex flex-col gap-1.5">
-			<label class="text-m font-bold">End Time</label>
-			<input
-				type="time"
-				name="end_time"
-				class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
-			/>
-		</div>
-	</div>
+  <div class="flex flex-col gap-1.5">
+    <label class="text-m font-bold">Event URL <span class="text-red-500">*</span></label>
+    <input type="url" name="event_url" placeholder="https://example.com/event" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
+  </div>
 
-	<div class="flex flex-col gap-1.5">
-		<label class="text-m font-bold">Price <span class="text-red-500">*</span></label>
-		<div class="flex gap-4">
-			<label class="flex items-center gap-2 cursor-pointer">
-				<input
-					type="radio"
-					name="price"
-					value="free"
-					required
-					class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40"
-				/>
-				<span class="text-sm">Free</span>
-			</label>
-			<label class="flex items-center gap-2 cursor-pointer">
-				<input
-					type="radio"
-					name="price"
-					value="paid"
-					required
-					class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40"
-				/>
-				<span class="text-sm">Purchase Required</span>
-			</label>
-		</div>
-	</div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-1">
+      <label class="text-m font-bold">Event Date <span class="text-red-500">*</span></label>
+      <input type="date" name="event_date" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label class="text-m font-bold">Start Time <span class="text-red-500">*</span></label>
+      <input type="time" name="start_time" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label class="text-m font-bold">End Time</label>
+      <input type="time" name="end_time" class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
+    </div>
+  </div>
 
-	<div class="flex flex-col gap-1.5">
-		<label class="text-m font-bold">Recommended Age Group <span class="text-red-500">*</span></label>
-		<select
-			name="age_group"
-			required
-			class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40"
-		>
-			<option value="">Select a recommended age group</option>
-			<option value="kids">Kids</option>
-			<option value="teens">Teens</option>
-			<option value="young-adults">Young Adults</option>
-			<option value="21plus">21+</option>
-			<option value="all-ages">All Ages</option>
-		</select>
-	</div>
+  <div class="flex flex-col gap-1.5">
+    <label class="text-m font-bold">Price <span class="text-red-500">*</span></label>
+    <div class="flex gap-4">
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="radio" name="price" value="free" required class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Free</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="radio" name="price" value="paid" required class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Purchase Required</span>
+      </label>
+    </div>
+  </div>
 
-	<div class="flex flex-col gap-1.5">
-		<label class="text-m font-bold">Interest <span class="text-red-500">*</span></label>
-		<fieldset class="flex flex-col gap-2">
-			<label class="flex items-center gap-2 cursor-pointer">
-				<input type="checkbox" name="interest" value="arts" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
-				<span class="text-sm">Arts</span>
-			</label>
-			<label class="flex items-center gap-2 cursor-pointer">
-				<input type="checkbox" name="interest" value="causes" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
-				<span class="text-sm">Causes</span>
-			</label>
-			<label class="flex items-center gap-2 cursor-pointer">
-				<input type="checkbox" name="interest" value="culture" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
-				<span class="text-sm">Culture</span>
-			</label>
-			<label class="flex items-center gap-2 cursor-pointer">
-				<input type="checkbox" name="interest" value="education" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
-				<span class="text-sm">Education</span>
-			</label>
-			<label class="flex items-center gap-2 cursor-pointer">
-				<input type="checkbox" name="interest" value="religion" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
-				<span class="text-sm">Religion</span>
-			</label>
-			<label class="flex items-center gap-2 cursor-pointer">
-				<input type="checkbox" name="interest" value="social" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
-				<span class="text-sm">Social</span>
-			</label>
-			<label class="flex items-center gap-2 cursor-pointer">
-				<input type="checkbox" name="interest" value="sports" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
-				<span class="text-sm">Sports</span>
-			</label>
-		</fieldset>
-	</div>
+  <div class="flex flex-col gap-1.5">
+    <label class="text-m font-bold">Recommended Age Group <span class="text-red-500">*</span></label>
+    <fieldset class="flex flex-col gap-2">
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="age_group" value="kids" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Kids</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="age_group" value="teens" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Teens</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="age_group" value="young-adults" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Young Adults</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="age_group" value="21plus" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">21+</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="age_group" value="all-ages" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">All Ages</span>
+      </label>
+    </fieldset>
+  </div>
 
-	<div class="flex flex-col gap-1.5">
-		<label class="text-m font-bold">Event Description <span class="text-red-500">*</span></label>
-		<textarea
-			name="description"
-			rows="5"
-			placeholder="Provide details about your event..."
-			required
-			class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40 resize-none"
-		></textarea>
-	</div>
+  <div class="flex flex-col gap-1.5">
+    <label class="text-m font-bold">Interest <span class="text-red-500">*</span></label>
+    <fieldset class="flex flex-col gap-2">
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="interest" value="arts" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Arts</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="interest" value="causes" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Causes</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="interest" value="culture" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Culture</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="interest" value="education" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Education</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="interest" value="religion" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Religion</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="interest" value="social" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Social</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" name="interest" value="sports" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
+        <span class="text-sm">Sports</span>
+      </label>
+    </fieldset>
+  </div>
 
-  <!-- Hidden from users -->
-  <input
-    type="text"
-    name="website"
-    style="display: none;"
-    tabindex="-1"
-    autocomplete="off"
-  />
+  <div class="flex flex-col gap-1.5">
+    <label class="text-m font-bold">Event Description <span class="text-red-500">*</span></label>
+    <textarea name="description" rows="5" placeholder="Provide details about your event..." required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40 resize-none" ></textarea>
+  </div>
 
-  <Button type="submit" variant="blue" size="lg" class="w-full justify-center"
-    >Submit Event 🎉</Button
-  >
+  <Button type="submit" variant="blue" size="lg" class="w-full justify-center">Submit Event 🎉</Button>
   <p id="form-status" class="text-m hidden" role="status"></p>
 </form>
 
 <script>
+  import { createClient } from '@supabase/supabase-js';
+
+  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+  const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
   const form = document.getElementById("event-form") as HTMLFormElement;
   const status = document.getElementById("form-status") as HTMLParagraphElement;
 
@@ -231,9 +167,7 @@ import Button from "@/components/buttons/Button.astro";
   }
 
   function isSpamSubmission(): boolean {
-    const honeypot = form.querySelector<HTMLInputElement>(
-      'input[name="website"]'
-    );
+    const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
     return honeypot !== null && honeypot.value.length > 0;
   }
 
@@ -254,7 +188,6 @@ import Button from "@/components/buttons/Button.astro";
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Honeypot check
     if (isSpamSubmission()) {
       console.warn("Spam submission detected (honeypot)");
       showStatus("Event submitted. Thanks! 🎉", false);
@@ -262,12 +195,19 @@ import Button from "@/components/buttons/Button.astro";
       return;
     }
 
-    // Rate limit check
     if (!checkRateLimit()) {
       return;
     }
 
-    // Get selected interests
+    const ageGroups = Array.from(
+      form.querySelectorAll<HTMLInputElement>('input[name="age_group"]:checked')
+    ).map((el) => el.value);
+
+    if (ageGroups.length === 0) {
+      showStatus("Please select at least one age group.", true);
+      return;
+    }
+
     const interests = Array.from(
       form.querySelectorAll<HTMLInputElement>('input[name="interest"]:checked')
     ).map((el) => el.value);
@@ -277,7 +217,6 @@ import Button from "@/components/buttons/Button.astro";
       return;
     }
 
-    // Build payload
     const data = new FormData(form);
     const payload = {
       event_id: crypto.randomUUID(),
@@ -292,7 +231,7 @@ import Button from "@/components/buttons/Button.astro";
       start_time: data.get("start_time"),
       end_time: data.get("end_time"),
       price: data.get("price"),
-      age_group: data.get("age_group"),
+      age_group: ageGroups.join(", "),
       interest: interests.join(", "),
       event_description: data.get("description"),
       source: "form",
@@ -305,29 +244,19 @@ import Button from "@/components/buttons/Button.astro";
     showStatus("Submitting…", false);
 
     try {
-      // Call the Netlify Function
-      const res = await fetch("/.netlify/functions/submit-event", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const { error } = await supabase
+        .from('events')
+        .insert([payload]);
 
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || `Request failed (${res.status})`);
+      if (error) {
+        throw new Error(error.message || "Failed to insert event");
       }
 
-      showStatus(
-        "Event submitted. It will appear on our site if approved. 🎉",
-        false
-      );
+      showStatus("Event submitted. It will appear on our site if approved. 🎉", false);
       form.reset();
     } catch (err) {
       console.error(err);
-      showStatus(
-        "Something went wrong submitting your event. Please try again.",
-        true
-      );
+      showStatus("Something went wrong submitting your event. Please try again.", true);
     } finally {
       if (submitBtn) submitBtn.disabled = false;
     }
