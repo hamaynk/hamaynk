@@ -4,6 +4,7 @@ import Icons from "unplugin-icons/vite";
 import node from '@astrojs/node';
 import tailwindcss from "@tailwindcss/vite";
 import netlify from "@astrojs/netlify";
+import path from 'path';
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,16 +13,22 @@ export default defineConfig({
   output: "static",
   integrations: [],
   vite: {
-    ssr: {
-        external: ['@supabase/supabase-js'],
+    resolve: {
+      alias: {
+        '@': path.resolve('./src'),
+      },
     },
-      plugins: [
-          tailwindcss(),
-          Icons({
-              compiler: "astro",
-          }),
-      ],
-},
+    ssr: {
+      external: ['@supabase/supabase-js'],
+    },
+    plugins: [
+      tailwindcss(),
+      Icons({
+        compiler: "astro",
+      }),
+    ],
+  },
   adapter: netlify({
-  // Ensure dynamic routes are supported
-}),});
+    // Ensure dynamic routes are supported
+  }),
+});
