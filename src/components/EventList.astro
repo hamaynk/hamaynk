@@ -1,24 +1,14 @@
 ---
 import { getCollection } from "astro:content";
-import {
-  stateBgColor,
-  categoryLabels,
-  ageGroupLabels,
-  formatDate,
-  getDateCategory,
-  getAllDateCategories,
-  getDateCategoryLabel
-} from "@/utils/eventUtils";
+import { stateBgColor, categoryLabels, ageGroupLabels, formatDate, getDateCategory, getAllDateCategories, getDateCategoryLabel } from "@/utils/eventUtils";
 import LucideCalendar from "~icons/lucide/calendar";
 
 const allPosts = await getCollection("events");
-
 const now = new Date();
 const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
 const posts = allPosts
-  .filter((event) => event.data.date >= startOfToday) // today + future
-  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime()); // sorted
+	.filter((event) => event.data.date >= startOfToday) // today + future
+	.sort((a, b) => a.data.date.getTime() - b.data.date.getTime()); // sorted
 
 // Extract unique values for each filter category
 const states = [...new Set(posts.map((p) => p.data.state))].sort();
@@ -126,7 +116,8 @@ const dates = getAllDateCategories(posts.map((p) => p.data.date));
 		class="hidden text-center py-12 px-6 bg-white rounded-xl mb-8"
 	>
 		<p class="text-brand-foreground mb-4">
-			No events found. <a
+			No events found.
+			<a
 				href="/hamaynk/diy-guides"
 				class="text-blue-600 font-bold hover:underline"
 			>
@@ -163,9 +154,7 @@ const dates = getAllDateCategories(posts.map((p) => p.data.date));
 									{formatDate(post.data.date)}
 								</span>
 							</div>
-
 							<h2 class="text-xl font-semibold mb-2">{post.data.title}</h2>
-
 							<div class="flex flex-wrap gap-2 mb-3">
 								{categoryLabels(post.data.interests).map((interest) => (
 									<span class="text-xs bg-green-100 text-green-800 rounded px-2 py-1">
@@ -173,7 +162,6 @@ const dates = getAllDateCategories(posts.map((p) => p.data.date));
 									</span>
 								))}
 							</div>
-
 							<a href={`/hamaynk/events/${post.id}`} class="text-brand-blue text-base font-bold">
 								More info →
 								<span class="absolute inset-0" />
@@ -221,30 +209,28 @@ const dates = getAllDateCategories(posts.map((p) => p.data.date));
 
 	const updateFilters = () => {
 		let visibleCount = 0;
-
 		items.forEach((item) => {
 			const itemDate = item.dataset.date;
 			const itemState = item.dataset.state;
-			const itemAgeGroup = item.dataset.agegroup;
+			const itemAgeGroups = item.dataset.agegroup?.split(",") ?? [];
 			const itemInterests = item.dataset.interests?.split(",") ?? [];
 
 			const dateMatch =
-			   activeFilters.date === "all" ||
-			   itemDate === activeFilters.date ||
-			   (activeFilters.date === "this-month" && itemDate === "this-week");
+				activeFilters.date === "all" ||
+				itemDate === activeFilters.date ||
+				(activeFilters.date === "this-month" && itemDate === "this-week");
 			const stateMatch =
 				activeFilters.state === "all" ||
 				itemState === activeFilters.state;
 			const ageGroupMatch =
 				activeFilters.ageGroup === "all" ||
-				itemAgeGroup === activeFilters.ageGroup;
+				itemAgeGroups.includes(activeFilters.ageGroup);
 			const interestsMatch =
 				activeFilters.interests === "all" ||
 				itemInterests.includes(activeFilters.interests);
 
 			const match = dateMatch && stateMatch && ageGroupMatch && interestsMatch;
 			item.classList.toggle("hidden", !match);
-
 			if (match) {
 				visibleCount++;
 			}
