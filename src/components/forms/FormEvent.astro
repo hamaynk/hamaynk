@@ -83,6 +83,7 @@ import Button from "@/components/buttons/Button.astro";
 
   <div class="flex flex-col gap-1.5">
     <label class="text-m font-bold">Recommended Age Group <span class="text-red-500">*</span></label>
+    <p class="text-sm text-gray-600">Please select ALL that apply.</p>
     <fieldset class="flex flex-col gap-2">
       <label class="flex items-center gap-2 cursor-pointer">
         <input type="checkbox" name="age_group" value="kids" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
@@ -100,15 +101,12 @@ import Button from "@/components/buttons/Button.astro";
         <input type="checkbox" name="age_group" value="21plus" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
         <span class="text-sm">21+</span>
       </label>
-      <label class="flex items-center gap-2 cursor-pointer">
-        <input type="checkbox" name="age_group" value="all-ages" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />
-        <span class="text-sm">All Ages</span>
-      </label>
     </fieldset>
   </div>
 
   <div class="flex flex-col gap-1.5">
     <label class="text-m font-bold">Interest <span class="text-red-500">*</span></label>
+    <p class="text-sm text-gray-600">Please select ALL that apply.</p>
     <fieldset class="flex flex-col gap-2">
       <label class="flex items-center gap-2 cursor-pointer">
         <input type="checkbox" name="interest" value="arts" class="rounded border-gray-200 focus:ring-2 focus:ring-brand-blue/40" />

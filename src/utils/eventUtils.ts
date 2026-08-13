@@ -1,6 +1,6 @@
 export type State = "CT" | "ME" | "MA" | "NH" | "RI" | "VT";
 export type Category = "Arts" | "Causes" | "Culture" | "Education" | "Religion" | "Social" | "Sports";
-export type AgeGroup = "Kids" | "Teens" | "Young Adults" | "21+" | "All ages";
+export type AgeGroup = "Kids" | "Teens" | "Young Adults" | "21+";
 
 const stateColorMap: Record<State, string> = {
 	CT: "bg-brand-blue",
