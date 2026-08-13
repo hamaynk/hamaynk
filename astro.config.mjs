@@ -6,8 +6,8 @@ import path from 'path';
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://hamaynk.github.io",
-  base: "/hamaynk",
+  site: "https://www.hamaynk.org",
+  base: "/",
   output: "static",
   integrations: [],
   vite: {
