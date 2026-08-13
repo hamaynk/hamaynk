@@ -15,6 +15,8 @@ interests:
   - Culture
   - Education
 ageGroup:
-  - All ages
+  - Teens
+  - Young Adults
+  - 21+
 ---
 Join bestselling author Chris Bohjalian and acclaimed novelist Nancy Kricorian in conversation celebrating the launch of Bohjalian's latest novel, *The Amateur*.

@@ -20,9 +20,9 @@ const {
 const imageSrc = typeof src === 'string' ? src : src.src;
 
 const variantClasses = {
-  card: 'w-full h-48 sm:h-64',
-  offset: 'w-full h-48 sm:h-64',
-  hero: 'w-full h-56 sm:h-96',
+  card: 'w-full h-auto sm:h-64',
+  offset: 'w-full h-auto sm:h-64',
+  hero: 'w-full h-auto sm:h-96',
   thumbnail: 'w-20 sm:w-24 h-20 sm:h-24',
 };
 
@@ -52,6 +52,7 @@ const rotation = rotations[rotationIndex];
       justify-content: center;
       transform: rotate(${rotation});
       flex-shrink: 0;
+      min-height: 12rem;
     `}
   >
     <img
@@ -59,7 +60,7 @@ const rotation = rotations[rotationIndex];
       alt={alt}
       loading="eager"
       decoding="async"
-      style="width: 100%; height: 100%; object-fit: cover; display: block;"
+      style="width: 100%; height: 100%; object-fit: contain; display: block;"
     />
   </div>
 )}

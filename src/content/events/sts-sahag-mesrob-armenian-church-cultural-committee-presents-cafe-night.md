@@ -14,5 +14,7 @@ eventUrl: https://www.armenianchurchri.org/
 interests:
   - Social
 ageGroup:
-  - All ages
+  - Teens
+  - Young Adults
+  - 21+
 ---

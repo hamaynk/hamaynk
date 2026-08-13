@@ -17,7 +17,10 @@ interests:
   - Religion
   - Social
 ageGroup:
-  - All ages
+  - Kids
+  - Teens
+  - Young Adults
+  - 21+
 ---
 Browse the bake sale for your dessert and visit the Armenian Vendor for books, CDs, and/or try your luck with raffle prizes! 
 

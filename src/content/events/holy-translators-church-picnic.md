@@ -16,7 +16,10 @@ interests:
   - Culture
   - Religion
 ageGroup:
-  - All ages
+  - Kids
+  - Teens
+  - Young Adults
+  - 21+
 ---
 
 A wonderful day of community celebration featuring:

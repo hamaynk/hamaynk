@@ -16,6 +16,7 @@ interests:
   - Culture
 ageGroup:
   - Young Adults
+  - 21+
 ---
 An evening of music, culture, and community to support Homenetmen of Boston’s youth sports and scouting programs. Our musical theme will consist of Arabic & Armenian mixed classics, with singer Koko Pilavdjian and keyboardist Aboud Ghazi. 
 

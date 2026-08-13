@@ -17,6 +17,9 @@ interests:
   - Culture
   - Social
 ageGroup:
-  - All ages
+  - Kids
+  - Teens
+  - Young Adults
+  - 21+
 ---
 Annually in the early Spring, a crane lifts, pulls apart and reconfigures the two halves of the Abstract Sculpture, a split rhomboid dodecahedron made of stainless steel and aluminum, to create a new sculptural shape. The annual configuration of the Abstract Sculpture is symbolic of all who pulled away from their country of origin or were forced to pull away and came to these Massachusetts shores, establishing themselves in new and different ways.

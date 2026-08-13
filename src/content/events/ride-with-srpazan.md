@@ -15,5 +15,7 @@ interests:
   - Sports
   - Social
 ageGroup:
-  - All ages
+  - Teens
+  - Young Adults
+  - 21+
 ---

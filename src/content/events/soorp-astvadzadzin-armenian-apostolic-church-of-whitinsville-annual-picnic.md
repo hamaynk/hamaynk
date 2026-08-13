@@ -14,7 +14,10 @@ eventUrl: https://armenianchurchofwhit.org/event/annual-church-picnic-3/
 interests:
   - Religion
 ageGroup:
-  - All ages
+  - Kids
+  - Teens
+  - Young Adults
+  - 21+
 ---
 Worship Schedule:
 - Divine Liturgy – 10:00 am

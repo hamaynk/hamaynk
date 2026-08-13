@@ -14,5 +14,8 @@ eventUrl: https://www.armenianheritagepark.org/events
 interests:
   - Culture
 ageGroup:
-  - All ages
+  - Kids
+  - Teens
+  - Young Adults
+  - 21+
 ---

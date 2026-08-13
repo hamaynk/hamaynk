@@ -15,5 +15,8 @@ interests:
   - Culture
   - Social
 ageGroup:
-  - All ages
+  - Kids
+  - Teens
+  - Young Adults
+  - 21+
 ---

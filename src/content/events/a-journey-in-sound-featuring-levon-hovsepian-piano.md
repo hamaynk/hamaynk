@@ -16,6 +16,8 @@ interests:
   - Culture
   - Social
 ageGroup:
+  - Teens
   - Young Adults
+  - 21+
 ---
 We are delighted to invite our friends, followers, and your families to a very special concert featuring our dear friend, acclaimed pianist Levon Hovsepian, together with outstanding musicians Michael Korn (violin) and Mariana Suzini (soprano). Let yourself be inspired by an unforgettable musical journey in the unique atmosphere of the House of Arts.

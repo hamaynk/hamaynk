@@ -16,5 +16,6 @@ interests:
   - Sports
 ageGroup:
   - Young Adults
+  - 21+
 ---
 Registration at 7:30 a.m.; shotgun start at 9 a.m. Awards dinner follows. For information e-mail Markkaz55@aol.com. The Flyer on their site has more event information and details of registration and sponsorships.

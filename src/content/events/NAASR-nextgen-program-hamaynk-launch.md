@@ -15,7 +15,10 @@ interests:
   - Arts
   - Causes
 ageGroup:
-  - All ages
+  - Kids
+  - Teens
+  - Young Adults
+  - 21+
 ---
 
 Over three weeks, ten high school students have worked in close, project-driven study with Professor Lisa Gulesserian and guest scholars from leading universities. Their study has moved from ancient and medieval Armenian civilization through the global diaspora to the hardest questions of the present: genocide and its denial, the loss of Artsakh, and the pursuit of justice. Along the way they have developed skills in media literacy, research fluency, coding, graphic design, and effective writing.

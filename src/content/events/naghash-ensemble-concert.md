@@ -16,7 +16,10 @@ interests:
   - Arts
   - Culture
 ageGroup:
-  - All ages
+  - Kids
+  - Teens
+  - Young Adults
+  - 21+
 ---
 
 Three brilliant female vocalists and some of Armenia’s finest instrumentalists on duduk, oud, dhol, and piano play captivating new music based on sacred texts by the medieval Armenian mystic poet and priest Mkrtich Naghash.

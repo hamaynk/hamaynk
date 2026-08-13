@@ -14,5 +14,8 @@ eventUrl: https://www.abmdr.am/ne-walk/
 interests:
   - Causes
 ageGroup:
-  - All ages
+  - Kids
+  - Teens
+  - Young Adults
+  - 21+
 ---

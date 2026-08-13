@@ -17,5 +17,8 @@ interests:
   - Religion
   - Social
 ageGroup:
-  - All ages
+  - Kids
+  - Teens
+  - Young Adults
+  - 21+
 ---
