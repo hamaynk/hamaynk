@@ -1,8 +1,8 @@
 ---
 title: The Melody of Armenia Film Screening
 seoTitle: The Melody of Armenia Film Screening
-seoDescription: "A screening of the restored 100-year-old film 'The Melody of Armenia,' featuring rare footage of the Burning of Smyrna and First Republic history, presented by the Armenian Cultural Association of Rhode Island."
-description: "A screening of the restored 100-year-old film 'The Melody of Armenia,' featuring rare footage of the Burning of Smyrna and First Republic history, presented by the Armenian Cultural Association of Rhode Island."
+seoDescription: "A screening of a restored 100-year-old film featuring rare footage of the Burning of Smyrna and First Republic history, presented by the Armenian Cultural Association of Rhode Island."
+description: "A screening of a restored 100-year-old film featuring rare footage of the Burning of Smyrna and First Republic history, presented by the Armenian Cultural Association of Rhode Island."
 date: 12 September 2026
 time: 6 P.M.
 location: Armenian Cultural Association of Rhode Island
