@@ -2,7 +2,7 @@
 title: The Melody of Armenia Film Screening
 seoTitle: The Melody of Armenia Film Screening
 seoDescription: "A screening of the restored 100-year-old film 'The Melody of Armenia,' featuring rare footage of the Burning of Smyrna and First Republic history, presented by the Armenian Cultural Association of Rhode Island."
-description: "On Saturday, September 12th, the Armenian Cultural Association of Rhode Island (ACAA-RI) and the Providence Hamazkayin will be hosting a screening of The Melody of Armenia. U. George Aghjayan, Director of the ARF Archives, will lead the restoration efforts of the film and be present to discuss how the film was rediscovered and restored, along with a Q&A session."
+description: "A screening of the restored 100-year-old film 'The Melody of Armenia,' featuring rare footage of the Burning of Smyrna and First Republic history, presented by the Armenian Cultural Association of Rhode Island."
 date: 12 September 2026
 time: 6 P.M.
 location: Armenian Cultural Association of Rhode Island
