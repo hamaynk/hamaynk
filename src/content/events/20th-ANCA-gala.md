@@ -9,7 +9,7 @@ location: Armenian National Committee of America
 venueAddress: 801 Greenwich Avenue
 venueCity: Warwick
 state: RI
-price: Paid
+price: $125
 organizers: Armenian National Committee of Rhode Island
 eventUrl: https://us.givergy.com/ancaergala/
 interests:

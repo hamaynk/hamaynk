@@ -9,7 +9,7 @@ location: ARS Cambridge Shushi Chapter
 venueAddress: ACEC, 47 Nichols Avenue
 venueCity: Watertown
 state: MA
-price: Paid
+price: $85
 organizers: ARS Cambridge Shushi Chapter
 eventUrl: https://www.facebook.com/share/p/19N3SMk3Ms/
 interests:

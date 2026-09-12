@@ -9,7 +9,7 @@ location: Armenian Cultural Association of Rhode Island
 venueAddress: 7 Armenia Street
 venueCity: Providence
 state: RI
-price: Paid
+price: $20
 organizers: ACAA-RI and Hamazkayin
 eventUrl: https://www.instagram.com/p/DcRD1aYx-_F/
 interests:
