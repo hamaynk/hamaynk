@@ -21,4 +21,4 @@ ageGroup:
   - Young Adults
   - 21+
 ---
-More information will be available soon at [www.stsvartanantz.com](www.stsvartanantz.com).
+More information will be available soon at event link.
