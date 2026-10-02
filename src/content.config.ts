@@ -13,7 +13,13 @@ const events = defineCollection({
     seoTitle: z.string(),
     seoDescription: z.string(),
     description: z.string(),
-    date: z.coerce.date(),
+    date: z.string().transform((dateString) => {
+      const parsed = new Date(dateString);
+      if (!isNaN(parsed.getTime())) {
+        return parsed;
+      }
+      throw new Error(`Invalid date format: "${dateString}". Use "YYYY-MM-DD", "Month DD, YYYY", or "DD Month YYYY".`);
+    }),
     time: z.string(),
     venueAddress: z.string(),
     venueCity: z.string(),
