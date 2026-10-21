@@ -5,11 +5,12 @@ seoDescription: "Join Armenian Church of the Holy Translators for a wonderful Ch
 description: "Join Armenian Church of the Holy Translators for a wonderful Church picnic where Faith, Family and Fellowship Join for a wonderful day of community celebration."
 date: September 20, 2026
 time: 12:00–5:00 P.M.
+location: "Armenian Church of the Holy Translators, MA"
 venueAddress: 38 Franklin St
 venueCity: Framingham
 state: MA
 price: Admission is free
-organizers: Armenian Church of the Holy Translators, MA
+organizers: "Armenian Church of the Holy Translators, MA"
 eventUrl: https://www.supportarmenian.com/events/holy-translators-church-picnic-framingham-september-20-2026
 interests:
   - Social

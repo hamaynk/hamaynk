@@ -5,6 +5,7 @@ seoDescription: "Join us for a beautiful afternoon of live music at the House of
 description: "Join us for a beautiful afternoon of live music at the House of Arts!"
 date: August 8, 2026
 time: 3:00 P.M.
+location: House of Arts
 venueAddress: 19 Old Salem Rd.
 venueCity: Gloucester
 state: MA

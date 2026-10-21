@@ -5,6 +5,7 @@ seoDescription: "Attend the Divine Liturgy and the Blessing of Grapes!"
 description: "Attend the Divine Liturgy and the Blessing of Grapes!"
 date: August 16, 2026
 time: 10:00 A.M–5:00 P.M.
+location: Soorp Astvadzadzin Armenian Apostolic Church
 venueAddress: 315 Church Street
 venueCity: Whitinsville
 state: MA

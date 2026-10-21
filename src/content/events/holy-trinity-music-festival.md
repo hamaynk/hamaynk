@@ -5,6 +5,7 @@ seoDescription: "Details to be added on Holy Trinity website!"
 description: "Details to be added on Holy Trinity website!"
 date: September 27, 2026
 time: 4:00 P.M.
+location: Holy Trinity Armenian Church of Greater Boston
 venueAddress: 145 Brattle Street
 venueCity: Cambridge
 state: MA

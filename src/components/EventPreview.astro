@@ -8,10 +8,13 @@ const allPosts = await getCollection("events");
 
 // Filter for today + future events and sort by date
 const now = new Date();
-const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+const todayISO = now.toISOString().split('T')[0]; // "2026-10-21"
 
 const posts = allPosts
-  .filter((event) => event.data.date >= startOfToday)
+  .filter((event) => {
+    const eventISO = event.data.date.toISOString().split('T')[0];
+    return eventISO >= todayISO;
+  })
   .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
   .slice(0, 3);
 ---

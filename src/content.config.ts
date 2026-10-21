@@ -21,6 +21,7 @@ const events = defineCollection({
       throw new Error(`Invalid date format: "${dateString}". Use "YYYY-MM-DD", "Month DD, YYYY", or "DD Month YYYY".`);
     }),
     time: z.string(),
+    location: z.string(),
     venueAddress: z.string(),
     venueCity: z.string(),
     state: z.enum(stateEnum),

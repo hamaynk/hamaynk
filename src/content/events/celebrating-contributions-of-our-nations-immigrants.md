@@ -5,6 +5,7 @@ seoDescription: "Honors Raffi and Nina Festekjian, Distinguished Leaders in Phil
 description: "Honors Raffi and Nina Festekjian, Distinguished Leaders in Philanthropy, Business and the Arts and Recognizes Organizations Serving Immigrants."
 date: September 24, 2026
 time: 6:00–9:30 P.M.
+location: Armenian Heritage Park
 venueAddress: 510 Atlantic Avenue
 venueCity: Boston
 state: MA

@@ -5,6 +5,7 @@ seoDescription: Come to the Armenian Museum of America to see two authors in con
 description: Come to the Armenian Museum of America to see two authors in conversation.
 date: August 11, 2026
 time: 7:00 P.M.
+location: Armenian Museum of America
 venueAddress: 65 Main Street
 venueCity: Watertown
 state: MA

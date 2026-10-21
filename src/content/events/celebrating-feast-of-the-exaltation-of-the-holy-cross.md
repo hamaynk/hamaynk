@@ -5,11 +5,12 @@ seoDescription: "Celebrate the Feast of the Exaltation of the Holy Cross & Back 
 description: "Celebrate Feast of the Exaltation of the Holy Cross & Back to School on Church Grounds"
 date: September 13, 2026
 time: 12:00 P.M.
+location: "St. Stephen’s Armenian Apostolic Church of Greater Boston"
 venueAddress: 1 Artsakh Street
 venueCity: Watertown
 state: MA
 price: free
-organizers: St. Stephen’s Armenian Apostolic Church of Greater Boston
+organizers: "St. Stephen’s Armenian Apostolic Church of Greater Boston"
 eventUrl: https://soorpstepanos.org/annual-picnic/#jp-carousel-7346
 interests:
   - Culture

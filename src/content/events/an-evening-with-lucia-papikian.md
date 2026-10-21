@@ -5,6 +5,7 @@ seoDescription: "KAMURJNER Cultural Connections invites you to a special evening
 description: "KAMURJNER Cultural Connections invites you to a special evening featuring the gifted young soprano Lucia Papikian, with Michele Wong on piano."
 date: 9 August 2026
 time: 5:00 P.M.
+location: Armenian Cultural Foundation
 venueAddress: 441 Mystic Street
 venueCity: Arlington
 state: MA

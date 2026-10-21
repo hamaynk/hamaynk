@@ -5,6 +5,7 @@ seoDescription: "Join Anoushavan Srpazan for a bike ride along the Charles River
 description: "Join Anoushavan Srpazan for a bike ride along the Charles River! Bring your bike, helmet and water bottle. Lunch provided for participants."
 date: 8 August 2026
 time: 9:30 A.M.
+location: St. Stephen’s Armenian Apostolic Church of Greater Boston
 venueAddress: 1 Artsakh Street
 venueCity: Watertown
 state: MA

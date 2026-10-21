@@ -5,6 +5,7 @@ seoDescription: "Join us for Rhode Island’s largest Armenian food festival hos
 description: "Join us for Rhode Island’s largest Armenian food festival hosted by Sts Vartanantz Armenian Apostolic Church."
 date: November 15, 2026
 time: 12:00–7:00 P.M.
+location: Sts Vartanantz Armenian Apostolic Church
 venueAddress: 60 Rhodes Pl
 venueCity: Cranston
 state: RI

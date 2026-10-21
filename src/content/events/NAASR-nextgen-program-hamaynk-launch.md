@@ -5,6 +5,7 @@ seoDescription: "Join us for the final presentations of the inaugural cohort of 
 description: "Join us for the final presentations of the inaugural cohort of NAASR's NextGen summer program!"
 date: July 30, 2026
 time: 7–9 P.M.
+location: NAASR
 venueAddress: 395 Concord Avenue
 venueCity: Belmont
 state: MA

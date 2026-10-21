@@ -6,7 +6,7 @@ const stateColorMap: Record<State, string> = {
 	CT: "bg-brand-blue",
 	ME: "bg-brand-green",
 	MA: "bg-brand-yellow",
-	NH: "bg-brand-red",
+	NH: "bg-brand-blue",
 	RI: "bg-brand-red",
 	VT: "bg-brand-red",
 };

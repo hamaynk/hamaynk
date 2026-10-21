@@ -5,6 +5,7 @@ seoDescription: Join us for our fall edition of Mediterranean Night at the ACEC!
 description: Join us for our fall edition of Mediterranean Night at the ACEC!
 date: September 19, 2026
 time: 7:30 P.M. – 12:00 AM
+location: ACEC
 venueAddress: 47 Nichols Ave
 venueCity: Watertown
 state: MA

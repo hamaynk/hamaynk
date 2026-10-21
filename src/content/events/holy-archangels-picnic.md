@@ -5,6 +5,7 @@ seoDescription: "Enjoy a delicious spread of kebabs and Armenian pastries at the
 description: "Enjoy a delicious spread of kebabs and Armenian pastries at the annual picnic hosted by the Holy Archangels Armenian Church, complete with live music from the Jason Naroian ensemble!"
 date: 23 August 2026
 time: 12:00 P.M. – 5:00 P.M.
+location: Holy Archangels Armenian Church
 venueAddress: 1280 Boston Rd.
 venueCity: Haverhill
 state: MA

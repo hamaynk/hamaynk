@@ -5,6 +5,7 @@ seoDescription: "Holy Archangels Church of Haverhill, MA, will hold its Annual G
 description: "Holy Archangels Church of Haverhill, MA, will hold its Annual Golf Tournament on Tuesday, Sep. 15, at Hickory Hill Golf Course (200 N. Lowell St., Methuen, MA)."
 date: 15 September 2026
 time: 7:30 A.M.
+location: Hickory Hill Golf Course
 venueAddress: 200 N. Lowell St.
 venueCity: Methuen
 state: MA

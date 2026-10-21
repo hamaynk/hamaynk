@@ -5,6 +5,7 @@ seoDescription: "Celebrate Armenian heritage and traditions, featuring delicious
 description: "Celebrate Armenian heritage and traditions, featuring delicious food, music, dance, and fun for all!"
 date: 4 October 2026
 time: 11:00 A.M.–4:00 P.M.
+location: Armenian Church of Our Savior
 venueAddress: 87 Salisbury Street
 venueCity: Worcester
 state: MA

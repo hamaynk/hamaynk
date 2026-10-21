@@ -5,6 +5,7 @@ seoDescription: "Join us in celebrating culture, tradition and heritage through 
 description: "Join us in celebrating culture, tradition and heritage through music, dance, storytelling, cuisine and community on the occasion of Armenian Independence Day."
 date: September 19, 2026
 time: 1–8 P.M.
+location: Armenian Heritage Park
 venueAddress: 115 Atlantic Avenue
 venueCity: Boston
 state: MA

@@ -5,6 +5,7 @@ seoDescription: Join us for our annual fundraising event featuring delicious sur
 description: Join us for our annual fundraising event featuring delicious surf and turf! Partake in our raffle and silent auction for some great accessories or memorabilia!
 date: September 17, 2026
 time: 6:00 P.M.
+location: Armenian Cultural and Educational Center
 venueAddress: 47 Nichols Ave
 venueCity: Watertown
 state: MA

@@ -5,8 +5,8 @@ seoDescription: "An evening of entertainment with French-Armenian singer HAKOB, 
 description: "Parisian Nights is an evening of entertainment featuring French-Armenian singer HAKOB, renowned as the winner of France’s The Voice. Enjoy a dynamic performance blending French, Armenian, and English languages with captivating violin solos. The event offers table seating and delicious light snacks alongside cocktails for adults (21+). All ages are welcome to experience this unique cultural celebration."
 date: 2 October 2026
 time: 7:30 P.M.
-location: ARS Cambridge Shushi Chapter
-venueAddress: ACEC, 47 Nichols Avenue
+location: ACEC
+venueAddress: 47 Nichols Avenue
 venueCity: Watertown
 state: MA
 price: $85

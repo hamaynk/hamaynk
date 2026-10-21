@@ -5,7 +5,7 @@ seoDescription: "Organized by the Armenian National Committee of Rhode Island, t
 description: "Organized this year by the Armenian National Committee of Rhode Island, the gala serves as the premier annual fundraising event for the ANCA Eastern Region Endowment Fund, a 501(c)(3) charitable and educational organization dedicated to advancing advocacy, education, and civic engagement throughout the Eastern United States. Marking the 20th installment of the ANCA Eastern Region's signature annual gathering, this year's gala will bring together community leaders, activists, supporters, and public officials from across the region to celebrate achievements, recognize distinguished service, and strengthen the grassroots movement at the heart of the Armenian Cause. Each year, the ANCA Eastern Region Gala is organized by a different local Armenian community organization, reflecting the grassroots foundation of the Armenian American movement. This year's event in Warwick will feature award presentations including the Freedom Award and Vahan Cardashian Award to honor outstanding contributors to the Armenian Cause. The ANCA Eastern Region Endowment Fund provides critical support for outreach, educational initiatives, leadership development, and advocacy efforts across the Eastern United States."
 date: 5 December 2026
 time: 6–11:30 P.M.
-location: Armenian National Committee of America
+location: "Crowne Plaza Hotel"
 venueAddress: 801 Greenwich Avenue
 venueCity: Warwick
 state: RI

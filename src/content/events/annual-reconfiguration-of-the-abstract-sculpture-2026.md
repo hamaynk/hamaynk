@@ -5,6 +5,7 @@ seoDescription: "Join us for the annual reconfiguration of the abstract sculptur
 description: "Join us for the annual reconfiguration of the abstract sculpture."
 date: October 18, 2026
 time: 9:00 A.M.
+location: Armenian Heritage Park
 venueAddress: Quincy Market, North End, Boston, MA 02110
 venueCity: Boston
 state: MA

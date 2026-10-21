@@ -5,6 +5,7 @@ seoDescription: "The ARS Lowell Lousintak Chapter invites you to an elegant Wome
 description: "The ARS Lowell Lousintak Chapter invites you to an elegant Women's Night featuring Hin Areni wines, exquisite appetizers, a silent auction, and networking."
 date: September 25, 2026
 time: 6:30 P.M.
+location: Gallery Twist
 venueAddress: 1963 Massachusetts Avenue
 venueCity: Lexington
 state: MA

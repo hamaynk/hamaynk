@@ -5,6 +5,7 @@ seoDescription: "Meet & Greet. Hot Chocolate & Holiday Cookies. Much More..."
 description: "Meet & Greet. Hot Chocolate & Holiday Cookies. Much More..."
 date: December 6, 2026
 time: 4:45 P.M.
+location: Armenian Heritage Park
 venueAddress: 115 Atlantic Avenue
 venueCity: Boston
 state: MA

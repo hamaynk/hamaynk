@@ -22,6 +22,7 @@ const {
 	date,
 	time,
 	state = "Unknown",
+    location,
 	venueAddress,
 	venueCity,
 	ageGroup,
@@ -120,7 +121,10 @@ const fullAddress = [venueAddress, venueCity, state].filter(Boolean).join(", ");
 								<div class="mb-4">
 									<p class="text-sm font-bold uppercase underline mb-1">Location</p>
 									<p class="text-sm text-brand-foreground font-semibold">
-										{fullAddress}
+									    {location}
+									</p>
+									<p class="text-sm text-brand-foreground font-semibold">
+									    {fullAddress}
 									</p>
 								</div>
 							)}

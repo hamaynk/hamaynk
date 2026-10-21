@@ -5,6 +5,7 @@ seoDescription: "Details coming soon on St. James Church website!"
 description: "Details coming soon on St. James Church website!"
 date: October 16, 2026
 time: 12:30–2:30 P.M. & 4:00–7:00 P.M.
+location: St. James Armenian Church
 venueAddress: 465 Mt. Auburn St.
 venueCity: Watertown
 state: MA
