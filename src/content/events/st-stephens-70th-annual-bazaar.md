@@ -33,4 +33,4 @@ ageGroup:
 Meals served starting at 11 AM.
 
 More information, to be a Bazaar sponsor, or to buy a raffle
-ticket, visit [www.soorpstepanos.org](www.soorpstepanos.org).
+ticket, visit Event Link.
