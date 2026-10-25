@@ -24,8 +24,13 @@ import Button from "@/components/buttons/Button.astro";
   </div>
 
   <div class="flex flex-col gap-1.5">
-    <label class="text-m font-bold">Venue Address <span class="text-red-500">*</span></label>
-    <input type="text" name="venue_address" placeholder="123 Concord Avenue" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
+    <label class="text-m font-bold">Venue Name <span class="text-red-500">*</span></label>
+    <input type="text" name="location" placeholder="e.g., First Armenian Church" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
+  </div>
+
+  <div class="flex flex-col gap-1.5">
+    <label class="text-m font-bold">Venue Street Address <span class="text-red-500">*</span></label>
+    <input type="text" name="venue_address" placeholder="e.g., 123 Concord Avenue" required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40" />
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -140,7 +145,7 @@ import Button from "@/components/buttons/Button.astro";
   </div>
 
   <div class="flex flex-col gap-1.5">
-    <label class="text-m font-bold">Event Description <span class="text-red-500">*</span></label>
+    <label class="text-m font-bold">Event Description (include pricing information here, if applicable) <span class="text-red-500">*</span></label>
     <textarea name="description" rows="5" placeholder="Provide details about your event..." required class="rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-blue/40 resize-none" ></textarea>
   </div>
 
@@ -218,6 +223,7 @@ import Button from "@/components/buttons/Button.astro";
       email: data.get("email"),
       organizers: data.get("organizers"),
       event_title: data.get("title"),
+      location: data.get("location"),
       venue_address: data.get("venue_address"),
       venue_city: data.get("venue_city"),
       venue_state: data.get("venue_state"),
