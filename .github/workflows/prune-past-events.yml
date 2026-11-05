@@ -1,0 +1,31 @@
+name: Rebuild to remove past events
+
+on:
+  schedule:
+    - cron: "22 7 * * *" # 07:22 UTC = 2:22 AM EST / 3:22 AM EDT
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  check-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Count past events
+        id: check
+        run: echo "count=$(node scripts/count-past-events.mjs)" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger deploy if past events exist
+        if: steps.check.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main
+
+      - name: Nothing to do
+        if: steps.check.outputs.count == '0'
+        run: echo "No past events found. Skipping rebuild."
