@@ -3,18 +3,20 @@ title: "Gagat Youth Career Development Conference"
 seoTitle: "Gagat Youth Career Development Conference"
 seoDescription: "The Gagat Youth Career Development Conference is a dynamic ecosystem that connects young Armenian talent with established professionals and community mentors. Inspired by the height of Mount Ararat, Gagat empowers the diaspora's next generation with essential networking and career resources while keeping them firmly rooted in their cultural heritage and identity."
 description: "The Gagat Youth Career Development Conference is a dynamic ecosystem that connects young Armenian talent with established professionals and community mentors. Inspired by the height of Mount Ararat, Gagat empowers the diaspora's next generation with essential networking and career resources while keeping them firmly rooted in their cultural heritage and identity."
-date: 15-16 January 2027
-time: 6:30 P.M.
+date: "15 January 2027"
+time: "6:30–10 P.M."
 location: "The Boston Marriott Newton"
 venueAddress: 2345 Commonwealth Avenue
 venueCity: Newton
 state: MA
-price: $125 before 1 Dec.; $175 after 1 Dec.
-organizers: GAGAT Youth Career Development Conference Planning Committee
-eventUrl: https://www.gagatconference.org/
+price: "$125 before 1 Dec.; $175 after 1 Dec."
+organizers: "GAGAT Youth Career Development Conference Planning Committee"
+eventUrl: "https://www.gagatconference.org/"
 interests:
   - Culture
+  - Social
 ageGroup:
+  - Young Adults
   - 21+
 ---
 The Gagat Youth Career Development Conference serves as a dynamic ecosystem designed to foster peer to peer connections while bridging the gap between young talent and established Armenian professionals and community members.
